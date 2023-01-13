@@ -127,7 +127,7 @@ public class Weapon : Interactable
 
         if (!readyToShoot || reloading || bulletsLeft <= 0) return;
 
-        _animator.SetTrigger("shoot");
+        if (_animator != null) _animator.SetTrigger("shoot");
         readyToShoot = false;
 
         //rocket launcher
@@ -212,7 +212,7 @@ public class Weapon : Interactable
                     var ps = GetComponentInParent<PlayerStats>();
                     var dmg = (collisionObject.GetComponentInParent(typeof(PlayerStats)) as PlayerStats).TakeDamage(
                         (int)finalDamage);
-                    ps.damage_done += dmg;
+                    if(ps != null) ps.damage_done += dmg;
 
                     if (transform.root.tag == "Player")
                     {

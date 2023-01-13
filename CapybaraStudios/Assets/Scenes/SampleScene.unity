@@ -1702,6 +1702,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348470264}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &361411896 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8643147639245045305, guid: 7d791ce83ceac9f4896a9b1222c5d24c, type: 3}
+  m_PrefabInstance: {fileID: 694397210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &367808992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2213,19 +2218,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7777627309602302415, guid: 2c54a0c5ce9238d4589e11abb3c5e370, type: 3}
   m_PrefabInstance: {fileID: 763714270}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &433295881
-SphereCollider:
+--- !u!114 &433295882
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433295878}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327d8bc115bf4ce44b75e83839f97851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: 
+  cooldownTime: 0
+  gunSound: {fileID: 361411896}
+  reloadSound: {fileID: 0}
+  pickupSound: {fileID: 0}
+  scopeSound: {fileID: 0}
+  damage: 10
+  initialSpread: 0
+  maxSpread: 0
+  range: 1000
+  reloadTime: 0
+  fireRate: 1
+  timeBetweenShooting: 0.5
+  distanceModifier: 0.05
+  damageFalloffStart: 20
+  singleReload: 0
+  maxAmmo: 10000
+  magazineSize: 10000
+  bulletsPerTap: 1
+  hasAmmo: 1
+  rapidFireEnabled: 0
+  bulletsLeft: 0
+  bulletsShot: 0
+  bulletHoleGraphic: {fileID: 7478510997650025130, guid: 926fdc7652ddfa84b84f91293fdabd3f, type: 3}
+  SniperHUD: {fileID: 0}
+  weaponSlot: 1
+  animationType: 1
+  spreadIncrease: 0.001
+  spreadDecrease: 0.01
+  currentSpread: 0
+  specialWeaponType: 0
+  BulletFirePoint: {fileID: 0}
+  BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
+  zoom: 1
 --- !u!1 &494910051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,10 +3426,6 @@ PrefabInstance:
     - target: {fileID: 6963829977725318005, guid: 2c54a0c5ce9238d4589e11abb3c5e370, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7435098860077030261, guid: 2c54a0c5ce9238d4589e11abb3c5e370, type: 3}
-      propertyPath: target
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7777627309602302415, guid: 2c54a0c5ce9238d4589e11abb3c5e370, type: 3}
       propertyPath: m_Name
