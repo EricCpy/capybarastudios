@@ -6,10 +6,18 @@ public class Turret : MonoBehaviour
 {
     public Transform target;
     public Transform body;
+    public Transform firePointLeft;
+    public Transform firePointRight;
 
     private void Update() 
     {
-        Aim();
+        if (target != null)
+        {
+            Aim();
+            Debug.DrawLine(firePointLeft.position, target.position);
+
+            //Shooting
+        }
     }
 
     private void Aim()
@@ -25,5 +33,25 @@ public class Turret : MonoBehaviour
         float projectedVectorAngle = Vector3.SignedAngle(projectedVector, toZeroAngle, planeNormal);
 
         return projectedVectorAngle;
-    } 
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log(other.name + " entered turret area");
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerMovement newTarget = other.gameObject.GetComponent<PlayerMovement>();
+            if(newTarget != null)
+            {
+                target = newTarget.Target;
+            }
+            
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        Debug.Log(other.name + " left turret area");
+        if (other.gameObject.CompareTag("Player"))
+        {
+            target = null;
+        }
+    }
 }
