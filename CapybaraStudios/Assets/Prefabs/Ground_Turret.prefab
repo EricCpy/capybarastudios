@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 6963829977725318005}
   - component: {fileID: 7435098860077030261}
   - component: {fileID: 6901319667335025672}
+  - component: {fileID: 4716633676577644278}
   m_Layer: 0
   m_Name: Ground_Turret
   m_TagString: Untagged
@@ -183,6 +184,52 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4716633676577644278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777627309602302415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327d8bc115bf4ce44b75e83839f97851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: 
+  cooldownTime: 0
+  gunSound: {fileID: 8643147639245045305, guid: 7d791ce83ceac9f4896a9b1222c5d24c, type: 3}
+  reloadSound: {fileID: 0}
+  pickupSound: {fileID: 0}
+  scopeSound: {fileID: 0}
+  damage: 10
+  initialSpread: 0
+  maxSpread: 0
+  range: 1000
+  reloadTime: 0
+  fireRate: 1
+  timeBetweenShooting: 0.5
+  distanceModifier: 0.05
+  damageFalloffStart: 20
+  singleReload: 0
+  maxAmmo: 10000
+  magazineSize: 10000
+  bulletsPerTap: 1
+  hasAmmo: 1
+  rapidFireEnabled: 0
+  bulletsLeft: 0
+  bulletsShot: 0
+  bulletHoleGraphic: {fileID: 7478510997650025130, guid: 926fdc7652ddfa84b84f91293fdabd3f, type: 3}
+  SniperHUD: {fileID: 0}
+  weaponSlot: 1
+  animationType: 1
+  spreadIncrease: 0.001
+  spreadDecrease: 0.01
+  currentSpread: 0
+  specialWeaponType: 0
+  BulletFirePoint: {fileID: 0}
+  BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
+  zoom: 1
 --- !u!1 &8070217710010544374
 GameObject:
   m_ObjectHideFlags: 0
