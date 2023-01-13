@@ -139,7 +139,7 @@
 ## __Florian K. &emsp; *Sounddesigner, Webdeveloper*__
 
 > ### &nbsp; Anzahl aller Commits: 4 + Website
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 1% 
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 1%  
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 0,3
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Sound
