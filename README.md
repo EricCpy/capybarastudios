@@ -9,15 +9,14 @@ Unity Version
   - [x] movement
   - [x] kamera
   - [x] Players sollen unterschiedliche Farben haben
-  - [ ] dmg
   - [ ] rocketlauncher
+  - [ ] dmg
   - [ ] dying
   - [ ] respawning
   - [ ] Name aus Menü soll über dem Kopf angezeigt werden
-  - [ ] connect to lobby by code with relay
   - [ ] TabMenü für den Multiplayer
   - [ ] Sounds
-  - [ ] Tabmenü im Multiplayer
+  - [ ] connect to lobby by code with relay
 
 - [ ] Tabmenü
    - [ ] Namen
@@ -44,7 +43,6 @@ Unity Version
   - [ ] stehender Geschützturm
 
 - [ ] Sounds
-  - [ ] Schritte
   - [ ] Heilen
   - [ ] 2 neue Soundtracks für die neuen Maps
   - [ ] Menümusik
