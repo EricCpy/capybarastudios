@@ -138,21 +138,23 @@
 
 ## __Florian K. &emsp; *Sounddesigner, Webdeveloper*__
 
-> ### &nbsp; Anzahl aller Commits: 4 + Website
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 1%  
+> ### &nbsp; Anzahl aller Commits: 4 + Website (anderes Repo, URL wird später bekanntgegeben)
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits im Main Repo: 1%  
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 0,3
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Sound
->           - own Soundtracks
+>           - own Soundtracks made in FL Studio with sound concept in mind (changing to intense version when being on attack)
 >           - Sound selection
 >       - Management
 >           - Playtest questions and sequence
+>           - Assistant in Management on demand
 >       - Map
 >           - Prototypes
+>           - Assistance in Map Design
 >       - Website
->           - Information
->           - Download
->           - Design
+>           - Technical Design
+>           - Implementation in Django (currently in progress)
+>           - Testing and Hosting (upcoming)
 
 ## __Zainab E. &emsp; *UI-Designer, HR-Management*__
 
@@ -171,7 +173,7 @@
 >       - Website
 >           - Information
 <br><br>
-# Derzeitiges Ranking der meisten Arbeit
+# Derzeitiges Ranking im Main Repo
 
 ### 1. Eric J. und Adrian J.
 ### 2. Deniz S. und Felix A.
