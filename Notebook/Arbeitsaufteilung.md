@@ -1,3 +1,5 @@
+<span style="color:white">
+
 # Arbeitsaufteilung CapybaraStudios bis 13.01. 
 
 ## __Eric J. &emsp; *Producer, Developer*__
@@ -7,7 +9,7 @@
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 10,1  
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Weapons
->           - GrapplingHook
+>           - Grappling Gun
 >           - Particles
 >       - Player
 >           - Ragdolls
@@ -171,6 +173,6 @@
 <br><br>
 # Derzeitiges Ranking der meisten Arbeit
 
-## 1. Eric J. und Adrian J.
-## 2. Deniz S. und Felix A.
-## 3. Erdenay K., Florian K. und Zainab E.
+### 1. Eric J. und Adrian J.
+### 2. Deniz S. und Felix A.
+### 3. Erdenay K., Florian K. und Zainab E.
