@@ -67,6 +67,7 @@ namespace SlimUI.ModernMenu
 
         public void Start()
         {
+            initName();
             // check difficulty
             // check slider values
             musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume");
@@ -525,6 +526,21 @@ namespace SlimUI.ModernMenu
             texturelowtextLINE.gameObject.SetActive(false);
             texturemedtextLINE.gameObject.SetActive(false);
             texturehightextLINE.gameObject.SetActive(true);
+        }
+
+
+        public TMP_InputField playerInputField;
+
+
+        public void initName()
+        {
+            string name = PlayerPrefs.GetString("CurrentName", "Player");
+            playerInputField.text = name;
+
+        }
+        public void updateName()
+        {
+            PlayerPrefs.SetString("CurrentName", playerInputField.text);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HUDcontroller : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class HUDcontroller : MonoBehaviour
 
     void Start()
     {
+        initName();
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
@@ -109,15 +112,29 @@ public class HUDcontroller : MonoBehaviour
 
     public void QuitGame()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
 				Application.Quit();
-        #endif
+#endif
     }
 
     public void Respawn()
     {
         FindObjectOfType<GameManager>().Respawn();
+    }
+
+    
+    
+    public TMP_InputField playerInputField;
+    public void initName()
+    {
+        string name = PlayerPrefs.GetString("CurrentName", "Player");
+        playerInputField.text = name;
+    }
+
+    public void updateName()
+    {
+        PlayerPrefs.SetString("CurrentName", playerInputField.text);
     }
 }
