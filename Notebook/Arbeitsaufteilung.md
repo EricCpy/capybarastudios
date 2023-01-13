@@ -138,7 +138,7 @@
 
 ## __Florian K. &emsp; *Sounddesigner, Webdeveloper*__
 
-> ### &nbsp; Anzahl aller Commits: 4 + Website (anderes Repo, URL wird später bekanntgegeben)
+> ### &nbsp; Anzahl aller Commits: 4 (Main Repo) + Website [-> Repository](https://github.com/fnyrawr/capybarastudios_website)
 > &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits im Main Repo: 1%  
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 0,3
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
