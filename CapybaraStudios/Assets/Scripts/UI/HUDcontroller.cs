@@ -35,6 +35,7 @@ public class HUDcontroller : MonoBehaviour
     {
         if (_gameIsPaused)
         {
+            settingsMenuUI.SetActive(false);
             Resume();
         }
         else
@@ -80,7 +81,7 @@ public class HUDcontroller : MonoBehaviour
 
     public void Resume()
     {
-        _input.Resume();
+        if(_input) _input.Resume();
         Cursor.lockState = CursorLockMode.Locked;
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale

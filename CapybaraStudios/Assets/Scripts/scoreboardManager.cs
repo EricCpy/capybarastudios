@@ -10,6 +10,18 @@ public class scoreboardManager : MonoBehaviour
 
     public void Update()
     {
-        leaderboard.text = GameManager.gameManager.GetScores();
+
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.scores != "")
+        {
+            leaderboard.text = GameManager.scores;
+        }
+        else
+        {
+            leaderboard.text = GameManager.gameManager.GetScores();
+        }
     }
 }

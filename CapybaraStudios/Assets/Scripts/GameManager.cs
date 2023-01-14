@@ -33,9 +33,11 @@ public class GameManager : MonoBehaviour
     private string saveLocation;
     private List<ScoreEntry> _scoreEntryList;
     public static GameManager gameManager;
+    public static string scores;
 
     private void Start()
     {
+        scores = "";
         gameManager = this;
         _scoreEntryList = new List<ScoreEntry>();
         saveLocation = "timeTable" + SceneManager.GetActiveScene().name;
@@ -141,6 +143,7 @@ public class GameManager : MonoBehaviour
 
     public void CompleteLevel()
     {
+        scores = GetScores();
         registerScore();
     }
 
@@ -153,7 +156,7 @@ public class GameManager : MonoBehaviour
         foreach (ScoreEntry highscoreEntry in _scoreEntryList)
         {
             if (highscoreEntry.playerName == playerName &&
-                TimeSpan.Parse(highscoreEntry.time).Milliseconds > TimeSpan.Parse(time).Milliseconds)
+                TimeSpan.Parse(highscoreEntry.time).TotalSeconds > TimeSpan.Parse(time).TotalSeconds)
             {
                 if (_scoreEntryList[0] == highscoreEntry)
                 {
@@ -163,8 +166,8 @@ public class GameManager : MonoBehaviour
                 _scoreEntryList.Remove(highscoreEntry);
                 break;
             }
-            else if (highscoreEntry.playerName == playerName && TimeSpan.Parse(highscoreEntry.time).Milliseconds <=
-                     TimeSpan.Parse(time).Milliseconds)
+            else if (highscoreEntry.playerName == playerName && TimeSpan.Parse(highscoreEntry.time).TotalSeconds <=
+                     TimeSpan.Parse(time).TotalSeconds)
             {
                 return "";
             }
@@ -186,9 +189,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public String GetScores()
+    public string GetScores()
     {
-        StringBuilder sb = new StringBuilder();
+        if (scores != "") return scores;
+        var sb = new StringBuilder();
         sb.Append(String.Format("{0,-4} {1,-15} {2,-8} {3,-5} {4,-6}\n", "Rank", "Name",
             "time", "kills", "damage"));
         if (_scoreEntryList == null)
@@ -203,10 +207,9 @@ public class GameManager : MonoBehaviour
             playerName = "current", time = time, kills = kills,
             damageDone = damageDone, madeAt = DateTime.Now
         });
-        tmp.Sort(
-            (score1, score2) => TimeSpan.Parse(score1.time).Milliseconds - TimeSpan.Parse(score2.time).Milliseconds);
+        tmp.Sort((o1, o2) =>
+            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
 
-        print(tmp.Count);
         foreach (var entry in tmp)
         {
             int length = Math.Min(entry.playerName.Length, 10);
@@ -228,7 +231,8 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            string s = String.Format("{0,-4} {1,-15} {2,-8} {3,-5} {4,-6}\n", prefix, entry.playerName.Substring(0, length),
+            string s = String.Format("{0,-4} {1,-15} {2,-8} {3,-5} {4,-6}\n", prefix,
+                entry.playerName.Substring(0, length),
                 entry.time, entry.kills, entry.damageDone);
             sb.Append(s);
         }
@@ -239,7 +243,7 @@ public class GameManager : MonoBehaviour
     private void SortTimers()
     {
         _scoreEntryList.Sort((o1, o2) =>
-            (int)((TimeSpan.Parse(o1.time).Milliseconds - TimeSpan.Parse(o2.time).Milliseconds)) * 1000);
+            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
         while (_scoreEntryList.Count > 10) // nur die top 10 und keine doppelten einträge 
         {
             _scoreEntryList.RemoveRange(10, 1);
