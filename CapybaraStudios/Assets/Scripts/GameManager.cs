@@ -263,6 +263,15 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(highscores);
         PlayerPrefs.SetString(saveLocation, json);
         PlayerPrefs.Save();
+        ScoreEntry tmp = new ScoreEntry()
+        {
+            damageDone = damageDone, kills = kills, madeAt = DateTime.Now,
+            playerName = PlayerPrefs.GetString("CurrentName", "Player"), time = time
+        };
+
+        string json2 = JsonUtility.ToJson(tmp);
+        
+        //TODO, submit score to database
     }
 
 
