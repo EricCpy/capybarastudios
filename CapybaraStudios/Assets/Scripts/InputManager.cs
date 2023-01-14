@@ -27,6 +27,14 @@ public class InputManager : MonoBehaviour
         {
             playerInput.LoadBindingOverridesFromJson(rebinds);
         }
+        
+        playerInput.FindAction("LookAround")
+            .ApplyParameterOverride("scaleVector2:x",
+                (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
+            
+        playerInput.FindAction("LookAround")
+            .ApplyParameterOverride("scaleVector2:y",
+                (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
 
         walking = playerInput.Walking;
         shooting = playerInput.Shooting;

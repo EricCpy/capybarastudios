@@ -19,6 +19,8 @@ public class rocketEnter : Interactable
 
     protected override void Interact(GameObject player)
     {
+        FindObjectOfType<GameManager>().CompleteLevel();
         SceneManager.LoadScene(2);
+        
     }
 }

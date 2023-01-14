@@ -77,7 +77,7 @@ namespace SlimUI.ModernMenu
             //mouseSmoothSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MouseSmoothing");
             _inputActionAsset.FindAction("LookAround")
                 .ApplyParameterOverride("scaleVector2:x",
-                    (float)(0.1 * sensitivityXSlider.GetComponent<Slider>().value));
+                    (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
 
             // check full screen
             if (Screen.fullScreen == true)
@@ -283,6 +283,15 @@ namespace SlimUI.ModernMenu
         public void SensitivityXSlider()
         {
             PlayerPrefs.SetFloat("XSensitivity", sliderValueXSensitivity);
+            _inputActionAsset.FindAction("LookAround")
+                .ApplyParameterOverride("scaleVector2:x",
+                    (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
+            
+            _inputActionAsset.FindAction("LookAround")
+                .ApplyParameterOverride("scaleVector2:y",
+                    (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
+            var tmp = FindObjectOfType<InputManager>();
+            if(tmp) tmp.RebindKey();
         }
 
         public void SensitivityYSlider()
@@ -535,9 +544,9 @@ namespace SlimUI.ModernMenu
         public void initName()
         {
             string name = PlayerPrefs.GetString("CurrentName", "Player");
-            playerInputField.text = name;
-
+            if (playerInputField) playerInputField.text = name;
         }
+
         public void updateName()
         {
             PlayerPrefs.SetString("CurrentName", playerInputField.text);
