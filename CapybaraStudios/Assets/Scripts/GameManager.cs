@@ -34,10 +34,12 @@ public class GameManager : MonoBehaviour
     private List<ScoreEntry> _scoreEntryList;
     public static GameManager gameManager;
     public static string scores;
+    public static List<ScoreEntry> scorelist;
 
     private void Start()
     {
         scores = "";
+        scorelist = new List<ScoreEntry>();
         gameManager = this;
         _scoreEntryList = new List<ScoreEntry>();
         saveLocation = "timeTable" + SceneManager.GetActiveScene().name;
@@ -144,6 +146,7 @@ public class GameManager : MonoBehaviour
     public void CompleteLevel()
     {
         scores = GetScores();
+        scorelist = GetScore();
         registerScore();
     }
 
@@ -238,6 +241,21 @@ public class GameManager : MonoBehaviour
         }
 
         return sb.ToString();
+    }
+
+    public List<ScoreEntry> GetScore()
+    {
+        var tmp = new List<ScoreEntry>();
+        tmp.AddRange(_scoreEntryList);
+        tmp.Add(new ScoreEntry
+        {
+            playerName = "current", time = time, kills = kills,
+            damageDone = damageDone, madeAt = DateTime.Now
+        });
+        tmp.Sort((o1, o2) =>
+            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
+
+        return tmp;
     }
 
     private void SortTimers()

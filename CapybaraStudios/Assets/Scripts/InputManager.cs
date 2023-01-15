@@ -43,22 +43,25 @@ public class InputManager : MonoBehaviour
 
         gun = GetComponent<GunScript>();
         hud = GetComponentInChildren<HUDcontroller>();
+        if (gun)
+        {
+            
+            shooting.Special.started += ctx => gun.StartSpecial();
+            shooting.Special.canceled += ctx => gun.StopSpecial();
 
-        shooting.Special.started += ctx => gun.StartSpecial();
-        shooting.Special.canceled += ctx => gun.StopSpecial();
+            shooting.Shoot.started += ctx => gun.StartFiring();
+            shooting.Shoot.performed += ctx => gun.Shoot();
+            shooting.Shoot.canceled += ctx => gun.StopFiring();
 
-        shooting.Shoot.started += ctx => gun.StartFiring();
-        shooting.Shoot.performed += ctx => gun.Shoot();
-        shooting.Shoot.canceled += ctx => gun.StopFiring();
-
-        shooting.Reload.performed += ctx => gun.Reload();
+            shooting.Reload.performed += ctx => gun.Reload();  
+            shooting.Drop.performed += ctx => gun.EjectGun(); 
+        }
 
         shooting.EquipPrimary.performed += ctx => equip(0);
         shooting.EquipSecondary.performed += ctx => equip(1);
         shooting.EquipKnife.performed += ctx => equip(2);
         shooting.EquipUtility.performed += ctx => equip(3);
 
-        shooting.Drop.performed += ctx => gun.EjectGun();
 
         ui.Tab.started += ctx => hud.Tab();
         ui.Tab.canceled += ctx => hud.Tab();
