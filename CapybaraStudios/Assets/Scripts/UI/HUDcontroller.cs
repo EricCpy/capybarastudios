@@ -138,4 +138,16 @@ public class HUDcontroller : MonoBehaviour
     {
         PlayerPrefs.SetString("CurrentName", playerInputField.text);
     }
+
+    public void RestartLevel()
+    {
+        Resume();
+        GameManager.RestartLevel();
+    }
+
+    public void LoadLastCheckpoint()
+    {
+        Resume();
+        Respawn();
+    }
 }

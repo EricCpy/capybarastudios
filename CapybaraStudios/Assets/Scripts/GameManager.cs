@@ -35,9 +35,11 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     public static string scores;
     public static List<ScoreEntry> scorelist;
+    private static string levelName;
 
     private void Start()
     {
+        levelName = SceneManager.GetActiveScene().name;
         scores = "";
         scorelist = new List<ScoreEntry>();
         gameManager = this;
@@ -111,8 +113,15 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
+        Time.timeScale = 1;
         Destroy(currentPlayer);
         SpawnPlayer();
+    }
+
+    public static void RestartLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(levelName);
     }
 
     public void SpawnPlayer()
