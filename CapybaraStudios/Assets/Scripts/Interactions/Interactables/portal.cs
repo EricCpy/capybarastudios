@@ -18,6 +18,7 @@ public class portal : MonoBehaviour
         {
             FindObjectOfType<GameManager>().teleport();
         }
+        GameManager.gameManager.changeRespawn(teleportTarget);
         thePlayer.transform.position = teleportTarget.transform.position;
     }
 }
