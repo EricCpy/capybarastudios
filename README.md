@@ -22,7 +22,7 @@ Unity Version
    - [ ] Namen
 
 - [ ] Menüs
-  - [ ] Namen ändern in Settings
+  - [x] Namen ändern in Settings
   - [ ] alle Optionen im Menü funktionieren
     - [x] Soundmanager
     - [x] Controls 
