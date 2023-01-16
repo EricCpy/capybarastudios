@@ -1876,7 +1876,9 @@ MonoBehaviour:
   deathMenuUI: {fileID: 5889874337517590008}
   gameUI: {fileID: 7674237330079625665}
   tabMenuUI: {fileID: 1999342161441719979}
+  settingsMenuUI: {fileID: 0}
   _input: {fileID: 0}
+  playerInputField: {fileID: 0}
 --- !u!1 &1585835209775849828
 GameObject:
   m_ObjectHideFlags: 0

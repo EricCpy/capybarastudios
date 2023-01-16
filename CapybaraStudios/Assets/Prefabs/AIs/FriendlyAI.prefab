@@ -262,6 +262,7 @@ MonoBehaviour:
   healthIndicator: {fileID: 0}
   damage_done: 0
   kills: 0
+  dead: 0
   blinkDuration: 0.1
   blinkIntensity: 4
   volume: {fileID: 0}

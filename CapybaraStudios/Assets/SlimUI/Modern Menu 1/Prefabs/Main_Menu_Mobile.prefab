@@ -10972,10 +10972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad149d53679afc04782ee02fa3e008d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMusicOne: {fileID: 0}
-  gameMusicTwo: {fileID: 0}
-  gameMusicOneIntense: {fileID: 0}
-  gameMusicTwoIntense: {fileID: 0}
+  audioMixer: {fileID: 0}
 --- !u!114 &4190065533394332608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14243,6 +14240,8 @@ MonoBehaviour:
   sensitivityXSlider: {fileID: 1097090015846844}
   sensitivityYSlider: {fileID: 1704898516236934}
   mouseSmoothSlider: {fileID: 1195748219516434}
+  _inputActionAsset: {fileID: 0}
+  playerInputField: {fileID: 0}
 --- !u!1 &1416812192481594
 GameObject:
   m_ObjectHideFlags: 0
