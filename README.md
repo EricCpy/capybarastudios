@@ -9,11 +9,11 @@ Unity Version
   - [x] movement
   - [x] kamera
   - [x] Players sollen unterschiedliche Farben haben
+  - [x] Name aus Menü soll über dem Kopf angezeigt werden
   - [ ] rocketlauncher
   - [ ] dmg
   - [ ] dying
   - [ ] respawning
-  - [ ] Name aus Menü soll über dem Kopf angezeigt werden
   - [ ] TabMenü für den Multiplayer
   - [ ] Sounds
   - [ ] connect to lobby by code with relay
