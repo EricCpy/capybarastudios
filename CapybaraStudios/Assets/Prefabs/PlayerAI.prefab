@@ -101,6 +101,7 @@ MonoBehaviour:
   healthIndicator: {fileID: 0}
   damage_done: 0
   kills: 0
+  dead: 0
   blinkDuration: 0.1
   blinkIntensity: 4
   volume: {fileID: 0}
@@ -645,7 +646,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8281245293658686659
 MonoBehaviour:
   m_ObjectHideFlags: 0
