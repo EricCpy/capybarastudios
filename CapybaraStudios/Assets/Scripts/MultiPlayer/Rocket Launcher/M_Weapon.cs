@@ -7,31 +7,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class WeaponMultiplayer : Interactable
+public class M_Weapon : Interactable
 {
-
     private Transform _transform;
 
     //sounds
     public AudioSource gunSound;
     public AudioSource reloadSound;
     public AudioSource pickupSound;
-    public AudioSource scopeSound;
 
     //Gun stats
-    public int damage;
-
-    public float initialSpread,
-        reloadTime,
-        fireRate,
-        timeBetweenShooting;
-        
-
-    public bool singleReload;
-    private float singleReloadTime;
-
-    public int maxAmmo, magazineSize, bulletsPerTap;
-    public bool hasAmmo, rapidFireEnabled;
+    public float reloadTime, timeBetweenShooting;
+    public int maxAmmo, magazineSize;
+    public bool hasAmmo;
     [HideInInspector] public int bulletsLeft, bulletsShot;
     bool reloading, readyToShoot;
     private float reloadStatus = 1;
@@ -55,20 +43,14 @@ public class WeaponMultiplayer : Interactable
     // 2 ist für sniper
     // 3 ist für rocket launcher
 
-    //Bullet Trail
     public Transform BulletFirePoint;
-    public TrailRenderer BulletTrail;
-    public float zoom = 1f;
     private bool _ai;
 
     private void Awake()
     {
-        singleReloadTime = reloadTime / ((float)magazineSize / bulletsPerTap);
         bulletsLeft = magazineSize;
         readyToShoot = true;
-        bulletsShot = bulletsPerTap;
-        rapidFireWait = new WaitForSeconds(1 / fireRate);
-        message = "Pick up [E]";
+        message = "Pick up [E] Rocket Launcher";
     }
 
     public void init(Animator animatior, Transform transform, TextMeshProUGUI ammoText, TextMeshProUGUI maxAmmoText,
@@ -96,7 +78,7 @@ public class WeaponMultiplayer : Interactable
 
     public void Shoot(bool first)
     {
-        if (singleReload && reloading)
+        if (reloading)
         {
             cancelReload();
             readyToShoot = false;
@@ -109,7 +91,7 @@ public class WeaponMultiplayer : Interactable
         if (_animator != null) _animator.SetTrigger("shoot");
         readyToShoot = false;
 
-
+        
         //rocket launcher
         Launcher launcher = GetComponent<Launcher>();
         launcher.Launch();
@@ -120,8 +102,6 @@ public class WeaponMultiplayer : Interactable
         impactReceiver.AddImpact(dir, force);
         //
 
-
-        //EventManager.Shot(ray.origin, hit_, transform.root);
 
         //magazine
         bulletsLeft--;
@@ -136,33 +116,12 @@ public class WeaponMultiplayer : Interactable
         }
 
         Invoke("ResetShot", timeBetweenShooting);
-
-        bulletsShot = bulletsPerTap;
     }
 
     //shoot cooldown
     private void ResetShot()
     {
         readyToShoot = true;
-    }
-
-    //rapid fire
-    public IEnumerator RapidFire()
-    {
-        var shooter = transform.root;
-        if (rapidFireEnabled)
-        {
-            while (transform.root == shooter)
-            {
-                Shoot(false);
-                yield return rapidFireWait;
-            }
-        }
-        /*else
-        {
-            Shoot(true);
-            yield return null;
-        }*/
     }
 
     //reload
@@ -172,38 +131,9 @@ public class WeaponMultiplayer : Interactable
 
         reloading = true;
         readyToShoot = true;
-
-        if (singleReload)
-        {
-            reloadStatus = (float)bulletsLeft / (float)magazineSize;
-            StartCoroutine(ReloadSingle());
-        }
-        else
-        {
-            reloadSound.Play();
-            reloadStatus = 0;
-            Invoke("ReloadFinished", reloadTime);
-        }
-    }
-
-    private IEnumerator ReloadSingle()
-    {
-        while (reloading && maxAmmo > 0 && bulletsLeft < magazineSize)
-        {
-            reloadSound.Play();
-            yield return new WaitForSeconds(singleReloadTime);
-            if (!reloading)
-            {
-                break;
-            }
-
-            bulletsLeft += bulletsPerTap;
-            maxAmmo -= bulletsPerTap;
-            ShowAmmo();
-        }
-
-        pickupSound.Play();
-        reloading = false;
+        reloadSound.Play();
+        reloadStatus = 0;
+        Invoke("ReloadFinished", reloadTime);
     }
 
     private void ReloadFinished()
@@ -214,7 +144,7 @@ public class WeaponMultiplayer : Interactable
         }
 
         pickupSound.Play();
-        //currentSpread = initialSpread;
+
         if ((maxAmmo + bulletsLeft) < magazineSize)
         {
             bulletsLeft = maxAmmo + bulletsLeft;
@@ -241,32 +171,12 @@ public class WeaponMultiplayer : Interactable
         }
         else
         {
-            _ammoText.SetText((bulletsLeft / bulletsPerTap) + " / " + (magazineSize / bulletsPerTap));
+            _ammoText.SetText((bulletsLeft) + " / " + (magazineSize));
             if (maxAmmo > 0)
-                _maxAmmoText.SetText((maxAmmo / bulletsPerTap).ToString());
+                _maxAmmoText.SetText((maxAmmo).ToString());
             else
                 _maxAmmoText.SetText("0");
         }
-    }
-
-    //Trail
-    public IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
-    {
-        float time = 0;
-        Vector3 start = trail.transform.position;
-
-        while (time < 1)
-        {
-            //interpolate between 2 points
-            trail.transform.position = Vector3.Lerp(start, hit.point, time);
-            time += Time.deltaTime / trail.time;
-
-            yield return null;
-        }
-
-        trail.transform.position = hit.point;
-
-        Destroy(trail.gameObject, trail.time);
     }
 
     public float getReloadStatus()
@@ -285,6 +195,5 @@ public class WeaponMultiplayer : Interactable
         readyToShoot = true;
         reloadStatus = 1;
         CancelInvoke("ReloadFinished");
-        StopCoroutine("ReloadSingle");
     }
 }

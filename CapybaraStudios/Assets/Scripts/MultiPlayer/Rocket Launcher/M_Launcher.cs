@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Launcher : MonoBehaviour
+public class M_Launcher : MonoBehaviour
 {
     public Transform firePoint;
     public Rigidbody rocket;
 
-    public float knockbackForce = 200f;
+    public float knockbackForce = 100f;
 
     public float range = 100f;
 
