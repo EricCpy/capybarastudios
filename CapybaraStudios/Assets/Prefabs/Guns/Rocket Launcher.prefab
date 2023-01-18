@@ -112,8 +112,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3757476, y: 0.3962075, z: 2.2295046}
-  m_Center: {x: 0.04530111, y: 0.020123482, z: 0.3495486}
+  m_Size: {x: 0.55939424, y: 0.57132524, z: 2.3060582}
+  m_Center: {x: 0.03764361, y: 0.007332891, z: 0.34296837}
 --- !u!114 &1773712428791679090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1773712427696635919}
-  rocket: {fileID: 1559698944973560897, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
+  rocket: {fileID: 5792868719729086648, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
   knockbackForce: 200
-  range: 50
+  range: 30
 --- !u!54 &1773712428791678989
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -18,7 +18,6 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-            Debug.Log("Collision");
             Explode();
     }
 
