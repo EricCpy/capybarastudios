@@ -103,20 +103,33 @@
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >        - Objects
 >           - Interactions
+>           - Tooltips
 >        - Weapons
 >           - Weaponsystem for Hitscan-Weapons
+>             - automatisches Schießen
+>             - Schadensabfall
+>             - Nachladen
+>             - Collisions
+>             - Mehrfachschuss
+>             - Cooldowns
+>           - Hitmarker
+>           - Einschusslöcher
+>           - Schadensverteilung
 >           - Particles
 >           - Input
 >           - Balancing
 >           - Rocketlauncher
 >           - Turret
 >           - Grenadelauncher
+>           - Rückstoßsystem
 >       - Player
 >           - HUD
+>           - Steuerung
 >       - Camera
 >           - Basics
 >       - Movement
 >           - Basics
+>       - Bugfixes
 
 ## __Erdenay K. &emsp; *Environment- and Leveldesigner*__
 
