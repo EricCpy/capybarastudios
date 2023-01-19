@@ -52,7 +52,10 @@ public class MultiPlayerMovement : NetworkBehaviour
     public Transform torso;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        if(!IsOwner) {
+            Destroy(_input);
+        }
         controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
         _isCrouchingHash = Animator.StringToHash("isCrouched");

@@ -113,9 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b71f31912792db418edbb8f9284040d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionSound: {fileID: 3472871397590428550}
   force: 100
   radius: 10
-  explosionSound: {fileID: 3472871397590428550}
 --- !u!54 &5792868719729086648
 Rigidbody:
   m_ObjectHideFlags: 0
