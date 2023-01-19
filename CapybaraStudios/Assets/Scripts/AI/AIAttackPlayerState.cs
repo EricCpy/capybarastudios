@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AIAttackPlayerState : AIState
 {
-    private Vector3 oldPlayerPos = Vector3.zero;
     private float currentTime = 0f; 
     private Quaternion currRotation;
     private Quaternion lookRotation;
@@ -49,7 +48,6 @@ public class AIAttackPlayerState : AIState
             Vector3 targetDir = agent.target.position - agent.transform.position;
             if(Vector3.Angle(agent.target.position, agent.transform.position) > 20f) agent.weapons.SetFiring(false);
             lookRotation = Quaternion.LookRotation(targetDir);
-            oldPlayerPos = agent.target.position;
         }
 
         //wenn player out of range geht, dann wechsle zum chase modus
