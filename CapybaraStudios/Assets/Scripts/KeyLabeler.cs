@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,12 +8,18 @@ public class KeyLabeler : MonoBehaviour
     [SerializeField] private InputActionReference action;
     [SerializeField] private GameObject waitingForInputObject;
     [SerializeField] private int index;
+    [SerializeField] private bool changeable = true;
     private TMP_Text _bindingDisplayNameText;
     private InputActionRebindingExtensions.RebindingOperation _rebindingOperation;
 
     private void Start()
     {
         _bindingDisplayNameText = GetComponentInChildren<TMP_Text>();
+        Label();
+    }
+
+    private void OnEnable()
+    {
         Label();
     }
 
@@ -23,6 +30,10 @@ public class KeyLabeler : MonoBehaviour
 
     public void StartRebinding()
     {
+        if (!changeable)
+        {
+            return;
+        }
         waitingForInputObject.SetActive(true);
         KeyMapper.playerInput.FindAction(action.name).Disable();
         _rebindingOperation = KeyMapper.playerInput.FindAction(action.name).PerformInteractiveRebinding(index)

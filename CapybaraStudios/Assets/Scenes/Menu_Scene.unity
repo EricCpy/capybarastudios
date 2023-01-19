@@ -219,6 +219,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 1
+  changeable: 1
 --- !u!1 &88032126 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 352906832806405946, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
@@ -239,6 +240,7 @@ MonoBehaviour:
   action: {fileID: -7501039610504296802, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!1 &224482925
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +797,7 @@ MonoBehaviour:
   action: {fileID: 6866794936900250994, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!1 &339512553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,6 +1391,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 2
+  changeable: 1
 --- !u!1 &452019886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,6 +2700,7 @@ MonoBehaviour:
   action: {fileID: -1615043304420335981, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 0
 --- !u!1 &841078734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,7 +2844,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 841078738}
   m_maskType: 0
 --- !u!23 &841078738
@@ -2904,6 +2909,7 @@ MonoBehaviour:
   action: {fileID: -7952785038415953332, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!1 &876586950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,6 +3005,7 @@ MonoBehaviour:
   action: {fileID: -8803115428811126137, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 0
 --- !u!1 &919867008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3241,6 +3248,7 @@ MonoBehaviour:
   action: {fileID: 609517206899869812, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 0
 --- !u!114 &987665067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3981,6 +3989,7 @@ MonoBehaviour:
   action: {fileID: 3350590068018286694, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!114 &1111678142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4513,6 +4522,7 @@ MonoBehaviour:
   action: {fileID: 6411862093397396869, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 0
 --- !u!1 &1298646778
 GameObject:
   m_ObjectHideFlags: 0
@@ -4948,6 +4958,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 4
+  changeable: 1
 --- !u!1 &1423786123
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,6 +5541,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 3
+  changeable: 1
 --- !u!1 &1783446725 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 352030351004282082, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
@@ -5550,6 +5562,7 @@ MonoBehaviour:
   action: {fileID: 4674274675683616539, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!1 &1853292752
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,7 +6647,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2049595976}
   m_maskType: 0
 --- !u!23 &2049595976
@@ -6737,6 +6750,7 @@ MonoBehaviour:
   action: {fileID: -2889636133254346937, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 1056853155}
   index: 0
+  changeable: 1
 --- !u!114 &2082756851
 MonoBehaviour:
   m_ObjectHideFlags: 0
