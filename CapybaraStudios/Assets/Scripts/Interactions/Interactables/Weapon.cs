@@ -84,7 +84,7 @@ public class Weapon : Interactable
         readyToShoot = true;
         bulletsShot = bulletsPerTap;
         rapidFireWait = new WaitForSeconds(1 / fireRate);
-        message = "Pick up [E]";
+        message = "Pick up";
     }
 
     public void init(Animator animatior, Transform transform, TextMeshProUGUI ammoText, TextMeshProUGUI maxAmmoText,

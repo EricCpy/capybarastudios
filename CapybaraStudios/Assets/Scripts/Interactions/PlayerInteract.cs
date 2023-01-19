@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -33,7 +34,9 @@ public class PlayerInteract : MonoBehaviour
         //get interactable as variable
         Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
         //update tooltip text
-        playerUI.UpdateText(interactable.message);
+        var key = InputControlPath.ToHumanReadableString(inputManager.playerInput.FindAction("Interact").bindings[0].effectivePath,
+            InputControlPath.HumanReadableStringOptions.OmitDevice).ToUpper();
+        playerUI.UpdateText("["+key+"] "+interactable.message);
         //on E press
         if (inputManager.walking.Interact.triggered)
         {
