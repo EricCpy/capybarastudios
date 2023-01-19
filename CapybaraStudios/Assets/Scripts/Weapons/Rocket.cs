@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rocket : MonoBehaviour
@@ -19,13 +20,17 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        explosionSound.Play();
         Explode();
     }
 
     private void Explode()
     {
-        
+        if (explosionSound)
+        {
+            var sound = Instantiate(explosionSound); 
+            sound.Play();
+            explosionSound = null;
+        }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider collision in colliders)
@@ -49,6 +54,7 @@ public class Rocket : MonoBehaviour
             
         }
         //Instantiate(explosionEffect, transform.position, transform.rotation);
+        
         Destroy(gameObject);
     }
 }
