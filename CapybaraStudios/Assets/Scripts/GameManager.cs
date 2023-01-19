@@ -37,10 +37,12 @@ public class GameManager : MonoBehaviour
     public static string scores;
     public static List<ScoreEntry> scorelist;
     private static string levelName;
+    private int sceneIndex;
 
     private void Start()
     {
         levelName = SceneManager.GetActiveScene().name;
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
         scores = "";
         scorelist = new List<ScoreEntry>();
         gameManager = this;
@@ -52,7 +54,13 @@ public class GameManager : MonoBehaviour
             _scoreEntryList = JsonUtility.FromJson<Scores>(json).scores;
         }
 
-        themeOne.Play();
+        if (sceneIndex == 1) {
+            themeOne.Play();
+        }
+        if(sceneIndex == 3) {
+            dungeon.Play();
+        }
+        
 
         _dummy = dummy;
 
