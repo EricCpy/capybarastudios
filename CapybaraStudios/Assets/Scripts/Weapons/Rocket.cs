@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    public AudioSource explosionSound;
     //public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
-
+    
     Rigidbody rig;
 
     // Start is called before the first frame update
@@ -16,17 +17,20 @@ public class Rocket : MonoBehaviour
         rig = GetComponent<Rigidbody>();
     }
 
-    private void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
-            Explode();
+        explosionSound.Play();
+        Explode();
     }
 
     private void Explode()
     {
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider collision in colliders)
         {
+
             //knockback
             Rigidbody rigb = collision.GetComponent<Rigidbody>();
 

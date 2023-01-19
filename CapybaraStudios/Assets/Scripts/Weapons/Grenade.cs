@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
+    public AudioSource impactSound;
+    public AudioSource explosionSound;
+
     //public GameObject explosionEffect;
     public float delay = 1f;
     public float force = 10f;
@@ -18,8 +21,17 @@ public class Grenade : MonoBehaviour
         Invoke("Explode", delay);
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        impactSound.Play();
+    }
+
     private void Explode()
     {
+        if(!explosionSound.isPlaying) {
+            explosionSound.Play();
+        }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider collision in colliders)
