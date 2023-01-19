@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1773712427696635919}
   rocket: {fileID: 5792868719729086648, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
-  knockbackForce: 500
+  knockbackForce: 300
   range: 40
 --- !u!54 &1773712428791678989
 Rigidbody:

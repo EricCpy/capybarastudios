@@ -142,7 +142,7 @@ MonoBehaviour:
   distanceModifier: 0
   damageFalloffStart: 0
   singleReload: 0
-  maxAmmo: 10
+  maxAmmo: 15
   magazineSize: 3
   bulletsPerTap: 1
   hasAmmo: 1
