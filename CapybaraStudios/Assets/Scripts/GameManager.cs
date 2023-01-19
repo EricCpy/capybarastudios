@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     public static List<ScoreEntry> scorelist;
     private static string levelName;
     private int sceneIndex;
+    public static string url = "http://127.0.0.1:8000/leaderboard/api/"; // change this for leaderboard submission
 
     private void Start()
     {
@@ -54,13 +56,16 @@ public class GameManager : MonoBehaviour
             _scoreEntryList = JsonUtility.FromJson<Scores>(json).scores;
         }
 
-        if (sceneIndex == 1) {
+        if (sceneIndex == 1)
+        {
             themeOne.Play();
         }
-        if(sceneIndex == 3) {
+
+        if (sceneIndex == 3)
+        {
             dungeon.Play();
         }
-        
+
 
         _dummy = dummy;
 
@@ -302,12 +307,33 @@ public class GameManager : MonoBehaviour
         ScoreEntry tmp = new ScoreEntry()
         {
             damageDone = damageDone, kills = kills, madeAt = DateTime.Now,
-            playerName = PlayerPrefs.GetString("CurrentName", "Player"), time = time
+            playerName = PlayerPrefs.GetString("CurrentName", "Player"), time = time,
+            map = SceneManager.GetActiveScene().name
         };
 
         string json2 = JsonUtility.ToJson(tmp);
-        
+        Upload(json2);
         //TODO, submit score to database
+    }
+
+    IEnumerator Upload(string json)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("data", json);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(url, json))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("data upload complete!");
+            }
+        }
     }
 
 
@@ -324,5 +350,6 @@ public class GameManager : MonoBehaviour
         public int damageDone;
         public string playerName;
         public DateTime madeAt;
+        public string map;
     }
 }
