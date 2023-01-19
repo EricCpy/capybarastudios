@@ -7,6 +7,7 @@ public class AIIdleState : AIState
     private float healTimer = 0f;
     public void Enter(AIAgent agent)
     {
+        agent.agent.stoppingDistance = 0f;
     }
 
     public void Exit(AIAgent agent)
@@ -27,13 +28,11 @@ public class AIIdleState : AIState
         }
         
         if(agent.config.aIBehaviour == AIBehaviour.Dummy) return;
-
-        if(!agent.agent.hasPath) {
+        if(!agent.agent.hasPath && agent.config.aIBehaviour != AIBehaviour.Attack) {
             if (!agent.agent.isOnNavMesh) return;
-            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(1,100f), UnityEngine.Random.Range(0, 0.39f), UnityEngine.Random.Range(1,100f)));
+            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(1,10f), UnityEngine.Random.Range(0, 0.39f), UnityEngine.Random.Range(1,10f)));
         }
-
-        if(agent.config.aIBehaviour != AIBehaviour.Aggressiv) return;
+        if(agent.config.aIBehaviour != AIBehaviour.Aggressiv && agent.config.aIBehaviour != AIBehaviour.Attack) return;
 
         float dist = (agent.player.position - agent.transform.position).sqrMagnitude;
         if(dist <= agent.config.minSightDistance * agent.config.minSightDistance

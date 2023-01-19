@@ -7,7 +7,8 @@ public enum AIBehaviour
    Dummy,
    Friendly,
    Passiv,
-   Aggressiv     
+   Aggressiv,
+   Attack
 }
 
 [CreateAssetMenu()]

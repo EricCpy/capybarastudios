@@ -23,6 +23,7 @@ public class AIFindWeaponState : AIState
 
     public void Update(AIAgent agent)
     {
+        Debug.Log(agent.weapons.HasWeapon());
         if(agent.weapons.HasWeapon()) {
             agent.stateMachine.ChangeState(AIStateId.Idle);
         }
@@ -33,7 +34,7 @@ public class AIFindWeaponState : AIState
         //walk random
         if(!agent.agent.hasPath) {
             if (!agent.agent.isOnNavMesh) return;
-            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(1f,100f), UnityEngine.Random.Range(0, 0.39f), UnityEngine.Random.Range(1,100f)));
+            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(1f,10f), UnityEngine.Random.Range(0, 0.39f), UnityEngine.Random.Range(1,10f)));
         }
     }
 
