@@ -5,40 +5,68 @@ using UnityEngine.InputSystem;
 
 public class M_InputManager : MonoBehaviour
 {
-    public Vector2 MoveInput { get; private set; }
+   public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool JumpInput { get; private set; } = false;
     public bool SprintInput { get; private set; } = false;
     public bool CrouchInput { get; private set; } = false;
 
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
     public PlayerInput.WalkingActions walking;
     public PlayerInput.ShootingActions shooting;
-
-    private PlayerMovement movement;
-    //private GunScript gun;
+    public PlayerInput.UIActions ui;
+    public PlayerInput.GeneralActions general;
+    private GunScript gun;
+    private M_HUDcontroller hud;
     void Awake()
     {
         playerInput = new PlayerInput();
+        var rebinds = PlayerPrefs.GetString("rebinds", string.Empty);
+
+        if (!string.IsNullOrEmpty(rebinds))
+        {
+            playerInput.LoadBindingOverridesFromJson(rebinds);
+        }
+        
+        playerInput.FindAction("LookAround")
+            .ApplyParameterOverride("scaleVector2:x",
+                (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
+            
+        playerInput.FindAction("LookAround")
+            .ApplyParameterOverride("scaleVector2:y",
+                (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
+
         walking = playerInput.Walking;
-        /*shooting = playerInput.Shooting;
-        gun = GetComponent<GunScript>();
+        shooting = playerInput.Shooting;
+        ui = playerInput.UI;
+        general = playerInput.General;
 
-        shooting.Special.started += ctx => gun.StartSpecial();
-        shooting.Special.canceled += ctx => gun.StopSpecial();
+        hud = GetComponentInChildren<M_HUDcontroller>();
+        /*gun = GetComponent<GunScript>();
+        
+        if (gun)
+        {
+            
+            shooting.Special.started += ctx => gun.StartSpecial();
+            shooting.Special.canceled += ctx => gun.StopSpecial();
 
-        shooting.Shoot.started += ctx => gun.StartFiring();
-        shooting.Shoot.performed += ctx => gun.Shoot();
-        shooting.Shoot.canceled += ctx => gun.StopFiring();
+            shooting.Shoot.started += ctx => gun.StartFiring();
+            shooting.Shoot.performed += ctx => gun.Shoot();
+            shooting.Shoot.canceled += ctx => gun.StopFiring();
 
-        shooting.Reload.performed += ctx => gun.Reload();
+            shooting.Reload.performed += ctx => gun.Reload();  
+            shooting.Drop.performed += ctx => gun.EjectGun(); 
+        }
 
         shooting.EquipPrimary.performed += ctx => equip(0);
         shooting.EquipSecondary.performed += ctx => equip(1);
         shooting.EquipKnife.performed += ctx => equip(2);
-        shooting.EquipUtility.performed += ctx => equip(3);
+        shooting.EquipUtility.performed += ctx => equip(3);*/
 
-        shooting.Drop.performed += ctx => gun.EjectGun();*/
+
+        ui.Tab.started += ctx => hud.Tab();
+        ui.Tab.canceled += ctx => hud.Tab();
+        ui.Pause.performed += ctx => Pause();
     }
 
     private void OnEnable()
@@ -59,7 +87,8 @@ public class M_InputManager : MonoBehaviour
         walking.Jump.canceled += SetJump;
 
         walking.Enable();
-        //shooting.Enable();
+        shooting.Enable();
+        ui.Enable();
     }
 
     private void OnDisable()
@@ -80,7 +109,17 @@ public class M_InputManager : MonoBehaviour
         walking.Jump.canceled -= SetJump;
 
         walking.Disable();
-        //shooting.Disable();
+        shooting.Disable();
+        ui.Disable();
+    }
+
+    private void Pause() {
+        if(!general.enabled)
+        hud.DoPause();
+    }
+
+    public void Resume() {
+        general.Disable();
     }
 
     private void SetMove(InputAction.CallbackContext ctx)
@@ -108,8 +147,14 @@ public class M_InputManager : MonoBehaviour
         SprintInput = ctx.started;
     }
 
-    /*private void equip(int index)
+    public void RebindKey()
     {
-        gun.EquipWeapon(index);
-    }*/
+        ui.Tab.started -= ctx => hud.Tab();
+        ui.Tab.canceled -= ctx => hud.Tab();
+        ui.Pause.performed -= ctx => Pause();
+        OnDisable();
+        
+        Awake();
+        OnEnable();
+    }
 }
