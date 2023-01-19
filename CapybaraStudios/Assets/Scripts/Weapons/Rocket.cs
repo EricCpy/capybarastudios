@@ -6,7 +6,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     public AudioSource explosionSound;
-    //public GameObject explosionEffect;
+    public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
     
@@ -53,7 +53,7 @@ public class Rocket : MonoBehaviour
             }
             
         }
-        //Instantiate(explosionEffect, transform.position, transform.rotation);
+        Instantiate(explosionEffect, transform.position, transform.rotation);
         
         Destroy(gameObject);
     }
