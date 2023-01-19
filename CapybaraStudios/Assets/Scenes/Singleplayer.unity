@@ -5262,7 +5262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1229445084}
-  portalSound: {fileID: 0}
+  portalSound: {fileID: 8952194282656303234, guid: fb69e61e681c7cc4b9b90f9ac9a4d78a, type: 3}
   changeMusic: 0
 --- !u!4 &262574144 stripped
 Transform:
@@ -32727,7 +32727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1318572174}
-  portalSound: {fileID: 0}
+  portalSound: {fileID: 8952194282656303234, guid: fb69e61e681c7cc4b9b90f9ac9a4d78a, type: 3}
   changeMusic: 1
 --- !u!1001 &1536590097
 PrefabInstance:

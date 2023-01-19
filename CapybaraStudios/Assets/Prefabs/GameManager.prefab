@@ -53,6 +53,7 @@ MonoBehaviour:
   themeTwo: {fileID: 1587259811095685768}
   themeOneIntense: {fileID: 348478150030522839}
   themeTwoIntense: {fileID: 4867310876709599579}
+  dungeon: {fileID: 6223492772368659730}
 --- !u!1 &999593160858187507
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +118,7 @@ Transform:
   - {fileID: 3679047529841393233}
   - {fileID: 4644031185470142474}
   - {fileID: 3994039609676382812}
+  - {fileID: 8510397422617257630}
   m_Father: {fileID: 999593160845776899}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -248,6 +250,73 @@ Transform:
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6944199595036777643, guid: d919d603295476f4c9afc5753126a820, type: 3}
   m_PrefabInstance: {fileID: 2581382586307683824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5635019965311523541
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 976937241280291995}
+    m_Modifications:
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301973791214747083, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+      propertyPath: m_Name
+      value: dungeon_base
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+--- !u!82 &6223492772368659730 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1760297768420519879, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+  m_PrefabInstance: {fileID: 5635019965311523541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8510397422617257630 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4046657507767155787, guid: 1c005270557c2b8469d4d31c53d68f43, type: 3}
+  m_PrefabInstance: {fileID: 5635019965311523541}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5880513770060656273
 PrefabInstance:

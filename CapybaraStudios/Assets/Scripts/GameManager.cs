@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public AudioSource themeTwo;
     public AudioSource themeOneIntense;
     public AudioSource themeTwoIntense;
+    public AudioSource dungeon;
     private PlayerStats playerStats;
     private string saveLocation;
     private List<ScoreEntry> _scoreEntryList;
