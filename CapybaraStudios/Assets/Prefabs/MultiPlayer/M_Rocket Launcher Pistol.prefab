@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2876530745694690554}
-  - component: {fileID: 2876530745694690552}
-  - component: {fileID: 4724254171869501255}
+  - component: {fileID: 5995680402031463313}
+  - component: {fileID: 7339504405806240379}
   m_Layer: 6
   m_Name: M_Rocket Launcher Pistol
   m_TagString: Weapon
@@ -37,53 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2876530745694690552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2876530745694690438}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327d8bc115bf4ce44b75e83839f97851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  message: 
-  cooldownTime: 1
-  gunSound: {fileID: 1456899809692883669}
-  reloadSound: {fileID: 5333592699352898933}
-  pickupSound: {fileID: 7853681007260589735}
-  scopeSound: {fileID: 0}
-  damage: 0
-  initialSpread: 0
-  maxSpread: 0
-  range: 1000
-  reloadTime: 2
-  fireRate: 1
-  timeBetweenShooting: 1
-  distanceModifier: 0
-  damageFalloffStart: 0
-  singleReload: 0
-  maxAmmo: 10
-  magazineSize: 1
-  bulletsPerTap: 1
-  hasAmmo: 1
-  rapidFireEnabled: 0
-  bulletsLeft: 0
-  bulletsShot: 0
-  bulletHoleGraphic: {fileID: 7478510997650025130, guid: 926fdc7652ddfa84b84f91293fdabd3f, type: 3}
-  SniperHUD: {fileID: 0}
-  weaponSlot: 1
-  animationType: 1
-  spreadIncrease: 0.001
-  spreadDecrease: 0.01
-  currentSpread: 0
-  specialWeaponType: 3
-  BulletFirePoint: {fileID: 2876530746787370117}
-  BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
-  zoom: 0.2
---- !u!114 &4724254171869501255
+--- !u!114 &5995680402031463313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,13 +46,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 2876530745694690438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f86e9d63324c634680d1e5c34acd2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 735ffd0d96e1a274d8a8583d225cdcdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 2876530746787370117}
-  rocket: {fileID: 5792868719729086648, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
-  knockbackForce: 500
-  range: 40
+  rocket: {fileID: 5792868719729086648, guid: 8eaf7defa59f66c4f894a24a3457df4b, type: 3}
+  knockbackForce: 100
+  range: 100
+--- !u!114 &7339504405806240379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2876530745694690438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b40750a815f0dd459a2a4a083055c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: 
+  cooldownTime: 0
+  gunSound: {fileID: 1456899809692883669}
+  reloadSound: {fileID: 5333592699352898933}
+  pickupSound: {fileID: 7853681007260589735}
+  reloadTime: 0
+  timeBetweenShooting: 0
+  maxAmmo: 0
+  magazineSize: 0
+  hasAmmo: 0
+  bulletsLeft: 0
+  bulletsShot: 0
+  weaponSlot: 0
+  animationType: 0
+  specialWeaponType: 0
+  BulletFirePoint: {fileID: 0}
 --- !u!1 &2876530746529239937
 GameObject:
   m_ObjectHideFlags: 0

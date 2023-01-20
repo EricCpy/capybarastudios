@@ -50,18 +50,15 @@ public class M_Weapon : Interactable
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
-        message = "Pick up [E] Rocket Launcher";
     }
 
     public void init(Animator animatior, Transform transform, TextMeshProUGUI ammoText, TextMeshProUGUI maxAmmoText,
-        GameObject hitmarker, float inaccuracy = 1f, bool ai = false)
+        GameObject hitmarker)
     {
         _animator = animatior;
         _transform = transform;
         _ammoText = ammoText;
         _maxAmmoText = maxAmmoText;
-        _inaccuracy = inaccuracy;
-        _ai = ai;
     }
 
     private void Update()
