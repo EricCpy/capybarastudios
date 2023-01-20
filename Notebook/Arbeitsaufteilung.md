@@ -92,7 +92,6 @@
 >           - Standing Turret
 >           - Healstation
 >           - Grenadelauncher
->           - Bowlingball Weapon
 >       - Player
 >           - Model
 >       - AI
