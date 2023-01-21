@@ -9,7 +9,7 @@ public class M_Rocket : NetworkBehaviour
     public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
-    
+    public float impactforce = 400f;
     Rigidbody rig;
 
     // Start is called before the first frame update
@@ -20,18 +20,17 @@ public class M_Rocket : NetworkBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Explode();
+        Explode(other.transform.position);
     }
 
-    private void Explode()
+    private void Explode(Vector3 point)
     {
         if (explosionSound)
         {
             if(IsServer) PlayExplosion();
-            else PlayExplosionServerRPC();
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-
+        HashSet<int> set = new HashSet<int>();
         foreach (Collider collision in colliders)
         {
             //knockback on not player objects
@@ -43,11 +42,20 @@ public class M_Rocket : NetworkBehaviour
                 rigb.AddExplosionForce(force, transform.position, radius, 1f, ForceMode.Impulse);
             }
 
+            M_PlayerStats stats = collision.GetComponentInParent<M_PlayerStats>();
             //damage
-            if(collision.GetComponentInParent(typeof(PlayerStats)))
+            if(stats != null)
             {
-                PlayerStats stats = collision.GetComponentInParent<PlayerStats>();
-                stats.TakeDamage(100);
+                if(!set.Contains(((int)stats.OwnerClientId)) && stats.gameObject.tag == "Player") {
+                    //stats.TakeDamage(99);
+                    set.Add(((int)stats.OwnerClientId));
+                    GameObject player = stats.gameObject;
+                    Vector3 dir = point - player.transform.position;
+                    float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
+                    float currForce = percentage * impactforce;
+                    ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
+                    receiver.AddImpact(dir, Mathf.Clamp(currForce, 25f, impactforce));
+                }
             }
             
         }
@@ -55,21 +63,10 @@ public class M_Rocket : NetworkBehaviour
         oj.GetComponent<NetworkObject>().Spawn();
 
         if(IsServer) DestroyRocket();
-        else DestroyRocketServerRPC();
-    }
-
-    [ServerRpc]
-    private void DestroyRocketServerRPC() {
-        DestroyRocket();
     }
 
     private void DestroyRocket() {
         Destroy(gameObject);
-    }
-
-    [ServerRpc]
-    private void PlayExplosionServerRPC() {
-        PlayExplosion();
     }
 
     private void PlayExplosion() {

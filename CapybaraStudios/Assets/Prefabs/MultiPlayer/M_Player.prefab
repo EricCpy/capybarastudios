@@ -3358,6 +3358,7 @@ GameObject:
   - component: {fileID: 4247300919598407957}
   - component: {fileID: 2093625504700856088}
   - component: {fileID: 8913261212996451807}
+  - component: {fileID: 2820518768231582397}
   m_Layer: 15
   m_Name: M_Player
   m_TagString: Player
@@ -3594,6 +3595,28 @@ MonoBehaviour:
   rigBuilder: {fileID: 8659778157883129935}
   leftHandIK: {fileID: 7692154713259755892}
   GunSlot: {fileID: 1802872416952313188}
+--- !u!114 &2820518768231582397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168766782365090938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6485de62165bc3d42808f319f8d92977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSound: {fileID: 6828299147099094242}
+  killSound: {fileID: 7606773405560989890}
+  maxHealth: 100
+  currentHealth: 100
+  healthIndicator: {fileID: 7219239274298247840}
+  damage_done: 0
+  kills: 0
+  dead: 0
+  blinkDuration: 0
+  blinkIntensity: 0
 --- !u!1 &1281807801642341523
 GameObject:
   m_ObjectHideFlags: 0
