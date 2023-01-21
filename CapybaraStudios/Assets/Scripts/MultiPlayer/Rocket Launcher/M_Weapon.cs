@@ -31,21 +31,8 @@ public class M_Weapon : Interactable
     private WaitForSeconds rapidFireWait;
     private int controllerMask = ~(1 << 15);
     private Animator _animator;
-    public int weaponSlot;
     public int animationType;
-
-    private float _inaccuracy = 1f;
-    //_inaccuracy for extra ai inaccuracy, player inaccuracy = 0
-
-    public int specialWeaponType;
-    // 0 ist für nicht special Weapon
-    // 1 ist für Grappling Gun
-    // 2 ist für sniper
-    // 3 ist für rocket launcher
-
     public Transform BulletFirePoint;
-    private bool _ai;
-
     private void Awake()
     {
         bulletsLeft = magazineSize;
@@ -67,12 +54,6 @@ public class M_Weapon : Interactable
         else if (reloadStatus > 1) reloadStatus = 1;
     }
 
-    protected override void Interact(GameObject player)
-    {
-        player.GetComponent<GunScript>().PickUp(gameObject);
-        pickupSound.Play();
-    }
-
     public void Shoot(bool first)
     {
         if (reloading)
@@ -90,7 +71,7 @@ public class M_Weapon : Interactable
 
         
         //rocket launcher
-        Launcher launcher = GetComponent<Launcher>();
+        M_Launcher launcher = GetComponent<M_Launcher>();
         launcher.Launch();
         //knockback
         var dir = transform.parent.transform.position - BulletFirePoint.position;

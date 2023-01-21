@@ -3355,8 +3355,9 @@ GameObject:
   - component: {fileID: 3995095118400568700}
   - component: {fileID: 8269584782976026085}
   - component: {fileID: 2859585919602648243}
-  - component: {fileID: 993407495881040577}
   - component: {fileID: 4247300919598407957}
+  - component: {fileID: 2093625504700856088}
+  - component: {fileID: 8913261212996451807}
   m_Layer: 15
   m_Name: M_Player
   m_TagString: Player
@@ -3548,22 +3549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 8756691152361757365}
---- !u!114 &993407495881040577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168766782365090938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea0762184501e245971a945d0e87cb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1276083470260032892}
-  rigBuilder: {fileID: 8659778157883129935}
-  leftHandIK: {fileID: 7692154713259755892}
-  GunSlot: {fileID: 1802872416952313188}
 --- !u!114 &4247300919598407957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3581,6 +3566,34 @@ MonoBehaviour:
   maxAmmoText: {fileID: 5537569112343070673}
   hitmarker: {fileID: 999085505870641033}
   currentWeapon: {fileID: 6744836900582474456}
+--- !u!114 &2093625504700856088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168766782365090938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fe5874143989c4aaeae569e67bcd0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8913261212996451807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168766782365090938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf835c4174f1855449614c74d5c9170f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1276083470260032892}
+  rigBuilder: {fileID: 8659778157883129935}
+  leftHandIK: {fileID: 7692154713259755892}
+  GunSlot: {fileID: 1802872416952313188}
 --- !u!1 &1281807801642341523
 GameObject:
   m_ObjectHideFlags: 0
@@ -40254,6 +40267,18 @@ PrefabInstance:
     - target: {fileID: 2876530745694690554, guid: 4b7ab0a0ff5dcf043a5a79ed95f3307f, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876530745694690554, guid: 4b7ab0a0ff5dcf043a5a79ed95f3307f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.006666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876530745694690554, guid: 4b7ab0a0ff5dcf043a5a79ed95f3307f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.006666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876530745694690554, guid: 4b7ab0a0ff5dcf043a5a79ed95f3307f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.006666666
       objectReference: {fileID: 0}
     - target: {fileID: 2876530745694690554, guid: 4b7ab0a0ff5dcf043a5a79ed95f3307f, type: 3}
       propertyPath: m_LocalPosition.x

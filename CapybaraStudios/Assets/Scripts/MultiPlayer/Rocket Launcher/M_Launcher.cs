@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class M_Launcher : MonoBehaviour
 {
     public Transform firePoint;
-    public Rigidbody rocket;
+    public GameObject rocket;
 
     public float knockbackForce = 100f;
 
@@ -13,9 +12,9 @@ public class M_Launcher : MonoBehaviour
 
     public void Launch()
     {
-        Rigidbody rocketInstance = Instantiate(rocket, firePoint.position, firePoint.rotation);
+        GameObject rocketInstance = Instantiate(rocket, firePoint.position, firePoint.rotation);
         //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
-        rocketInstance.velocity = transform.forward * range;
+        rocketInstance.GetComponent<Rigidbody>().velocity = transform.forward * range;
     }
 
     public float GetKnockbackForce()

@@ -24,7 +24,7 @@ public class M_WeaponAnimationController : NetworkBehaviour
         var Weapon = getActiveWeapon();
         if (Weapon)
         {
-            animator.SetInteger("weaponType", Weapon.GetComponent<Weapon>().animationType);
+            animator.SetInteger("weaponType", Weapon.GetComponent<M_Weapon>().animationType);
             var temp = Weapon.transform.Find("ref_left_hand_target");
             if (temp)
             {
