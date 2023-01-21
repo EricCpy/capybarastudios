@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class M_Rocket : MonoBehaviour
+public class M_Rocket : NetworkBehaviour
 {
-   public AudioSource explosionSound;
+    public AudioSource explosionSound;
     public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
@@ -26,9 +27,8 @@ public class M_Rocket : MonoBehaviour
     {
         if (explosionSound)
         {
-            var sound = Instantiate(explosionSound); 
-            sound.Play();
-            explosionSound = null;
+            if(IsServer) PlayExplosion();
+            else PlayExplosionServerRPC();
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
@@ -52,8 +52,31 @@ public class M_Rocket : MonoBehaviour
             }
             
         }
-        Instantiate(explosionEffect, transform.position, transform.rotation);
-        
+        GameObject oj = Instantiate(explosionEffect, transform.position, transform.rotation);
+        oj.GetComponent<NetworkObject>().Spawn();
+
+        if(IsServer) DestroyRocket();
+        else DestroyRocketServerRPC();
+    }
+
+    [ServerRpc]
+    private void DestroyRocketServerRPC() {
+        DestroyRocket();
+    }
+
+    private void DestroyRocket() {
         Destroy(gameObject);
     }
+
+    [ServerRpc]
+    private void PlayExplosionServerRPC() {
+        PlayExplosion();
+    }
+
+    private void PlayExplosion() {
+        var sound = Instantiate(explosionSound); 
+        sound.GetComponent<NetworkObject>().Spawn();
+        sound.Play();
+    }
+
 }
