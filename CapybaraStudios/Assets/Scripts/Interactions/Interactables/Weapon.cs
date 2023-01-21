@@ -459,7 +459,7 @@ public class Weapon : Interactable
         Launcher launcher = GetComponent<Launcher>();
         launcher.Launch();
         //knockback
-        var dir = transform.parent.transform.position - BulletFirePoint.position;
+        Vector3 dir = transform.parent.transform.position - BulletFirePoint.position;
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 500f);
         ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
         impactReceiver.AddImpact(dir, force);

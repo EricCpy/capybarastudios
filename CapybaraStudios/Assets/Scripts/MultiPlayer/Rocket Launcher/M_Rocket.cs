@@ -34,8 +34,7 @@ public class M_Rocket : NetworkBehaviour
 
         foreach (Collider collision in colliders)
         {
-
-            //knockback
+            //knockback on not player objects
             Rigidbody rigb = collision.GetComponent<Rigidbody>();
 
             if (rigb != null)

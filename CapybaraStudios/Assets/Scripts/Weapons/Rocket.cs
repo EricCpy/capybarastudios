@@ -9,7 +9,7 @@ public class Rocket : MonoBehaviour
     public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
-    
+    public float impactforce = 700f;
     Rigidbody rig;
 
     // Start is called before the first frame update
@@ -20,10 +20,10 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Explode();
+        Explode(other.transform.position);
     }
 
-    private void Explode()
+    private void Explode(Vector3 point)
     {
         if (explosionSound)
         {
@@ -32,7 +32,7 @@ public class Rocket : MonoBehaviour
             explosionSound = null;
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-
+        bool selfknocked = false;
         foreach (Collider collision in colliders)
         {
 
@@ -49,7 +49,18 @@ public class Rocket : MonoBehaviour
             if(collision.GetComponentInParent(typeof(PlayerStats)))
             {
                 PlayerStats stats = collision.GetComponentInParent<PlayerStats>();
-                stats.TakeDamage(100);
+                if(!selfknocked && stats.gameObject.tag == "Player") {
+                    stats.TakeDamage(99);
+                    selfknocked = true;
+                    GameObject player = stats.gameObject;
+                    Vector3 dir = point - player.transform.position;
+                    float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
+                    float currForce = percentage * impactforce;
+                    ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
+                    receiver.AddImpact(dir, currForce);
+                } else if(stats.gameObject.tag == "Enemy") {
+                    stats.TakeDamage(100);
+                }
             }
             
         }

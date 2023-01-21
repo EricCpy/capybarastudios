@@ -10,16 +10,16 @@ Unity Version
   - [x] kamera
   - [x] Players sollen unterschiedliche Farben haben
   - [x] Name aus Menü soll über dem Kopf angezeigt werden
-  - [ ] rocketlauncher
+  - [x] rocketlauncher
+  - [x] Sounds
   - [ ] dmg
   - [ ] dying
   - [ ] respawning
   - [ ] TabMenü für den Multiplayer
-  - [ ] Sounds
   - [ ] connect to lobby by code with relay
 
-- [ ] Tabmenü
-   - [ ] Namen
+- [x] Tabmenü
+   - [x] Namen
 
 - [ ] Menüs
   - [x] Namen ändern in Settings
@@ -37,15 +37,15 @@ Unity Version
     - [ ] Parkourmap oder Parkourelemente
 
 - [ ] Waffen
-  - [ ] Granadelauncher
-  - [ ] Rocketlauncher
+  - [x] Granadelauncher
+  - [x] Rocketlauncher
   - [ ] fliegender Geschützturm
   - [ ] stehender Geschützturm
 
 - [ ] Sounds
-  - [ ] Heilen
+  - [x] Heilen
   - [ ] 2 neue Soundtracks für die neuen Maps
-  - [ ] Menümusik
+  - [x] Menümusik
   - [ ] Soundtrack für den Multiplayer
-  - [ ] Rocketlauncher
-  - [ ] Granadelauncher
+  - [x] Rocketlauncher
+  - [x] Granadelauncher
