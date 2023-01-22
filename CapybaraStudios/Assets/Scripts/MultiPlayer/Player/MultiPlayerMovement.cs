@@ -49,7 +49,7 @@ public class MultiPlayerMovement : NetworkBehaviour
     private float _velocityX = 0;
     private float _velocityZ = 0;
     private bool isJumping;
-    public Transform torso;
+    public Transform center;
     // Start is called before the first frame update
     void Start()
     {   

@@ -11,16 +11,20 @@ public class Rocket : MonoBehaviour
     public float radius = 10f;
     public float impactforce = 700f;
     Rigidbody rig;
+    private bool exploded = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        Destroy(gameObject, 30f);
     }
 
     void OnCollisionEnter(Collision other)
     {
+        if(exploded) return;
         Explode(other.transform.position);
+        exploded = true;
     }
 
     private void Explode(Vector3 point)
@@ -29,7 +33,7 @@ public class Rocket : MonoBehaviour
         {
             var sound = Instantiate(explosionSound); 
             sound.Play();
-            explosionSound = null;
+            Destroy(sound.gameObject, 10f);
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         bool selfknocked = false;

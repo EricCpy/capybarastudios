@@ -3451,7 +3451,7 @@ MonoBehaviour:
   gravity: -40
   Target: {fileID: 6271370191318142388}
   _animationTransitionSpeed: 3
-  torso: {fileID: 7283937177359100701}
+  center: {fileID: 3681102450027214421}
 --- !u!114 &4322564949865965329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31658,6 +31658,7 @@ Transform:
   - {fileID: 3148430514198169537}
   - {fileID: 5896741720345428211}
   - {fileID: 7529699925635599830}
+  - {fileID: 3681102450027214421}
   - {fileID: 6647585298511759771}
   - {fileID: 5459805771080081918}
   m_Father: {fileID: 420119629213778019}
@@ -32115,7 +32116,7 @@ Transform:
   - {fileID: 820982517194886173}
   - {fileID: 1022556841334258495}
   m_Father: {fileID: 3007601069905876932}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4364243328904705166
 MonoBehaviour:
@@ -37539,6 +37540,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8064145548159144030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3681102450027214421}
+  m_Layer: 7
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3681102450027214421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064145548159144030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.056, z: 0.292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3007601069905876932}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8081604967328278620
 GameObject:
   m_ObjectHideFlags: 0
@@ -39974,7 +40006,7 @@ Transform:
   - {fileID: 4982500528237228421}
   - {fileID: 9105339360507931204}
   m_Father: {fileID: 3007601069905876932}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8738996429363222073
 MonoBehaviour:
