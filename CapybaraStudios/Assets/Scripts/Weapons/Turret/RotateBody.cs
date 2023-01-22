@@ -6,6 +6,10 @@ public class RotateBody : MonoBehaviour
 {
     public Transform target;
 
+    private void Awake() {
+        GetComponent<SphereCollider>().radius = GetComponentInParent<Turret>().radius;
+    }
+
     private void Update() 
     {
         if (target != null)

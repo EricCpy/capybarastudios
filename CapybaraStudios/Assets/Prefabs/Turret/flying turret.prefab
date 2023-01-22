@@ -64,7 +64,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1161384782268325689
 GameObject:
@@ -242,6 +242,7 @@ MonoBehaviour:
   range: 1000
   cooldown: 0.1
   maxHealth: 150
+  radius: 10
   canShoot: 1
   firePointLeft: {fileID: 5429219619685553549}
   firePointRight: {fileID: 5172350383249889548}
