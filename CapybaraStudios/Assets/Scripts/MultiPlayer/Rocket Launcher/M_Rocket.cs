@@ -12,6 +12,7 @@ public class M_Rocket : NetworkBehaviour
     public float impactforce = 400f;
     Rigidbody rig;
     private bool exploded = false;
+    public ulong owningPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,9 +48,12 @@ public class M_Rocket : NetworkBehaviour
             //damage
             if(stats != null)
             {
-                if(set.Add((stats.OwnerClientId)) && stats.gameObject.tag == "Player") {
+                if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
                     KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
-                    stats.UpdateHealthServerRpc();
+                    Debug.Log(stats.OwnerClientId);
+                    Debug.Log(owningPlayer);
+                    if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-99, stats.OwnerClientId);
+                    else stats.UpdateHealthServerRpc(-10, stats.OwnerClientId);
                 }
             }
             

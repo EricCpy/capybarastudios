@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class M_Weapon : Interactable
+public class M_Weapon : NetworkBehaviour
 {
     private Transform _transform;
 
@@ -72,7 +73,7 @@ public class M_Weapon : Interactable
         
         //rocket launcher
         M_Launcher launcher = GetComponent<M_Launcher>();
-        launcher.Launch();
+        launcher.Launch(OwnerClientId);
         //knockback
         var dir = _transform.position - BulletFirePoint.position;
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 200f);

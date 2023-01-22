@@ -10,7 +10,7 @@ using Unity.Netcode;
 
 public class M_PlayerStats : NetworkBehaviour
 {
-    /*public AudioSource deathSound;
+    public AudioSource deathSound;
     public AudioSource killSound;
     private int damageTaken = 0;
     public TextMeshProUGUI healthIndicator;
@@ -19,8 +19,6 @@ public class M_PlayerStats : NetworkBehaviour
 
     //private Ragdoll ragdoll;
 
-    */
-
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
     private Color color;
     [SerializeField] private float blinkDuration, blinkIntensity;
@@ -28,19 +26,20 @@ public class M_PlayerStats : NetworkBehaviour
     private Volume volume;
 
     [SerializeField] private int maxHealth = 100;
-    private NetworkVariable<float> playerHealth;
-    /*void Awake()
+    private NetworkVariable<float> networkHealth;
+    void Awake()
     {
         skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         color = skinnedMeshRenderers[0].material.color;
-        playerHealth = new NetworkVariable<float>(maxHealth);
+        networkHealth = new NetworkVariable<float>(maxHealth);
     }
 
     void Start()
     {
         volume = M_Camera.Instance._camera.GetComponentInChildren<Volume>();
     }
-    void Update()
+    
+    /*void Update()
     {
         if (blinkTimer > 0)
         {
@@ -53,11 +52,35 @@ public class M_PlayerStats : NetworkBehaviour
         }
     }*/
 
-    [ServerRpc]
-    public void UpdateHealthServerRpc() {
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateHealthServerRpc(int health, ulong clientId) {
+        // Zusatz:
+        //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
+        //  Addiere im TabMenü die Kills vom Killer + 1
 
+        var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
+        if(client == null || client.networkHealth.Value <= 0) return;
+        client.networkHealth.Value += health;
+        if(client.networkHealth.Value <= 0) {
+            client.networkHealth.Value = 0;
+            //lasse client sterben
+            //sterben = ragdoll + scripts deaktivieren
+        } else {
+            //change blick timer on this client
+        }
+        //change hp bar on this client
+        
+
+        UpdateHealthClientRpc();
     }
 
+    [ClientRpc]
+    public void UpdateHealthClientRpc() {
+        //change hp for client in his hud
+        //change vignette in camera
+        //wenn client hp == 0, dann öffne sterbe hud
+        //spiele sterbe sound
+    }
 
     /*public int TakeDamage(int damageAmount)
     {
