@@ -28,7 +28,8 @@ public class Turret : MonoBehaviour
     {
         if (target != null)
         {
-            Aim();
+            //aim
+            body.transform.LookAt(target);
             Debug.DrawLine(firePointLeft.position, target.position);
 
             if(readyToShoot)
@@ -41,21 +42,6 @@ public class Turret : MonoBehaviour
                 Invoke("Cooldown", cooldown);
             }
         }
-    }
-
-    private void Aim()
-    {
-        float targetPlaneAngle = vector3AngleOnPlane(target.position, transform.position, -body.transform.up, body.transform.forward);
-        Vector3 newRotation = new Vector3(0, targetPlaneAngle, 0);
-        body.transform.Rotate(newRotation, Space.Self);
-    }
-
-    float vector3AngleOnPlane(Vector3 from, Vector3 to, Vector3 planeNormal, Vector3 toZeroAngle)
-    {
-        Vector3 projectedVector = Vector3.ProjectOnPlane(from - to, planeNormal);
-        float projectedVectorAngle = Vector3.SignedAngle(projectedVector, toZeroAngle, planeNormal);
-
-        return projectedVectorAngle;
     }
 
     private void ShootWeapon(Transform firePoint)
