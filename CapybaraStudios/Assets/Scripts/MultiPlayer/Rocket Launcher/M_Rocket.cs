@@ -23,7 +23,9 @@ public class M_Rocket : NetworkBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(exploded) return;
+        NetworkObject obj = other.gameObject.GetComponentInParent<NetworkObject>();
+        if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) return;
+        print(other.gameObject.name);
         Explode();
         exploded = true;
     }
@@ -50,8 +52,6 @@ public class M_Rocket : NetworkBehaviour
             {
                 if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
                     KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
-                    Debug.Log(stats.OwnerClientId);
-                    Debug.Log(owningPlayer);
                     if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-99, stats.OwnerClientId);
                     else stats.UpdateHealthServerRpc(-10, stats.OwnerClientId);
                 }
