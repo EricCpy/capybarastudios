@@ -64,7 +64,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1161384782268325689
 GameObject:
@@ -197,9 +197,10 @@ GameObject:
   - component: {fileID: 8221128531331046614}
   - component: {fileID: 1435497331753409501}
   - component: {fileID: 6435086232414744520}
+  - component: {fileID: 8269776024386826865}
   m_Layer: 0
   m_Name: flying turret
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,11 +233,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8f4c91aa3f9b6489a4d2c0bad3fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turret: {fileID: 2510153193912928504}
   target: {fileID: 0}
   body: {fileID: 3831713419157843424}
+  explosionSound: {fileID: 3472871397590428550, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
+  explosionEffect: {fileID: 4922897050496721276, guid: 81e91a55042706f488471896c6279b3a, type: 3}
   damage: 10
   range: 1000
   cooldown: 0.1
+  maxHealth: 150
+  radius: 10
   canShoot: 1
   firePointLeft: {fileID: 5429219619685553549}
   firePointRight: {fileID: 5172350383249889548}
@@ -300,6 +306,19 @@ MonoBehaviour:
   BulletFirePoint: {fileID: 0}
   BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
   zoom: 1
+--- !u!65 &8269776024386826865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510153193912928504}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3529313, y: 1.1532707, z: 1.0411198}
+  m_Center: {x: -0.06113267, y: 0.38589942, z: 0.020559952}
 --- !u!1 &4230318323975040808
 GameObject:
   m_ObjectHideFlags: 0

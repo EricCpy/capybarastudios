@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    public GameObject turret;
     public Transform target;
     public Transform body;
+    public AudioSource explosionSound;
+    public GameObject explosionEffect;
     public int damage = 10;
     public float range = 1000f;
     public float cooldown = .5f;
+    public float maxHealth = 250;
+    public float radius;
     public bool canShoot;
     private int controllerMask = ~(1 << 15);
 
@@ -23,6 +28,7 @@ public class Turret : MonoBehaviour
 
     private void Start() {
         weapon = GetComponent<Weapon>();
+        GetComponent<SphereCollider>().radius = radius;
     }
 
     private void Update() 
@@ -54,6 +60,27 @@ public class Turret : MonoBehaviour
     private void Cooldown()
     {
         readyToShoot = true;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(maxHealth >= 0)
+        {
+            //take damage
+            maxHealth -= damage;
+            //check if dead
+            if(maxHealth <= 0)
+            {
+                Instantiate(explosionEffect, transform.position, transform.rotation);
+                if (explosionSound)
+                {
+                    var sound = Instantiate(explosionSound); 
+                    sound.Play();
+                    explosionSound = null;
+                }
+                Destroy(turret);
+            }
+        }
     }
 
     IEnumerator FocusPlayer(PlayerMovement newTarget, float delayTime)

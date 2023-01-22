@@ -6,12 +6,14 @@ public class RotateBody : MonoBehaviour
 {
     public Transform target;
 
+    private void Awake() {
+        GetComponent<SphereCollider>().radius = GetComponentInParent<Turret>().radius;
+    }
+
     private void Update() 
     {
         if (target != null)
         {
-            //aim
-            //body.transform.LookAt(target);
             Vector3 targetPosition = new Vector3(target.position.x, this.transform.position.y, target.position.z);
             this.transform.LookAt(targetPosition);
         }

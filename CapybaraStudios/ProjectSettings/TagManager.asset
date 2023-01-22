@@ -10,6 +10,7 @@ TagManager:
   - Limbs
   - Weapon
   - BotWeapon
+  - Turret
   layers:
   - Default
   - TransparentFX
