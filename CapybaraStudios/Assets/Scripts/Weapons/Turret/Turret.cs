@@ -14,6 +14,7 @@ public class Turret : MonoBehaviour
     public float range = 1000f;
     public float cooldown = .5f;
     public float maxHealth = 250;
+    public float radius;
     public bool canShoot;
     private int controllerMask = ~(1 << 15);
 
@@ -27,6 +28,7 @@ public class Turret : MonoBehaviour
 
     private void Start() {
         weapon = GetComponent<Weapon>();
+        GetComponent<SphereCollider>().radius = radius;
     }
 
     private void Update() 
