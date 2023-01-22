@@ -164,11 +164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8f4c91aa3f9b6489a4d2c0bad3fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turret: {fileID: 0}
+  turret: {fileID: 7777627309602302415}
   target: {fileID: 0}
   body: {fileID: 5158888058528800613}
-  explosionSound: {fileID: 0}
-  explosionEffect: {fileID: 0}
+  explosionSound: {fileID: 3472871397590428550, guid: 5cc65ce490fa87d4b88bdf20af43eced, type: 3}
+  explosionEffect: {fileID: 4922897050496721276, guid: 81e91a55042706f488471896c6279b3a, type: 3}
   damage: 10
   range: 1000
   cooldown: 0.1
