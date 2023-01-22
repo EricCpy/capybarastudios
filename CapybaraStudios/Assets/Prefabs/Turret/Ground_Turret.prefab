@@ -172,7 +172,7 @@ MonoBehaviour:
   damage: 10
   range: 1000
   cooldown: 0.1
-  maxHealth: 250
+  maxHealth: 200
   canShoot: 1
   firePointLeft: {fileID: 4697806118175420099}
   firePointRight: {fileID: 9068446421205708358}

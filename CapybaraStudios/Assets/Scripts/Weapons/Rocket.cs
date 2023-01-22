@@ -66,6 +66,11 @@ public class Rocket : MonoBehaviour
                     stats.TakeDamage(100);
                 }
             }
+            if(collision.GetComponentInParent(typeof(Turret)))
+            {
+                Turret stats = collision.GetComponentInParent<Turret>();
+                stats.TakeDamage(100);
+            }
             
         }
         Instantiate(explosionEffect, transform.position, transform.rotation);
