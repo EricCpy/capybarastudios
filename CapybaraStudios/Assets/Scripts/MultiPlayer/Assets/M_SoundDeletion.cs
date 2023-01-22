@@ -14,6 +14,7 @@ public class M_SoundDeletion : NetworkBehaviour
     }
     
     private void DestroySource() {
+        gameObject.GetComponent<NetworkObject>().Despawn();
         Destroy(gameObject);
     }
 }

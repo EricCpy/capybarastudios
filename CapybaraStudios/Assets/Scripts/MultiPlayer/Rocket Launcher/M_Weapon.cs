@@ -74,10 +74,10 @@ public class M_Weapon : Interactable
         M_Launcher launcher = GetComponent<M_Launcher>();
         launcher.Launch();
         //knockback
-        var dir = transform.parent.transform.position - BulletFirePoint.position;
+        var dir = _transform.position - BulletFirePoint.position;
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 200f);
-        ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
-        impactReceiver.AddImpact(dir, force);
+        //ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
+        //impactReceiver.AddImpact(dir, force);
         //
 
 

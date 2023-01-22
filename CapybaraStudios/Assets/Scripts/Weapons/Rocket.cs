@@ -11,6 +11,7 @@ public class Rocket : MonoBehaviour
     public float radius = 10f;
     public float impactforce = 700f;
     Rigidbody rig;
+    private bool exploded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,9 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        if(exploded) return;
         Explode(other.transform.position);
+        exploded = true;
     }
 
     private void Explode(Vector3 point)

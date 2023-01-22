@@ -7,7 +7,6 @@ public class ImpactReceiver : MonoBehaviour
     
     Vector3 impact = Vector3.zero;
     CharacterController character;
-
     void Start()
     {
         character = GetComponent<CharacterController>();
@@ -16,16 +15,17 @@ public class ImpactReceiver : MonoBehaviour
     void Update()
     {
         // apply impact force:
-        if (impact.magnitude > 0.2) character.Move(impact * Time.deltaTime);
-        // consumes impact energy each frame:
-        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+        if (impact.sqrMagnitude > 0.2) {
+            character.Move(impact * Time.deltaTime);
+            impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+            if(impact.sqrMagnitude <= 0.2) impact = Vector3.zero;
+        }
+        
     }
 
     public void AddImpact(Vector3 dir, float force)
     {
         dir.Normalize();
-        // reflect down force on the ground
-        if (dir.y < 0) dir.y = -dir.y; 
         impact += dir.normalized * force / 3f;
     }
 }
