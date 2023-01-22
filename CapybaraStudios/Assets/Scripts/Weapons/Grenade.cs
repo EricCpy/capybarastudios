@@ -29,7 +29,9 @@ public class Grenade : MonoBehaviour
     private void Explode()
     {
         if(!explosionSound.isPlaying) {
-            explosionSound.Play();
+            var sound = Instantiate(explosionSound); 
+            sound.Play();
+            Destroy(sound.gameObject, 10f);
         }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);

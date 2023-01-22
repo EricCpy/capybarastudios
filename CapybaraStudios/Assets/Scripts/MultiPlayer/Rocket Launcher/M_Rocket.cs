@@ -11,26 +11,28 @@ public class M_Rocket : NetworkBehaviour
     public float radius = 10f;
     public float impactforce = 400f;
     Rigidbody rig;
-
+    private bool exploded = false;
+    public ulong owningPlayer;
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        if(IsServer) Destroy(gameObject, 30f);
     }
+
 
     void OnCollisionEnter(Collision other)
     {
-        Explode(other.transform.position);
+        if(exploded) return;
+        Explode();
+        exploded = true;
     }
 
-    private void Explode(Vector3 point)
+    private void Explode()
     {
-        if (explosionSound)
-        {
-            if(IsServer) PlayExplosion();
-        }
+        if(IsServer) PlayExplosion();
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-        HashSet<int> set = new HashSet<int>();
+        HashSet<ulong> set = new HashSet<ulong>();
         foreach (Collider collision in colliders)
         {
             //knockback on not player objects
@@ -46,15 +48,12 @@ public class M_Rocket : NetworkBehaviour
             //damage
             if(stats != null)
             {
-                if(!set.Contains(((int)stats.OwnerClientId)) && stats.gameObject.tag == "Player") {
-                    //stats.TakeDamage(99);
-                    set.Add(((int)stats.OwnerClientId));
-                    GameObject player = stats.gameObject;
-                    Vector3 dir = point - player.transform.position;
-                    float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
-                    float currForce = percentage * impactforce;
-                    ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
-                    receiver.AddImpact(dir, Mathf.Clamp(currForce, 25f, impactforce));
+                if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
+                    KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
+                    Debug.Log(stats.OwnerClientId);
+                    Debug.Log(owningPlayer);
+                    if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-99, stats.OwnerClientId);
+                    else stats.UpdateHealthServerRpc(-10, stats.OwnerClientId);
                 }
             }
             
@@ -65,6 +64,18 @@ public class M_Rocket : NetworkBehaviour
         if(IsServer) DestroyRocket();
     }
 
+    [ClientRpc]
+    private void KnockbackClientRpc(Vector3 point, ClientRpcParams clientRpcParams) {
+        GameObject player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
+        Vector3 position = player.GetComponent<MultiPlayerMovement>().center.position;
+        //torso ist leicht verschoben
+        Vector3 dir = position - point; 
+        float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
+        float currForce = percentage * impactforce;
+        ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
+        receiver.AddImpact(dir, Mathf.Clamp(currForce, impactforce * 0.1f, impactforce));
+    }
+
     private void DestroyRocket() {
         Destroy(gameObject);
     }
@@ -72,7 +83,6 @@ public class M_Rocket : NetworkBehaviour
     private void PlayExplosion() {
         var sound = Instantiate(explosionSound); 
         sound.GetComponent<NetworkObject>().Spawn();
-        sound.Play();
     }
-
+    
 }

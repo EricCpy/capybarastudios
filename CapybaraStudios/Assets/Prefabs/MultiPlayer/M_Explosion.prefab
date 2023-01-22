@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1526291071590915452}
   - component: {fileID: 886569259538186809}
   - component: {fileID: -6774216005915760481}
+  - component: {fileID: 510371968974182297}
   m_Layer: 0
   m_Name: M_Explosion
   m_TagString: Untagged
@@ -44,7 +45,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4887,3 +4888,16 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &510371968974182297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4922897050496721276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c656c46636aa1643ad605c084c6ec98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
