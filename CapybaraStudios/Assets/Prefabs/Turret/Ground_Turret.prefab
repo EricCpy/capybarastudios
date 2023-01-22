@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 7435098860077030261}
   - component: {fileID: 6901319667335025672}
   - component: {fileID: 4716633676577644278}
+  - component: {fileID: 1395525646169571321}
   m_Layer: 0
   m_Name: Ground_Turret
   m_TagString: Untagged
@@ -168,6 +169,7 @@ MonoBehaviour:
   damage: 10
   range: 1000
   cooldown: 0.1
+  canShoot: 1
   firePointLeft: {fileID: 4697806118175420099}
   firePointRight: {fileID: 9068446421205708358}
   BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
@@ -230,6 +232,19 @@ MonoBehaviour:
   BulletFirePoint: {fileID: 0}
   BulletTrail: {fileID: 1734369488617747396, guid: e68430fd2495d1b418a51b23a5c7f771, type: 3}
   zoom: 1
+--- !u!65 &1395525646169571321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777627309602302415}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6546211, y: 1.3570101, z: 1.7536745}
+  m_Center: {x: -0.0043582916, y: 0.7015966, z: -0.25295782}
 --- !u!1 &8070217710010544374
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Turret : MonoBehaviour
     public int damage = 10;
     public float range = 1000f;
     public float cooldown = .5f;
+    public bool canShoot;
     private int controllerMask = ~(1 << 15);
 
     //Shooting
@@ -32,7 +33,7 @@ public class Turret : MonoBehaviour
             body.transform.LookAt(target);
             Debug.DrawLine(firePointLeft.position, target.position);
 
-            if(readyToShoot)
+            if(readyToShoot && canShoot)
             {
                 Transform firePoint = isLeft ? firePointLeft : firePointRight;
                 weapon.init(null, firePoint, null, null, null);
