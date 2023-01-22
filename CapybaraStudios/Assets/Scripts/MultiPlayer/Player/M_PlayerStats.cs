@@ -71,11 +71,11 @@ public class M_PlayerStats : NetworkBehaviour
         //change hp bar on this client
         
 
-        UpdateHealthClientRpc();
+        UpdateHealthClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
     }
 
     [ClientRpc]
-    public void UpdateHealthClientRpc() {
+    public void UpdateHealthClientRpc(ClientRpcParams clientRpcParams) {
         //change hp for client in his hud
         //change vignette in camera
         //wenn client hp == 0, dann öffne sterbe hud
