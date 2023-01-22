@@ -17,6 +17,7 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        Destroy(gameObject, 30f);
     }
 
     void OnCollisionEnter(Collision other)
@@ -32,7 +33,7 @@ public class Rocket : MonoBehaviour
         {
             var sound = Instantiate(explosionSound); 
             sound.Play();
-            explosionSound = null;
+            Destroy(sound.gameObject, 10f);
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         bool selfknocked = false;

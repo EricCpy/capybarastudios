@@ -10,30 +10,30 @@ using Unity.Netcode;
 
 public class M_PlayerStats : NetworkBehaviour
 {
-    public AudioSource deathSound;
+    /*public AudioSource deathSound;
     public AudioSource killSound;
-    public int maxHealth = 100;
     private int damageTaken = 0;
-    [SerializeField] public int currentHealth = 100;
     public TextMeshProUGUI healthIndicator;
     public int damage_done = 0;
     public int kills = 0;
-    private Animator _animator;
-    public bool dead = false;
 
     //private Ragdoll ragdoll;
+
+    */
+
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
     private Color color;
     [SerializeField] private float blinkDuration, blinkIntensity;
     private float blinkTimer;
     private Volume volume;
 
-    void Awake()
+    [SerializeField] private int maxHealth = 100;
+    private NetworkVariable<float> playerHealth;
+    /*void Awake()
     {
-        _animator = GetComponentInChildren<Animator>();
         skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         color = skinnedMeshRenderers[0].material.color;
-        currentHealth = maxHealth;
+        playerHealth = new NetworkVariable<float>(maxHealth);
     }
 
     void Start()
@@ -51,9 +51,15 @@ public class M_PlayerStats : NetworkBehaviour
                 s.material.color = color + Color.white * intentsity;
             }
         }
+    }*/
+
+    [ServerRpc]
+    public void UpdateHealthServerRpc() {
+
     }
 
-    public int TakeDamage(int damageAmount)
+
+    /*public int TakeDamage(int damageAmount)
     {
         if (damageAmount <= 0 || currentHealth <= 0) return 0;
         Debug.Log("Take Damage: " + damageAmount);
@@ -94,7 +100,7 @@ public class M_PlayerStats : NetworkBehaviour
         GetComponent<WeaponAnimationController>().enabled = false;
         GetComponent<HUDcontroller>().Death();
 
-        /*if (!deathSound.isPlaying && !isAI)
+        if (!deathSound.isPlaying && !isAI)
         {
             deathSound.Play();
         }
@@ -102,7 +108,7 @@ public class M_PlayerStats : NetworkBehaviour
         if (!killSound.isPlaying && isAI)
         {
             killSound.Play();
-        }*/
+        }
 
         GetComponent<Ragdoll>().EnablePhysics();
     }
@@ -134,5 +140,5 @@ public class M_PlayerStats : NetworkBehaviour
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(HealOverTime(health - 1));
         }
-    }
+    }*/
 }

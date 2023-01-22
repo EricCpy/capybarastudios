@@ -48,8 +48,8 @@ public class M_Rocket : NetworkBehaviour
             if(stats != null)
             {
                 if(set.Add((stats.OwnerClientId)) && stats.gameObject.tag == "Player") {
-                    Debug.Log("lll");
-                    KClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
+                    KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
+                    stats.UpdateHealthServerRpc();
                 }
             }
             
@@ -61,21 +61,15 @@ public class M_Rocket : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void KClientRpc(Vector3 point, ClientRpcParams clientRpcParams) {
-        Debug.Log(clientRpcParams.Send.TargetClientIds);
+    private void KnockbackClientRpc(Vector3 point, ClientRpcParams clientRpcParams) {
         GameObject player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
         Vector3 position = player.GetComponent<MultiPlayerMovement>().center.position;
         //torso ist leicht verschoben
-        Debug.Log("pos of player: " + position);
-        Debug.Log("pos of hit: " + point);
         Vector3 dir = position - point; 
-        Debug.Log("dir: " + dir.normalized);
-        Debug.DrawLine(position, point, Color.blue, 60f);
-        Debug.DrawRay(point, dir.normalized * 30f, Color.red, 40f);
         float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
         float currForce = percentage * impactforce;
         ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
-        receiver.AddImpact(dir, Mathf.Clamp(currForce, impactforce / 4f, impactforce));
+        receiver.AddImpact(dir, Mathf.Clamp(currForce, impactforce * 0.1f, impactforce));
     }
 
     private void DestroyRocket() {
