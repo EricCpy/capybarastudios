@@ -12,8 +12,8 @@ Unity Version
   - [x] Name aus Menü soll über dem Kopf angezeigt werden
   - [x] rocketlauncher
   - [x] Sounds
-  - [ ] dmg
-  - [ ] dying
+  - [x] dmg
+  - [x] dying
   - [ ] respawning
   - [ ] TabMenü für den Multiplayer
   - [ ] connect to lobby by code with relay
