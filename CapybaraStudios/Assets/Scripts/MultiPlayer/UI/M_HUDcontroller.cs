@@ -25,7 +25,6 @@ public class M_HUDcontroller : NetworkBehaviour
 
     void Start()
     {
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
         deathMenuUI.SetActive(false);

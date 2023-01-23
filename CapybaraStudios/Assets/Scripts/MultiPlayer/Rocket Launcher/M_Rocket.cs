@@ -53,7 +53,7 @@ public class M_Rocket : NetworkBehaviour
                 if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
                     KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
                     if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-99, stats.OwnerClientId);
-                    else stats.UpdateHealthServerRpc(-10, stats.OwnerClientId);
+                    else stats.UpdateHealthServerRpc(-100, stats.OwnerClientId);
                 }
             }
             

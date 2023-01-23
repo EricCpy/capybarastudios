@@ -16,7 +16,7 @@ public class Ragdoll : MonoBehaviour
         DeactivatePhysics();
     }
 
-    private void DeactivatePhysics() {
+    public void DeactivatePhysics() {
         foreach(var r in rBodies) {
             r.isKinematic = true;
         }

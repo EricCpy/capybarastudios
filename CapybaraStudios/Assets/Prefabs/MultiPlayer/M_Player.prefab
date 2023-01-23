@@ -3612,8 +3612,7 @@ MonoBehaviour:
   healthIndicator: {fileID: 7219239274298247840}
   damage_done: 0
   kills: 0
-  blinkDuration: 0
-  blinkIntensity: 0
+  blinkIntensity: 4
   maxHealth: 100
 --- !u!1 &1281807801642341523
 GameObject:
