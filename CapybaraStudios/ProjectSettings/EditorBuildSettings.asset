@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/EndScene.unity
     guid: e821a94bd84b7f44184346cb3c095ece
   - enabled: 1
-    path: Assets/Scenes/DungeonMap.unity
-    guid: e963ff1721e39194e9c9727dcce7ca21
+    path: Assets/Scenes/AntarcticStation.unity
+    guid: 73aa4027beb4c42969f1c5644065c3c2
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

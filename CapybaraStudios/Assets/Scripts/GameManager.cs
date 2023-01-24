@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     public AudioSource themeTwo;
     public AudioSource themeOneIntense;
     public AudioSource themeTwoIntense;
-    public AudioSource dungeon;
+    public AudioSource themeThree;
+    public AudioSource themeThreeIntense;
     private PlayerStats playerStats;
     private string saveLocation;
     private List<ScoreEntry> _scoreEntryList;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
 
         if (sceneIndex == 3)
         {
-            dungeon.Play();
+            themeThree.Play();
         }
 
 
@@ -108,6 +109,15 @@ public class GameManager : MonoBehaviour
                     themeTwo.Stop();
                 }
             }
+
+            if (themeThree.isPlaying)
+            {
+                themeThreeIntense.Play();
+                if (themeThreeIntense.isPlaying)
+                {
+                    themeThree.Stop();
+                }
+            }
         }
         else
         {
@@ -121,6 +131,12 @@ public class GameManager : MonoBehaviour
             {
                 themeTwo.Play();
                 themeTwoIntense.Stop();
+            }
+
+            if (themeThreeIntense.isPlaying)
+            {
+                themeThree.Play();
+                themeThreeIntense.Stop();
             }
         }
     }
