@@ -14,7 +14,7 @@ public class M_Weapon : NetworkBehaviour
     //sounds
     public AudioSource gunSound;
     public AudioSource reloadSound;
-
+    public AudioSource pickupSound;
     //HUD
     private TextMeshProUGUI _ammoText;
     private TextMeshProUGUI _maxAmmoText;
@@ -43,6 +43,12 @@ public class M_Weapon : NetworkBehaviour
         _transform = transform;
         _ammoText = ammoText;
         _maxAmmoText = maxAmmoText;
+    }
+
+    private void Update()
+    {
+        if (reloadStatus < 1) reloadStatus += Time.deltaTime / reloadTime;
+        else if (reloadStatus > 1) reloadStatus = 1;
     }
 
     public void Shoot()
@@ -77,6 +83,7 @@ public class M_Weapon : NetworkBehaviour
     {
         if (reloading || bulletsLeft == magazineSize) return;
         reloading = true;
+        reloadStatus = 0;
         reloadSound.Play();
         Invoke("ReloadFinished", reloadTime);
     }
@@ -84,6 +91,7 @@ public class M_Weapon : NetworkBehaviour
     private void ReloadFinished()
     {
         reloadSound.Stop();
+        pickupSound.Play();
         readyToShoot = true;
         reloading = false;
         bulletsLeft = magazineSize;
@@ -93,5 +101,10 @@ public class M_Weapon : NetworkBehaviour
     public void ShowAmmo()
     {
         _ammoText.SetText("" + bulletsLeft);
+    }
+    
+    public float getReloadStatus()
+    {
+        return reloadStatus;
     }
 }

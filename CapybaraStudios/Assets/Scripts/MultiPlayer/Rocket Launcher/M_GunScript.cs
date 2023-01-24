@@ -26,4 +26,8 @@ public class M_GunScript : MonoBehaviour
     {
         currentWeapon.Reload();
     }
+    public float getReloadStatus()
+    {
+        return currentWeapon.getReloadStatus();
+    }
 }
