@@ -6,6 +6,5 @@ using Unity.Netcode;
 
 public class ScoreManager : Singleton<ScoreManager>
 {   
-    public Dictionary<ulong, M_PlayerStats> players;
-
+    public Dictionary<ulong, M_PlayerStats> players = new Dictionary<ulong, M_PlayerStats>();
 }

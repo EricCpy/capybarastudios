@@ -1337,11 +1337,6 @@ Transform:
   m_Father: {fileID: 493217002}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1751272223 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8950276709416922912, guid: 861eeac303c5b1547a1af591e64432aa, type: 3}
-  m_PrefabInstance: {fileID: 8950276710089958463}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1765025829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,11 +1773,6 @@ MonoBehaviour:
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
-    - Override: 0
-      Prefab: {fileID: 1751272223}
-      SourcePrefabToOverride: {fileID: 0}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -1957,7 +1947,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8950276709416922911, guid: 861eeac303c5b1547a1af591e64432aa, type: 3}
+    - target: {fileID: 0}
       propertyPath: GlobalObjectIdHash
       value: 2468316095
       objectReference: {fileID: 0}
