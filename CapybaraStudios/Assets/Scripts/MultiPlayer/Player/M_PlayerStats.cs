@@ -36,9 +36,9 @@ public class M_PlayerStats : NetworkBehaviour
     private M_Weapon weapon;
 
     //Score Zeug
-    private NetworkVariable<int> networkDmg = new (0);
-    private NetworkVariable<int> networkDeaths = new (0);
-    private NetworkVariable<int> networkKills = new (0);
+    public NetworkVariable<int> networkDmg = new (0);
+    public NetworkVariable<int> networkDeaths = new (0);
+    public NetworkVariable<int> networkKills = new (0);
     public NetworkVariable<NetworkString> playerName = new();
     public override void OnNetworkSpawn()
     {
@@ -155,17 +155,13 @@ public class M_PlayerStats : NetworkBehaviour
         //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
         //  Addiere im TabMenü die Kills vom Killer + 1
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
-        var killer = NetworkManager.Singleton.ConnectedClients[damagerId].PlayerObject.GetComponent<M_PlayerStats>();
         if(client == null || client.networkHealth.Value <= 0 || client.immunity.Value > 0f) return;
         client.networkHealth.Value += health;
         client.networkHealth.Value = Mathf.Min(client.networkHealth.Value, 100);
-        if(killer != null) client.networkDmg.Value+= Mathf.Abs(health);
         if(client.networkHealth.Value <= 0) {
             client.networkHealth.Value = 0;
             //Play KillSound for
-            client.networkDeaths.Value++;
             if(clientId == damagerId) return;
-            if(killer != null) client.networkKills.Value++;
             KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {damagerId}}});
         } else if(health < 0) {
             client.blinkDuration.Value = currentBlinkDuration; //change blink timer
