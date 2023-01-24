@@ -54,7 +54,7 @@ public class multiplayerScoreboard : MonoBehaviour
 
             var currentPlayer = Color.cyan;
 
-            if (player.playerName.ToString() == PlayerPrefs.GetString("CurrentName", "Player"))//TODO
+            if (player.playerName.Value.ToString() == PlayerPrefs.GetString("CurrentName", "Player"))//TODO
             {
                 entryTransform.Find("Name").GetComponent<TMP_Text>().color = currentPlayer;
                 entryTransform.Find("Rank").GetComponent<TMP_Text>().color = currentPlayer;
@@ -64,10 +64,10 @@ public class multiplayerScoreboard : MonoBehaviour
             }
 
             entryTransform.Find("Rank").GetComponent<TMP_Text>().text = prefix;
-            entryTransform.Find("Name").GetComponent<TMP_Text>().text = player.playerName.ToString();//TODO
-            entryTransform.Find("Deaths").GetComponent<TMP_Text>().text = player.networkDeaths + "";
-            entryTransform.Find("Kills").GetComponent<TMP_Text>().text = player.networkKills + "";
-            entryTransform.Find("Dmg").GetComponent<TMP_Text>().text = player.networkDmg + "";
+            entryTransform.Find("Name").GetComponent<TMP_Text>().text = player.playerName.Value.ToString();//TODO
+            entryTransform.Find("Deaths").GetComponent<TMP_Text>().text = player.networkDeaths.Value + "";
+            entryTransform.Find("Kills").GetComponent<TMP_Text>().text = player.networkKills.Value + "";
+            entryTransform.Find("Dmg").GetComponent<TMP_Text>().text = player.networkDmg.Value + "";
 
 
             index++;
