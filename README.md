@@ -40,8 +40,8 @@ Unity Version
   - [ ] mindestens eine neue Multiplayermap
     - [ ] Parkourmap oder Parkourelemente
 
-- [ ] Waffen
+- [x] Waffen
   - [x] Granadelauncher
   - [x] Rocketlauncher
-  - [ ] fliegender Geschützturm
-  - [ ] stehender Geschützturm
+  - [x] fliegender Geschützturm
+  - [x] stehender Geschützturm
