@@ -3616,6 +3616,7 @@ MonoBehaviour:
   healthObj: {fileID: 2757617100751569132}
   nameObj: {fileID: 1662901154129954122}
   blinkIntensity: 4
+  currentBlinkDuration: 0.4
   maxHealth: 100
 --- !u!1 &1281807801642341523
 GameObject:
@@ -4914,7 +4915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8476181759881088800
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29848,8 +29849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -855.5848, y: -460}
-  m_SizeDelta: {x: 500, y: 110}
+  m_AnchoredPosition: {x: -847, y: -460}
+  m_SizeDelta: {x: 111.67, y: 110}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &5177477518086845466
 CanvasRenderer:
@@ -29879,7 +29880,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0 / 0
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -29914,7 +29915,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -31385,8 +31386,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -855.5848, y: -355}
-  m_SizeDelta: {x: 500, y: 100}
+  m_AnchoredPosition: {x: -780.63, y: -460}
+  m_SizeDelta: {x: 212.3146, y: 110}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3946571181912661356
 CanvasRenderer:
@@ -31416,7 +31417,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: "/ \u221E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31443,15 +31444,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 20
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

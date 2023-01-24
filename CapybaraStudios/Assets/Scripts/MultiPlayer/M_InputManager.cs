@@ -47,7 +47,6 @@ public class M_InputManager : MonoBehaviour
         shooting.Shoot.performed += ctx => gun.Shoot();
         shooting.Reload.performed += ctx => gun.Reload();
 
-
         ui.Tab.started += ctx => hud.Tab();
         ui.Tab.canceled += ctx => hud.Tab();
         ui.Pause.performed += ctx => Pause();
@@ -98,12 +97,16 @@ public class M_InputManager : MonoBehaviour
     }
 
     private void Pause() {
-        if(!general.enabled)
+        if(!general.enabled) {
+            general.Enable();
+            shooting.Disable();
+        } 
         hud.DoPause();
     }
 
     public void Resume() {
         general.Disable();
+        shooting.Enable();
     }
 
     private void SetMove(InputAction.CallbackContext ctx)

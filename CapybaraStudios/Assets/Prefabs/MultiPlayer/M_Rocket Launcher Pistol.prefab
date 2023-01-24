@@ -72,8 +72,8 @@ MonoBehaviour:
   reloadTime: 2
   timeBetweenShooting: 1
   maxAmmo: 10
-  magazineSize: 1
-  hasAmmo: 1
+  magazineSize: 3
+  hasAmmo: 0
   bulletsLeft: 0
   bulletsShot: 0
   animationType: 1
@@ -117,14 +117,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2876530746529239937}
-  m_LocalRotation: {x: 0.1552073, y: 0.6275821, z: 0.7262894, w: -0.23357041}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.007, y: -0.022, z: 0.183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2876530745694690554}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -79.774, y: 337.576, z: -125.532}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2876530746787370116
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2876530746787370116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.237, z: 1.06}
+  m_LocalPosition: {x: -0, y: 0.269, z: 1.092}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -19,16 +19,11 @@ public class M_GunScript : MonoBehaviour
 
     public void Shoot()
     {
-        currentWeapon.Shoot(true);
+        currentWeapon.Shoot();
     }
 
     public void Reload()
     {
         currentWeapon.Reload();
-    }
-
-    public float getReloadStatus()
-    {
-        return currentWeapon.getReloadStatus();
     }
 }

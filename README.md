@@ -14,9 +14,13 @@ Unity Version
   - [x] Sounds
   - [x] dmg
   - [x] dying
-  - [ ] respawning
+  - [x] respawning
   - [ ] TabMenü für den Multiplayer
+  - [ ] DeathMenü
+  - [ ] KillSound für Killer
   - [ ] connect to lobby by code with relay
+  - [ ] Spielmodis
+  - [ ] MultiplayerMap
 
 - [x] Tabmenü
    - [x] Namen

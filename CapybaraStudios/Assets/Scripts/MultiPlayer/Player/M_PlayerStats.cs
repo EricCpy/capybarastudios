@@ -27,11 +27,10 @@ public class M_PlayerStats : NetworkBehaviour
     private Volume volume;
     [SerializeField] private int maxHealth = 100;
     private NetworkVariable<float> networkHealth = new (100);
-    private NetworkVariable<float> respawnTime = new (0);
     private NetworkVariable<float> immunity = new ();
     private NetworkVariable<float> blinkDuration = new (0);
     private bool dead = false;
-    private float currentHealth;
+    private float currentHealth, respawnCount = 0f;
     private PlayerVisuals playerVisuals;
     private Color color;
     void Start()
@@ -48,7 +47,10 @@ public class M_PlayerStats : NetworkBehaviour
     void Update()
     {
         if(dead) {
-            if(networkHealth.Value == 0) return;
+            if(IsOwner) {
+                respawnCount -= Time.deltaTime;
+            }
+            if(respawnCount > 0f) return;
             Respawn();
         } 
         if(networkHealth.Value != currentHealth) {
@@ -88,6 +90,15 @@ public class M_PlayerStats : NetworkBehaviour
     }
 
     void Die() {
+        if(IsOwner) {
+            GetComponent<M_InputManager>().enabled = false;
+            GetComponent<M_WeaponAnimationController>().enabled = false;
+            GetComponentInChildren<Animator>().enabled = false;
+            deathSound.Play(); //spiele sterbe sound
+            //öffne KillHud
+            //GetComponent<M_HUDcontroller>().Death();
+        }
+        respawnCount = 2f;
         dead = true;
         ragdoll.EnablePhysics();
         healthObj.SetActive(false);
@@ -95,7 +106,15 @@ public class M_PlayerStats : NetworkBehaviour
     }
 
     void Respawn() {
+        if(IsOwner) {
+            RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
+            GetComponent<M_InputManager>().enabled = false;
+            GetComponent<M_WeaponAnimationController>().enabled = false;
+            GetComponentInChildren<Animator>().enabled = false;
+            deathSound.Stop();
+        }
         dead = false;
+        respawnCount = 0f;
         ragdoll.DeactivatePhysics();
         healthObj.SetActive(true);
         nameObj.SetActive(true);
@@ -107,12 +126,11 @@ public class M_PlayerStats : NetworkBehaviour
         //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
         //  Addiere im TabMenü die Kills vom Killer + 1
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
-        if(client == null || client.networkHealth.Value <= 0 || client.respawnTime.Value > 0f || client.immunity.Value > 0f) return;
+        if(client == null || client.networkHealth.Value <= 0 || client.immunity.Value > 0f) return;
         client.networkHealth.Value += health;
         client.networkHealth.Value = Mathf.Min(client.networkHealth.Value, 100);
         if(client.networkHealth.Value <= 0) {
             client.networkHealth.Value = 0;
-            respawnTime.Value = 2f; //setze respawn timer
         } else {
             client.blinkDuration.Value = currentBlinkDuration; //change blink timer
         }
@@ -122,14 +140,6 @@ public class M_PlayerStats : NetworkBehaviour
         currentHealth = networkHealth.Value;
         healthIndicator.SetText("+" + currentHealth); //change hp for client in his hud
         updateVignette(); //change vignette in camera
-        if(currentHealth == 0) {
-            //deathSound.Play(); //spiele sterbe sound
-            GetComponent<M_InputManager>().enabled = false;
-            GetComponent<M_WeaponAnimationController>().enabled = false;
-            GetComponentInChildren<Animator>().enabled = false;
-            //öffne KillHud
-            //GetComponent<M_HUDcontroller>().Death();
-        }
     }
 
     public void updateVignette()

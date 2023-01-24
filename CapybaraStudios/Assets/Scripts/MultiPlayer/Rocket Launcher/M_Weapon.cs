@@ -11,29 +11,25 @@ using Random = UnityEngine.Random;
 public class M_Weapon : NetworkBehaviour
 {
     private Transform _transform;
-
     //sounds
     public AudioSource gunSound;
     public AudioSource reloadSound;
-    public AudioSource pickupSound;
-
-    //Gun stats
-    public float reloadTime, timeBetweenShooting;
-    public int maxAmmo, magazineSize;
-    public bool hasAmmo;
-    [HideInInspector] public int bulletsLeft, bulletsShot;
-    bool reloading, readyToShoot;
-    private float reloadStatus = 1;
 
     //HUD
     private TextMeshProUGUI _ammoText;
     private TextMeshProUGUI _maxAmmoText;
 
-    private WaitForSeconds rapidFireWait;
-    private int controllerMask = ~(1 << 15);
+    public Transform BulletFirePoint;
+
+    //Gun stats
+    public float reloadTime, timeBetweenShooting;
+    public int magazineSize;
+    [HideInInspector] public int bulletsLeft;
+    bool reloading, readyToShoot;
+    private float reloadStatus = 1;
     private Animator _animator;
     public int animationType;
-    public Transform BulletFirePoint;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
@@ -49,28 +45,10 @@ public class M_Weapon : NetworkBehaviour
         _maxAmmoText = maxAmmoText;
     }
 
-    private void Update()
+    public void Shoot()
     {
-        if (reloadStatus < 1) reloadStatus += Time.deltaTime / reloadTime;
-        else if (reloadStatus > 1) reloadStatus = 1;
-    }
-
-    public void Shoot(bool first)
-    {
-        if (reloading)
-        {
-            cancelReload();
-            readyToShoot = false;
-            Invoke("ResetShot", timeBetweenShooting);
-            return;
-        }
-
         if (!readyToShoot || reloading || bulletsLeft <= 0) return;
-
         if (_animator != null) _animator.SetTrigger("shoot");
-        readyToShoot = false;
-
-        
         //rocket launcher
         M_Launcher launcher = GetComponent<M_Launcher>();
         launcher.Launch(OwnerClientId);
@@ -79,22 +57,13 @@ public class M_Weapon : NetworkBehaviour
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 200f);
         ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
         impactReceiver.AddImpact(dir, force);
-        //
-
 
         //magazine
         bulletsLeft--;
-        bulletsShot--;
         ShowAmmo();
         gunSound.Play();
-        if (bulletsShot > 0 && bulletsLeft > 0)
-        {
-            readyToShoot = true;
-            Shoot(false);
-            return;
-        }
-
-        Invoke("ResetShot", timeBetweenShooting);
+        readyToShoot = false;
+        if (bulletsLeft > 0) Invoke("ResetShot", timeBetweenShooting);
     }
 
     //shoot cooldown
@@ -106,73 +75,23 @@ public class M_Weapon : NetworkBehaviour
     //reload
     public void Reload()
     {
-        if (bulletsLeft.Equals(magazineSize) || maxAmmo <= 0 || reloadStatus < 1) return;
-
+        if (reloading || bulletsLeft == magazineSize) return;
         reloading = true;
-        readyToShoot = true;
         reloadSound.Play();
-        reloadStatus = 0;
         Invoke("ReloadFinished", reloadTime);
     }
 
     private void ReloadFinished()
     {
-        if (reloadSound)
-        {
-            reloadSound.Stop();
-        }
-
-        pickupSound.Play();
-
-        if ((maxAmmo + bulletsLeft) < magazineSize)
-        {
-            bulletsLeft = maxAmmo + bulletsLeft;
-            maxAmmo = 0;
-        }
-        else
-        {
-            maxAmmo -= magazineSize - bulletsLeft;
-            bulletsLeft = magazineSize;
-        }
-
-        ShowAmmo();
-
+        reloadSound.Stop();
+        readyToShoot = true;
         reloading = false;
+        bulletsLeft = magazineSize;
+        ShowAmmo();
     }
 
     public void ShowAmmo()
     {
-        if (!_ammoText || !_maxAmmoText) return;
-        if (!hasAmmo)
-        {
-            _ammoText.SetText("∞");
-            _maxAmmoText.SetText("");
-        }
-        else
-        {
-            _ammoText.SetText((bulletsLeft) + " / " + (magazineSize));
-            if (maxAmmo > 0)
-                _maxAmmoText.SetText((maxAmmo).ToString());
-            else
-                _maxAmmoText.SetText("0");
-        }
-    }
-
-    public float getReloadStatus()
-    {
-        return reloadStatus;
-    }
-
-    public void cancelReload()
-    {
-        if (reloadSound)
-        {
-            reloadSound.Stop();
-        }
-
-        reloading = false;
-        readyToShoot = true;
-        reloadStatus = 1;
-        CancelInvoke("ReloadFinished");
+        _ammoText.SetText("" + bulletsLeft);
     }
 }

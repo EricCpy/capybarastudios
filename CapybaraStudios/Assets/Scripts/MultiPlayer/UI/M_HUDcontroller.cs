@@ -56,30 +56,9 @@ public class M_HUDcontroller : NetworkBehaviour
         }
     }
 
-    public void Death()
+    public void Death(string killer)
     {
-        tabMenuUI.SetActive(false);
         deathMenuUI.SetActive(true);
-        gameUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
-    }
-
-
-    private IEnumerator DeathFadein(float time)
-    {
-        if (time > 0)
-        {
-            yield return new WaitForSeconds(0.1f);
-            deathMenuUI.GetComponent<CanvasGroup>().alpha += 0.06666666f;
-            time -= 100;
-            StartCoroutine(DeathFadein(time));
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
-        }
     }
 
     public void Resume()
@@ -87,7 +66,6 @@ public class M_HUDcontroller : NetworkBehaviour
         print("Resume");
         if(_input) _input.Resume();
         Cursor.lockState = CursorLockMode.Locked;
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
         _gameIsPaused = false;
         pauseMenuUI.SetActive(false);
@@ -101,7 +79,6 @@ public class M_HUDcontroller : NetworkBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
         _gameIsPaused = true;
     }
 
