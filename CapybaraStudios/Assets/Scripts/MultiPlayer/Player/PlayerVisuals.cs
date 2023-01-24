@@ -51,5 +51,6 @@ public class PlayerVisuals : NetworkBehaviour
     [ServerRpc]
     private void NameServerRpc(string name) {
         _netName.Value = name;
+        GetComponent<M_PlayerStats>().playerName.Value = name;
     }
 }

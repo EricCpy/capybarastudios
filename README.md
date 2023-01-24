@@ -16,7 +16,7 @@ Unity Version
   - [x] dying
   - [x] respawning
   - [x] KillSound für Killer
-  - [ ] TabMenü für den Multiplayer (ScoreManager)
+  - [x] TabMenü für den Multiplayer (ScoreManager)
   - [ ] DeathMenü
   - [ ] connect to lobby by code with relay
   - [ ] Spielmodis

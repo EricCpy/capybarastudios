@@ -36,10 +36,10 @@ public class M_PlayerStats : NetworkBehaviour
     private M_Weapon weapon;
 
     //Score Zeug
-    private NetworkVariable<int> networkDmg = new ();
+    private NetworkVariable<int> networkDmg = new (0);
     private NetworkVariable<int> networkDeaths = new (0);
-    private NetworkVariable<int> networkKills = new ();
-
+    private NetworkVariable<int> networkKills = new (0);
+    public NetworkVariable<NetworkString> playerName = new();
     public override void OnNetworkSpawn()
     {
         ScoreManager.Instance.players.Add(OwnerClientId, this);
