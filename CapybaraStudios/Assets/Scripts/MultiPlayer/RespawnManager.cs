@@ -11,7 +11,7 @@ public class RespawnManager : NetworkSingleton<RespawnManager>
     
     [ServerRpc(RequireOwnership = false)]
     public void SetClientToNewSpawnServerRpc(ulong clientId) {
-        Debug.Log("bbbbb");
+        Debug.Log(currentSpawn.Value);
         Transform t = spawns[currentSpawn.Value++ % spawns.Length];
         ChangePositionClientRpc(t.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
     }

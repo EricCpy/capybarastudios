@@ -34,6 +34,17 @@ public class M_PlayerStats : NetworkBehaviour
     private PlayerVisuals playerVisuals;
     private Color color;
     private M_Weapon weapon;
+
+    //Score Zeug
+    private NetworkVariable<int> networkDmg = new ();
+    private NetworkVariable<int> networkDeaths = new ();
+    private NetworkVariable<int> networkKills = new ();
+
+    public override void OnNetworkSpawn()
+    {
+        ScoreManager.Instance.players.Add(OwnerClientId, this);
+    }
+
     void Start()
     {
         if(IsServer || IsHost) {
