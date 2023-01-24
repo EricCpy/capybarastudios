@@ -16,18 +16,14 @@ public class M_PlayerStats : NetworkBehaviour
     public TextMeshProUGUI healthIndicator;
     public int damage_done = 0;
     public int kills = 0;
-
-    //private Ragdoll ragdoll;
-
+    private Ragdoll ragdoll;
 
     [SerializeField] private Image healthBar;
 
     [SerializeField] private GameObject healthObj, nameObj;
-
-    private SkinnedMeshRenderer[] skinnedMeshRenderers;
-    private Color color;
     [SerializeField] private float blinkIntensity;
     private float blinkTimer, maxImmunity = 2f;
+    [SerializeField] private float currentBlinkDuration = .4f;
     private Volume volume;
     [SerializeField] private int maxHealth = 100;
     private NetworkVariable<float> networkHealth = new (100);
@@ -36,43 +32,38 @@ public class M_PlayerStats : NetworkBehaviour
     private NetworkVariable<float> blinkDuration = new (0);
     private bool dead = false;
     private float currentHealth;
+    private PlayerVisuals playerVisuals;
+    private Color color;
     void Start()
     {
         if(IsServer || IsHost) {
             networkHealth.Value = maxHealth;
             immunity.Value = maxImmunity;
         }
+        ragdoll = GetComponent<Ragdoll>();
         volume = M_Camera.Instance._camera.GetComponentInChildren<Volume>();
-        skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        color = skinnedMeshRenderers[0].material.color;
+        playerVisuals = GetComponent<PlayerVisuals>();
+        blinkDuration.OnValueChanged += OnBlinkChanged;
     }
-
     void Update()
     {
-        Debug.Log(networkHealth.Value);
         if(dead) {
             if(networkHealth.Value == 0) return;
             Respawn();
         } 
-
-        if(IsOwner) {
-            if(networkHealth.Value != currentHealth) {
-                UpdateHealth();
-            }
+        if(networkHealth.Value != currentHealth) {
+            if(IsOwner) UpdateHealth();
+            SetHealthBar();
         }
-        Debug.Log("2: " + networkHealth.Value);
         if(networkHealth.Value == 0) {
             Die();
             return;
         }
 
-        if (blinkDuration.Value > 0)
-        {
-            if(blinkTimer <= 0) blinkTimer = blinkDuration.Value;
-            Debug.Log(blinkDuration.Value);
+        if(blinkTimer > 0) {
             blinkTimer -= Time.deltaTime;
-            float intentsity = Mathf.Clamp01(blinkTimer / blinkDuration.Value) * blinkIntensity;
-            foreach (var s in skinnedMeshRenderers)
+            float intentsity = Mathf.Clamp01(blinkTimer / currentBlinkDuration) * blinkIntensity;
+            foreach (var s in playerVisuals.renderers)
             {
                 s.material.color = color + Color.white * intentsity;
             }
@@ -82,19 +73,30 @@ public class M_PlayerStats : NetworkBehaviour
            if(blinkTimer <= 0) blinkDuration.Value = 0;
            if(immunity.Value > 0) immunity.Value -= Time.deltaTime;
         }
-        Debug.Log("3: " + networkHealth.Value);
+    }
+
+    private void OnBlinkChanged(float prev, float next) {
+        if(next > 0) {
+            blinkTimer = next;
+            color = playerVisuals.renderers[0].material.color;
+        }
+    }
+
+    void SetHealthBar() {
+        float percent = networkHealth.Value / maxHealth;
+        healthBar.rectTransform.localScale = new Vector3(-percent,1,1);
     }
 
     void Die() {
         dead = true;
-        GetComponent<Ragdoll>().EnablePhysics();
+        ragdoll.EnablePhysics();
         healthObj.SetActive(false);
         nameObj.SetActive(false);
     }
 
     void Respawn() {
         dead = false;
-        GetComponent<Ragdoll>().DeactivatePhysics();
+        ragdoll.DeactivatePhysics();
         healthObj.SetActive(true);
         nameObj.SetActive(true);
     }
@@ -104,22 +106,19 @@ public class M_PlayerStats : NetworkBehaviour
         // Zusatz:
         //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
         //  Addiere im TabMenü die Kills vom Killer + 1
-        Debug.Log(networkHealth.Value);
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
         if(client == null || client.networkHealth.Value <= 0 || client.respawnTime.Value > 0f || client.immunity.Value > 0f) return;
         client.networkHealth.Value += health;
-        client.networkHealth.Value = Mathf.Min(health, 100);
+        client.networkHealth.Value = Mathf.Min(client.networkHealth.Value, 100);
         if(client.networkHealth.Value <= 0) {
             client.networkHealth.Value = 0;
             respawnTime.Value = 2f; //setze respawn timer
         } else {
-            client.blinkDuration.Value = .4f; //change blink timer
+            client.blinkDuration.Value = currentBlinkDuration; //change blink timer
         }
-        //change hp bar on this client
     }
 
     public void UpdateHealth() {
-        Debug.Log(networkHealth.Value);
         currentHealth = networkHealth.Value;
         healthIndicator.SetText("+" + currentHealth); //change hp for client in his hud
         updateVignette(); //change vignette in camera

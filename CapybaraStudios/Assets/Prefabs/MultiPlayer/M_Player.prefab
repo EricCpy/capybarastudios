@@ -3612,6 +3612,9 @@ MonoBehaviour:
   healthIndicator: {fileID: 7219239274298247840}
   damage_done: 0
   kills: 0
+  healthBar: {fileID: 5209488662349389122}
+  healthObj: {fileID: 2757617100751569132}
+  nameObj: {fileID: 1662901154129954122}
   blinkIntensity: 4
   maxHealth: 100
 --- !u!1 &1281807801642341523
@@ -5454,7 +5457,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3
 --- !u!1 &2176574587027008906
 GameObject:
   m_ObjectHideFlags: 0
@@ -25867,7 +25870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 41, y: 0}
+  m_AnchoredPosition: {x: 41.44, y: 0}
   m_SizeDelta: {x: 93, y: 18}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &9178781680185866981
@@ -25907,7 +25910,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3
 --- !u!1 &3701159306864876762
 GameObject:
   m_ObjectHideFlags: 0

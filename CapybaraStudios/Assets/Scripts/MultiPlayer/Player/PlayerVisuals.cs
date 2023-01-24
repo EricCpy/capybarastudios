@@ -8,7 +8,7 @@ public class PlayerVisuals : NetworkBehaviour
 {
     private NetworkVariable<Color> _netColor = new();
     private NetworkVariable<NetworkString> _netName = new();
-    [SerializeField] private SkinnedMeshRenderer[] renderers;
+    public SkinnedMeshRenderer[] renderers;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private GameObject nameBar;
     [SerializeField] private TextMeshProUGUI nameOverlay;
