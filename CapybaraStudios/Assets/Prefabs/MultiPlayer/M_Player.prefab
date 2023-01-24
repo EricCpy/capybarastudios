@@ -8788,6 +8788,7 @@ MonoBehaviour:
   action: {fileID: -7952785038415953332, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3231373529328008510
 GameObject:
   m_ObjectHideFlags: 0
@@ -10377,6 +10378,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 3
+  changeable: 1
 --- !u!1 &3231497443320012160
 GameObject:
   m_ObjectHideFlags: 0
@@ -10906,6 +10908,7 @@ MonoBehaviour:
   action: {fileID: -7501039610504296802, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3231554403563857768
 GameObject:
   m_ObjectHideFlags: 0
@@ -11102,6 +11105,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 2
+  changeable: 1
 --- !u!1 &3231559689702847672
 GameObject:
   m_ObjectHideFlags: 0
@@ -12595,6 +12599,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 4
+  changeable: 1
 --- !u!1 &3231635389396362110
 GameObject:
   m_ObjectHideFlags: 0
@@ -13982,6 +13987,7 @@ MonoBehaviour:
   action: {fileID: 6411862093397396869, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3231679448703417670
 GameObject:
   m_ObjectHideFlags: 0
@@ -17186,6 +17192,7 @@ MonoBehaviour:
   action: {fileID: -1615043304420335981, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3231854623042819248
 GameObject:
   m_ObjectHideFlags: 0
@@ -21188,6 +21195,7 @@ MonoBehaviour:
   action: {fileID: -9047541242382115978, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 1
+  changeable: 1
 --- !u!1 &3232122204912562552
 GameObject:
   m_ObjectHideFlags: 0
@@ -22856,6 +22864,7 @@ MonoBehaviour:
   action: {fileID: 6866794936900250994, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3233445645414348182
 GameObject:
   m_ObjectHideFlags: 0
@@ -23052,6 +23061,7 @@ MonoBehaviour:
   action: {fileID: -8803115428811126137, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3233480404506055152
 GameObject:
   m_ObjectHideFlags: 0
@@ -24036,6 +24046,7 @@ MonoBehaviour:
   action: {fileID: 4674274675683616539, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   waitingForInputObject: {fileID: 3232154557122466068}
   index: 0
+  changeable: 1
 --- !u!1 &3233532476705794156
 GameObject:
   m_ObjectHideFlags: 0
