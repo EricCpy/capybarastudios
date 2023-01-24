@@ -15,12 +15,13 @@ Unity Version
   - [x] dmg
   - [x] dying
   - [x] respawning
-  - [ ] TabMenü für den Multiplayer
+  - [x] KillSound für Killer
+  - [ ] TabMenü für den Multiplayer (ScoreManager)
   - [ ] DeathMenü
-  - [ ] KillSound für Killer
   - [ ] connect to lobby by code with relay
   - [ ] Spielmodis
   - [ ] MultiplayerMap
+  - [ ] out of map sterben
 
 - [x] Tabmenü
    - [x] Namen

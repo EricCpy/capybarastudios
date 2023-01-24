@@ -30,37 +30,34 @@ public class M_PlayerStats : NetworkBehaviour
     private NetworkVariable<float> immunity = new ();
     private NetworkVariable<float> blinkDuration = new (0);
     private bool dead = false;
-    private float currentHealth, respawnCount = 0f;
+    private float respawnCount = 0f;
     private PlayerVisuals playerVisuals;
     private Color color;
+    private M_Weapon weapon;
     void Start()
     {
         if(IsServer || IsHost) {
             networkHealth.Value = maxHealth;
             immunity.Value = maxImmunity;
         }
+        if(IsOwner) {
+            healthObj.SetActive(false);
+            nameObj.SetActive(false);
+        }
         ragdoll = GetComponent<Ragdoll>();
         volume = M_Camera.Instance._camera.GetComponentInChildren<Volume>();
         playerVisuals = GetComponent<PlayerVisuals>();
+        weapon = GetComponentInChildren<M_Weapon>();
         blinkDuration.OnValueChanged += OnBlinkChanged;
+        networkHealth.OnValueChanged += OnHealthChanged;
     }
     void Update()
     {
         if(dead) {
-            if(IsOwner) {
-                respawnCount -= Time.deltaTime;
-            }
-            if(respawnCount > 0f) return;
-            Respawn();
+            if(!IsOwner) return;
+            respawnCount -= Time.deltaTime;
+            if(respawnCount <= 0f) Respawn();
         } 
-        if(networkHealth.Value != currentHealth) {
-            if(IsOwner) UpdateHealth();
-            SetHealthBar();
-        }
-        if(networkHealth.Value == 0) {
-            Die();
-            return;
-        }
 
         if(blinkTimer > 0) {
             blinkTimer -= Time.deltaTime;
@@ -77,6 +74,12 @@ public class M_PlayerStats : NetworkBehaviour
         }
     }
 
+    private void OnHealthChanged(float prev, float next) {
+        if(IsOwner) UpdateHealth(next);
+        else SetHealthBar();
+        if(networkHealth.Value == 0) Die();
+    }
+
     private void OnBlinkChanged(float prev, float next) {
         if(next > 0) {
             blinkTimer = next;
@@ -90,38 +93,53 @@ public class M_PlayerStats : NetworkBehaviour
     }
 
     void Die() {
+        respawnCount = 2f;
+        dead = true;
+        ragdoll.EnablePhysics();
+        if(!IsOwner) {
+            healthObj.SetActive(false);
+            nameObj.SetActive(false);
+        }
+        GetComponent<M_WeaponAnimationController>().enabled = false;
         if(IsOwner) {
             GetComponent<M_InputManager>().enabled = false;
-            GetComponent<M_WeaponAnimationController>().enabled = false;
-            GetComponentInChildren<Animator>().enabled = false;
             deathSound.Play(); //spiele sterbe sound
             //öffne KillHud
             //GetComponent<M_HUDcontroller>().Death();
         }
-        respawnCount = 2f;
-        dead = true;
-        ragdoll.EnablePhysics();
-        healthObj.SetActive(false);
-        nameObj.SetActive(false);
     }
 
     void Respawn() {
-        if(IsOwner) {
-            RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
-            GetComponent<M_InputManager>().enabled = false;
-            GetComponent<M_WeaponAnimationController>().enabled = false;
-            GetComponentInChildren<Animator>().enabled = false;
-            deathSound.Stop();
-        }
         dead = false;
         respawnCount = 0f;
-        ragdoll.DeactivatePhysics();
-        healthObj.SetActive(true);
-        nameObj.SetActive(true);
+        if(IsOwner) {
+            RespawnServerRpc();
+            RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
+            GetComponent<M_InputManager>().enabled = true;
+            weapon.bulletsLeft = weapon.magazineSize;
+            deathSound.Stop();
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void UpdateHealthServerRpc(int health, ulong clientId) {
+    public void RespawnServerRpc() {
+        networkHealth.Value = maxHealth;
+        immunity.Value = maxImmunity;
+        RespawnClientRpc();
+    }
+
+    [ClientRpc]
+    public void RespawnClientRpc() {
+        ragdoll.DeactivatePhysics();
+        if(!IsOwner) {
+            healthObj.SetActive(true);
+            nameObj.SetActive(true);
+        }
+        GetComponent<M_WeaponAnimationController>().enabled = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateHealthServerRpc(int health, ulong clientId, ulong damagerId) {
         // Zusatz:
         //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
         //  Addiere im TabMenü die Kills vom Killer + 1
@@ -131,18 +149,25 @@ public class M_PlayerStats : NetworkBehaviour
         client.networkHealth.Value = Mathf.Min(client.networkHealth.Value, 100);
         if(client.networkHealth.Value <= 0) {
             client.networkHealth.Value = 0;
-        } else {
+            //Play KillSound for
+            if(clientId == damagerId) return;
+            KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {damagerId}}});
+        } else if(health < 0) {
             client.blinkDuration.Value = currentBlinkDuration; //change blink timer
         }
     }
 
-    public void UpdateHealth() {
-        currentHealth = networkHealth.Value;
-        healthIndicator.SetText("+" + currentHealth); //change hp for client in his hud
-        updateVignette(); //change vignette in camera
+    [ClientRpc]
+    public void KillSoundClientRpc(ClientRpcParams clientRpcParams) {
+        killSound.Play();
     }
 
-    public void updateVignette()
+    public void UpdateHealth(float currentHealth) {
+        healthIndicator.SetText("+" + currentHealth); //change hp for client in his hud
+        updateVignette(currentHealth); //change vignette in camera
+    }
+
+    public void updateVignette(float currentHealth)
     {
         Vignette vignette;
         if (volume.profile.TryGet(out vignette))

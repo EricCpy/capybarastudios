@@ -21,9 +21,9 @@ public class M_Launcher : NetworkBehaviour
     private void Spawn(ulong owner) {
         GameObject rocketInstance = Instantiate(rocket, firePoint.position, firePoint.rotation);
         //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
+        rocketInstance.GetComponent<NetworkObject>().Spawn();
         rocketInstance.GetComponent<Rigidbody>().velocity = transform.forward * range;
         rocketInstance.GetComponent<M_Rocket>().owningPlayer = owner; 
-        rocketInstance.GetComponent<NetworkObject>().Spawn();
         //rocketInstance.GetComponent<NetworkObject>().SpawnWithOwnership();
     }
 
