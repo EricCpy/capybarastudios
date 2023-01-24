@@ -17,6 +17,8 @@ public class M_HUDcontroller : NetworkBehaviour
     public GameObject tabMenuUI;
     public GameObject settingsMenuUI;
     [SerializeField] M_InputManager _input;
+    [SerializeField] private TextMeshProUGUI deathText;
+    private bool dead = false;
 
     public override void OnNetworkSpawn() {
         if(!IsOwner) Destroy(gameObject);
@@ -36,6 +38,7 @@ public class M_HUDcontroller : NetworkBehaviour
 
     public void DoPause()
     {
+        if(dead) Death("", false);
         if (_gameIsPaused)
         {
             settingsMenuUI.SetActive(false);
@@ -50,15 +53,24 @@ public class M_HUDcontroller : NetworkBehaviour
 
     public void Tab()
     {
+        if(dead) Death("", false);
         if (!_gameIsPaused)
         {
             tabMenuUI.SetActive(!tabMenuUI.activeSelf);
         }
     }
 
-    public void Death(string killer)
+    public void Death(string killer, bool dead)
     {
-        deathMenuUI.SetActive(true);
+        this.dead = dead;
+        deathMenuUI.SetActive(dead);
+        if(dead == false) return;
+        Debug.Log(killer);
+        if(killer.Equals("")) {
+            deathText.text = "You killed yourself :(";
+            return;
+        }
+        deathText.text = killer + " killed you";
     }
 
     public void Resume()

@@ -17,11 +17,11 @@ Unity Version
   - [x] respawning
   - [x] KillSound für Killer
   - [x] TabMenü für den Multiplayer (ScoreManager)
-  - [ ] DeathMenü
+  - [x] DeathMenü
+  - [ ] out of map sterben
   - [ ] connect to lobby by code with relay
   - [ ] Spielmodis
   - [ ] MultiplayerMap
-  - [ ] out of map sterben
 
 - [x] Tabmenü
    - [x] Namen

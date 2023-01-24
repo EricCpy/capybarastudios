@@ -96,6 +96,17 @@ public class M_InputManager : MonoBehaviour
         ui.Disable();
     }
 
+
+    public void Die() {
+        walking.Disable();
+        shooting.Disable();
+    }
+
+    public void Respawn() {
+        walking.Enable();
+        shooting.Enable();
+    }
+
     private void Pause() {
         if(!general.enabled) {
             general.Enable();
