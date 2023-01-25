@@ -1686,12 +1686,12 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2.5
+  m_Height: 2.72
   m_Radius: 0.38
   m_SlopeLimit: 45
   m_StepOffset: 0.7
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1.225, z: 0}
 --- !u!114 &9148826288943837784
 MonoBehaviour:
@@ -1735,7 +1735,7 @@ MonoBehaviour:
   jumpSound: {fileID: 1581118760022023251}
   speed: 7
   sprintingSpeed: 15
-  jumpHeight: 2
+  jumpHeight: 1.35
   gravity: -40
   Target: {fileID: 6271370191318142388}
   _animationTransitionSpeed: 3

@@ -2825,7 +2825,7 @@ MonoBehaviour:
   jumpSound: {fileID: 7520782608286808615}
   speed: 7
   sprintingSpeed: 15
-  jumpHeight: 2
+  jumpHeight: 1.35
   gravity: -40
   Target: {fileID: 300647477097907602}
   _animationTransitionSpeed: 3

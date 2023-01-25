@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private float _velocityX = 0;
     private float _velocityZ = 0;
     private bool isJumping;
-
+    private bool isFalling;
     public Transform torso;
 
     // Start is called before the first frame update
@@ -83,21 +83,15 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded)
         {
             _animator.SetBool("isFalling", false);
+            isFalling = false;
         }
         else
         {
-            isJumping = false;
-            if (controller.isGrounded) //if the player was grounded in the previous update but nor now, meaning he jumped now
+            if (!isFalling && (controller.velocity.y < 0 || controller.velocity.y < -2))
             {
-                isJumping = true;
+                isFalling = true;
+                _animator.SetBool("isFalling", true);
             }
-            else if (controller.velocity.y < 0 || controller.velocity.y < -2)
-            {
-                isJumping = false;
-                _animator.SetTrigger("isFalling");
-            }
-
-            _animator.SetBool("isJumping", isJumping);
         }
 
         _animator.SetBool("isGrounded", controller.isGrounded);
@@ -126,6 +120,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        midAirMomentum.y = playerVelocity;
+        controller.Move(midAirMomentum * Time.deltaTime);
         //constant downward (gravity)
         playerVelocity += (gravity * Time.deltaTime);
         if (controller.isGrounded && playerVelocity < 0)

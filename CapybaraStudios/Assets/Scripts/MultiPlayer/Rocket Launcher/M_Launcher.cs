@@ -19,7 +19,6 @@ public class M_Launcher : NetworkBehaviour
     }
 
     private void Spawn(ulong owner, Vector3 pos, Quaternion rot) {
-        Debug.Log(firePoint.rotation);
         GameObject rocketInstance = Instantiate(rocket, pos, rot);
         //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
         rocketInstance.GetComponent<NetworkObject>().Spawn();
