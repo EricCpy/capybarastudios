@@ -17,14 +17,18 @@ public class M_Rocket : NetworkBehaviour
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        rig.freezeRotation = true;
         if(IsServer) Destroy(gameObject, 30f);
     }
 
-
     void OnCollisionEnter(Collision other)
-    {
+    {   
+        Vector3 oldVelocity = rig.velocity;
         M_PlayerStats obj = other.gameObject.GetComponentInParent<M_PlayerStats>();
-        if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) return;
+        if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) {
+            rig.velocity = oldVelocity;
+            return;
+        } 
         print(other.gameObject.name);
         Explode();
         exploded = true;

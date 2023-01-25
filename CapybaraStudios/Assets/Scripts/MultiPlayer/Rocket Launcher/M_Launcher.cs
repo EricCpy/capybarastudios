@@ -13,13 +13,14 @@ public class M_Launcher : NetworkBehaviour
 
     public void Launch(ulong from)
     {
-        if(IsServer) Spawn(from);
-        else SpawnServerRPC(from);
+        if(IsServer) Spawn(from, firePoint.position, firePoint.rotation);
+        else SpawnServerRPC(from, firePoint.position, firePoint.rotation);
         
     }
 
-    private void Spawn(ulong owner) {
-        GameObject rocketInstance = Instantiate(rocket, firePoint.position, firePoint.rotation);
+    private void Spawn(ulong owner, Vector3 pos, Quaternion rot) {
+        Debug.Log(firePoint.rotation);
+        GameObject rocketInstance = Instantiate(rocket, pos, rot);
         //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
         rocketInstance.GetComponent<NetworkObject>().Spawn();
         rocketInstance.GetComponent<Rigidbody>().velocity = transform.forward * range;
@@ -28,8 +29,8 @@ public class M_Launcher : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void SpawnServerRPC(ulong owner) {
-        Spawn(owner);
+    public void SpawnServerRPC(ulong owner, Vector3 pos, Quaternion rot) {
+        Spawn(owner, pos, rot);
     }
 
     public float GetKnockbackForce()

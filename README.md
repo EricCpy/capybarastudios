@@ -19,6 +19,7 @@ Unity Version
   - [x] TabMenü für den Multiplayer (ScoreManager)
   - [x] DeathMenü
   - [x] out of map sterben
+  - [x] aktualisiere und ordne tab menü nach kills
   - [ ] Spielmodis
   - [ ] connect to lobby by code with relay
   - [ ] MultiplayerMap
@@ -26,13 +27,13 @@ Unity Version
 - [x] Tabmenü
    - [x] Namen
 
-- [ ] Menüs
+- [x] Menüs
   - [x] Namen ändern in Settings
-  - [ ] alle Optionen im Menü funktionieren
+  - [x] alle Optionen im Menü funktionieren
     - [x] Soundmanager
     - [x] Controls 
       - [x] mindestens Maussenstivität einstellbar
-    - [ ] Video Funktionen einbauen
+    - [x] Video Funktionen einbauen
 
 - [ ] Maps
   - [ ] mindestens 2 neue SingleplayerMaps

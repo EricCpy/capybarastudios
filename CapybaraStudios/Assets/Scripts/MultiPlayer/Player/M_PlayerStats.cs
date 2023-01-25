@@ -27,9 +27,10 @@ public class M_PlayerStats : NetworkBehaviour
     private Volume volume;
     [SerializeField] public int maxHealth = 100;
     private M_HUDcontroller hud;
-    private NetworkVariable<float> networkHealth = new (100);
+    private NetworkVariable<int> networkHealth = new (100);
     private NetworkVariable<float> immunity = new ();
     private NetworkVariable<float> blinkDuration = new (0);
+    private NetworkVariable<ulong> lastDamager = new (0);
     private bool dead = false;
     private float respawnCount = 0f;
     private PlayerVisuals playerVisuals;
@@ -42,7 +43,7 @@ public class M_PlayerStats : NetworkBehaviour
     [HideInInspector] public NetworkVariable<int> networkDeaths = new (0);
     [HideInInspector] public NetworkVariable<int> networkKills = new (0);
     [HideInInspector] public NetworkVariable<NetworkString> playerName = new();
-    private string killer;
+    private string killer = "";
     public override void OnNetworkSpawn()
     {
         ScoreManager.Instance.players.Add(OwnerClientId, this);
@@ -53,6 +54,7 @@ public class M_PlayerStats : NetworkBehaviour
         if(IsServer || IsHost) {
             networkHealth.Value = maxHealth;
             immunity.Value = maxImmunity;
+            lastDamager.Value = OwnerClientId;
         }
         if(IsOwner) {
             healthObj.SetActive(false);
@@ -66,6 +68,7 @@ public class M_PlayerStats : NetworkBehaviour
         weapon = GetComponentInChildren<M_Weapon>();
         blinkDuration.OnValueChanged += OnBlinkChanged;
         networkHealth.OnValueChanged += OnHealthChanged;
+        OnHealthChanged(networkHealth.Value, networkHealth.Value);
     }
     void Update()
     {
@@ -90,7 +93,7 @@ public class M_PlayerStats : NetworkBehaviour
         }
     }
 
-    private void OnHealthChanged(float prev, float next) {
+    private void OnHealthChanged(int prev, int next) {
         if(IsOwner) UpdateHealth(next);
         else SetHealthBar();
         if(networkHealth.Value == 0) Die();
@@ -104,7 +107,7 @@ public class M_PlayerStats : NetworkBehaviour
     }
 
     void SetHealthBar() {
-        float percent = networkHealth.Value / maxHealth;
+        float percent = networkHealth.Value / (float) maxHealth;
         healthBar.rectTransform.localScale = new Vector3(-percent,1,1);
     }
 
@@ -147,9 +150,8 @@ public class M_PlayerStats : NetworkBehaviour
 
     [ClientRpc]
     public void RespawnClientRpc() {
-        Debug.Log(OwnerClientId);
-        Debug.Log(NetworkManager.Singleton.LocalClientId);
         ragdoll.DeactivatePhysics();
+        dead = false;
         GetComponent<M_WeaponAnimationController>().enabled = true;
         if(!IsOwner) {
             healthObj.SetActive(true);
@@ -166,11 +168,11 @@ public class M_PlayerStats : NetworkBehaviour
         var killer = NetworkManager.Singleton.ConnectedClients[damagerId].PlayerObject.GetComponent<M_PlayerStats>();
         if(client == null || client.networkHealth.Value <= 0 || client.immunity.Value > 0f || killer == null) return;
         
+        client.lastDamager.Value = damagerId;
         if(client.networkHealth.Value + health <= 0) {
-            Debug.Log(clientId);
-            Debug.Log(damagerId);
-            if(clientId == damagerId)  KillerClientRpc(damagerId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
-            else {
+            KillerClientRpc(damagerId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
+            if(clientId != damagerId) {
+                killer.networkDmg.Value += client.networkHealth.Value;
                 killer.networkKills.Value++;
                 KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {damagerId}}});
             }
@@ -182,7 +184,7 @@ public class M_PlayerStats : NetworkBehaviour
         }
         client.networkHealth.Value += health;
         client.networkHealth.Value = Mathf.Min(client.networkHealth.Value, 100);
-        if(clientId != damagerId) killer.networkDmg.Value+= Mathf.Abs(health);
+        if(clientId != damagerId) killer.networkDmg.Value += Mathf.Abs(health);
        
     }
 
@@ -193,8 +195,14 @@ public class M_PlayerStats : NetworkBehaviour
         //  Addiere im TabMenü die Kills vom Killer + 1
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
         if(client == null || client.networkHealth.Value <= 0) return;
-        KillerClientRpc(clientId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
+        KillerClientRpc(clientId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {client.lastDamager.Value}}});
+        if(clientId != client.lastDamager.Value) {
+                var killer = NetworkManager.Singleton.ConnectedClients[client.lastDamager.Value].PlayerObject.GetComponent<M_PlayerStats>();
+                killer.networkKills.Value++;
+                KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {client.lastDamager.Value}}});
+        }
         client.networkHealth.Value = 0;
+        client.lastDamager.Value = clientId;
         client.networkDeaths.Value++;
     }
 
@@ -207,11 +215,16 @@ public class M_PlayerStats : NetworkBehaviour
         }
         M_PlayerStats killerStats;
         ScoreManager.Instance.players.TryGetValue(killerId, out killerStats);
+        if(killerStats == null) {
+            killer = "";
+            return;
+        }
         killer = killerStats.playerName.Value; 
     }
 
     [ClientRpc]
     public void KillSoundClientRpc(ClientRpcParams clientRpcParams) {
+        Debug.Log("kill" + OwnerClientId);
         killSound.Play();
     }
 

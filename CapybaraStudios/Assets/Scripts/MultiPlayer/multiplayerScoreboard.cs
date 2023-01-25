@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class multiplayerScoreboard : MonoBehaviour
 {
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<GameObject> entries;
+    private float time;
 
     public void Awake()
     {
@@ -21,12 +23,16 @@ public class multiplayerScoreboard : MonoBehaviour
 
     private void OnEnable()
     {
+        UpdateList();
+    }
+
+    private void UpdateList() {
         var templateHeight = 40f;
         var index = 0;
-        ScoreManager scoreManager = ScoreManager.Instance;
-        var scores = scoreManager.players.Values;
-        
-        foreach (var player in scores)
+        var dict = ScoreManager.Instance.players;
+        var sortedDict = from entry in dict orderby entry.Value.networkKills.Value descending select entry;
+
+        foreach (var kvPair in sortedDict)
         {
             var entryTransform = Instantiate(entryTemplate, entryContainer);
             entries.Add(entryTransform.gameObject);
@@ -53,7 +59,7 @@ public class multiplayerScoreboard : MonoBehaviour
             }
 
             var currentPlayer = Color.cyan;
-
+            var player = kvPair.Value;
             if (player.playerName.Value.ToString() == PlayerPrefs.GetString("CurrentName", "Player"))
             {
                 entryTransform.Find("Name").GetComponent<TMP_Text>().color = currentPlayer;
@@ -72,6 +78,17 @@ public class multiplayerScoreboard : MonoBehaviour
 
             index++;
         }
+        time = 5f;
+    }
+
+    private void FixedUpdate() {
+        time -= Time.deltaTime;
+        if(time <= 0f) {
+            entries.ForEach(entry => Destroy(entry));
+            entries.Clear();
+            UpdateList();
+            time = 5f;
+        }   
     }
 
 
