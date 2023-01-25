@@ -69,7 +69,7 @@ public class M_Weapon : NetworkBehaviour
         ShowAmmo();
         gunSound.Play();
         readyToShoot = false;
-        if (bulletsLeft > 0) Invoke("ResetShot", timeBetweenShooting);
+        Invoke("ResetShot", timeBetweenShooting);
     }
 
     //shoot cooldown

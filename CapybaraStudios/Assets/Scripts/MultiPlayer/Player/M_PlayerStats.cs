@@ -25,7 +25,7 @@ public class M_PlayerStats : NetworkBehaviour
     private float blinkTimer, maxImmunity = 2f;
     [SerializeField] private float currentBlinkDuration = .4f;
     private Volume volume;
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] public int maxHealth = 100;
     private M_HUDcontroller hud;
     private NetworkVariable<float> networkHealth = new (100);
     private NetworkVariable<float> immunity = new ();
@@ -120,8 +120,7 @@ public class M_PlayerStats : NetworkBehaviour
         if(IsOwner) {
             inputManager.Die();
             deathSound.Play(); //spiele sterbe sound
-            //öffne KillHud
-            hud.Death(killer, true);
+            hud.Death(killer, true); //öffne KillHud
         }
     }
 
@@ -129,8 +128,8 @@ public class M_PlayerStats : NetworkBehaviour
         dead = false;
         respawnCount = 0f;
         if(IsOwner) {
-            RespawnServerRpc();
             RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
+            RespawnServerRpc();
             hud.Death("", false);
             inputManager.Respawn();
             weapon.bulletsLeft = weapon.magazineSize;
@@ -148,12 +147,14 @@ public class M_PlayerStats : NetworkBehaviour
 
     [ClientRpc]
     public void RespawnClientRpc() {
+        Debug.Log(OwnerClientId);
+        Debug.Log(NetworkManager.Singleton.LocalClientId);
         ragdoll.DeactivatePhysics();
+        GetComponent<M_WeaponAnimationController>().enabled = true;
         if(!IsOwner) {
             healthObj.SetActive(true);
             nameObj.SetActive(true);
         }
-        GetComponent<M_WeaponAnimationController>().enabled = true;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -185,9 +186,21 @@ public class M_PlayerStats : NetworkBehaviour
        
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void OutOfMapServerRpc(ulong clientId) {
+        // Zusatz:
+        //  Spiele Kill Sound für denjenigen, der den Client gekillt hat
+        //  Addiere im TabMenü die Kills vom Killer + 1
+        var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
+        if(client == null || client.networkHealth.Value <= 0) return;
+        KillerClientRpc(clientId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
+        client.networkHealth.Value = 0;
+        client.networkDeaths.Value++;
+    }
+
+
     [ClientRpc]
     public void KillerClientRpc(ulong killerId, ClientRpcParams clientRpcParams) {
-        Debug.Log("scheißhaufen");
         if(killerId == OwnerClientId) {
             killer = "";
             return;

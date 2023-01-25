@@ -65,7 +65,6 @@ public class M_HUDcontroller : NetworkBehaviour
         this.dead = dead;
         deathMenuUI.SetActive(dead);
         if(dead == false) return;
-        Debug.Log(killer);
         if(killer.Equals("")) {
             deathText.text = "You killed yourself :(";
             return;

@@ -18,6 +18,6 @@ public class RespawnManager : NetworkSingleton<RespawnManager>
 
     [ClientRpc]
     private void ChangePositionClientRpc(Vector3 pos, ClientRpcParams clientRpcParams) {
-        NetworkManager.Singleton.LocalClient.PlayerObject.transform.position = pos;
+        NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.transform.position = pos;
     }
 }
