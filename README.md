@@ -18,9 +18,9 @@ Unity Version
   - [x] KillSound für Killer
   - [x] TabMenü für den Multiplayer (ScoreManager)
   - [x] DeathMenü
-  - [ ] out of map sterben
-  - [ ] connect to lobby by code with relay
+  - [x] out of map sterben
   - [ ] Spielmodis
+  - [ ] connect to lobby by code with relay
   - [ ] MultiplayerMap
 
 - [x] Tabmenü
