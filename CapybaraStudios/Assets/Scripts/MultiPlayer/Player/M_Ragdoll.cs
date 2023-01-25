@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ragdoll : MonoBehaviour
+public class M_Ragdoll : MonoBehaviour
 {
     Rigidbody[] rBodies;
     MeshCollider[] meshColliders;
@@ -18,9 +18,10 @@ public class Ragdoll : MonoBehaviour
     }
 
     public void DeactivatePhysics() {
-        foreach(var r in rBodies) {
-            r.isKinematic = true;
-        }
+        foreach(var r in rBodies) r.isKinematic = true;
+        foreach(var collider in GetComponentsInChildren<Collider>()) if(collider.GetType() != typeof(CharacterController)) collider.enabled = false;
+        foreach(var collider in meshColliders) collider.enabled = true;
+        animator.enabled = true;
     }
 
     public void EnablePhysics() {

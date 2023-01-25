@@ -2850,7 +2850,7 @@ MonoBehaviour:
   baseFOV: 80
   sprintingFOV: 1.1
   _input: {fileID: 7737243822893930890}
-  hookParticles: {fileID: 0}
+  hookParticles: {fileID: 7309031836049416264}
 --- !u!114 &6382008538426765262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2916,7 +2916,7 @@ MonoBehaviour:
   dead: 0
   blinkDuration: 0
   blinkIntensity: 0
-  volume: {fileID: 0}
+  volume: {fileID: 8382383355852141957}
 --- !u!114 &643242498026820881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5645,6 +5645,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6779924598733401245, guid: 7e5d24750c6c7b54e9776d8bd9e729e8, type: 3}
   m_PrefabInstance: {fileID: 4714486163020830419}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &7309031836049416264 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2595161442498311835, guid: 7e5d24750c6c7b54e9776d8bd9e729e8, type: 3}
+  m_PrefabInstance: {fileID: 4714486163020830419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8382383355852141957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835111331530236758, guid: 7e5d24750c6c7b54e9776d8bd9e729e8, type: 3}
+  m_PrefabInstance: {fileID: 4714486163020830419}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4718924124373646749
 PrefabInstance:
   m_ObjectHideFlags: 0

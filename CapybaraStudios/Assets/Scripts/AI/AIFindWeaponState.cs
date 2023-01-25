@@ -29,7 +29,9 @@ public class AIFindWeaponState : AIState
         }
 
         pickup = FindWeapon(agent);
-        if(pickup != null) agent.agent.destination = pickup.transform.position;
+        if(pickup != null) {
+            agent.agent.destination = pickup.transform.position;
+        }
 
         //walk random
         if(!agent.agent.hasPath) {
