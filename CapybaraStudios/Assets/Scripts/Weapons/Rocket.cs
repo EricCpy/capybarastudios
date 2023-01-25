@@ -17,12 +17,17 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        rig.freezeRotation = true;
         Destroy(gameObject, 30f);
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if(exploded) return;
+        Vector3 oldVelocity = rig.velocity;
+        if(exploded) {
+            rig.velocity = oldVelocity;
+            return;
+        }
         Explode(other.transform.position);
         exploded = true;
     }
