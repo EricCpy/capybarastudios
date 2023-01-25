@@ -30,7 +30,15 @@ public class scoreboardManager : MonoBehaviour
         }
         else
         {
-            scores = GameManager.scorelist;
+            if (GameManager.scorelist!=null)
+            {
+                scores = GameManager.scorelist;
+            }
+            else
+            {
+                
+                return;
+            }
         }
         foreach (var scoreEntry in scores)
         {
