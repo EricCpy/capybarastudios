@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: 
   cooldownTime: 0
-  gunSound: {fileID: 8643147639245045305, guid: 7d791ce83ceac9f4896a9b1222c5d24c, type: 3}
+  gunSound: {fileID: 3299006233831561905, guid: 7a5f38a0d9e9e404e957e3a85d5e9060, type: 3}
   reloadSound: {fileID: 0}
   pickupSound: {fileID: 0}
   scopeSound: {fileID: 0}
