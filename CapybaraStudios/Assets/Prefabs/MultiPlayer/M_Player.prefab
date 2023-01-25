@@ -1717,13 +1717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559e0ad338450304c9e0c667cec68d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshColliders:
-  - {fileID: 7779620270914032294}
-  - {fileID: 3334018226242864321}
-  - {fileID: 3277604228131883341}
-  - {fileID: 1650253880798218307}
-  - {fileID: 6819010678029057134}
-  - {fileID: 8617498006564976287}
 --- !u!114 &8693717531553440926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8957,7 +8950,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 55c9657a3872f3f4e8d22d87aa05d54e, type: 3}
   m_Controller: {fileID: 9100000, guid: eb76a5640716a0b4a98bd374ba20b6c3, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ragdoll : MonoBehaviour
 {
     Rigidbody[] rBodies;
-    [SerializeField] MeshCollider[] meshColliders;
+    MeshCollider[] meshColliders;
     Animator animator;
     ClientNetworkAnimator canimator;
     // Start is called before the first frame update
@@ -13,11 +13,11 @@ public class Ragdoll : MonoBehaviour
     {
         rBodies = GetComponentsInChildren<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        meshColliders = GetComponentsInChildren<MeshCollider>();
         DeactivatePhysics();
     }
 
     public void DeactivatePhysics() {
-        Debug.Log("asadadadadad");
         foreach(var r in rBodies) r.isKinematic = true;
         foreach(var collider in GetComponentsInChildren<Collider>()) if(collider.GetType() != typeof(CharacterController)) collider.enabled = false;
         foreach(var collider in meshColliders) collider.enabled = true;
