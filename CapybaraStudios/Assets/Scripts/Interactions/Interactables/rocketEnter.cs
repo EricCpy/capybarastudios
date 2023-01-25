@@ -21,6 +21,5 @@ public class rocketEnter : Interactable
     {
         FindObjectOfType<GameManager>().CompleteLevel();
         SceneManager.LoadScene(2);
-        
     }
 }
