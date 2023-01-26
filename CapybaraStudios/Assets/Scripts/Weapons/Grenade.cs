@@ -14,8 +14,7 @@ public class Grenade : MonoBehaviour
     public float impactforce = 700f;
 
     Rigidbody rig;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         rig = GetComponent<Rigidbody>();
@@ -28,7 +27,7 @@ public class Grenade : MonoBehaviour
         impactSound.Play();
     }
 
-    private void Explode(Vector3 point)
+    private void Explode()
     {
         if(!explosionSound.isPlaying) {
             var sound = Instantiate(explosionSound); 
@@ -59,7 +58,7 @@ public class Grenade : MonoBehaviour
                     stats.TakeDamage(99);
                     selfknocked = true;
                     GameObject player = stats.gameObject;
-                    Vector3 dir = point - player.transform.position;
+                    Vector3 dir = -(this.transform.position - player.transform.position);
                     float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
                     float currForce = percentage * impactforce;
                     ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
