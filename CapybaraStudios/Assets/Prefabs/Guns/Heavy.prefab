@@ -68,15 +68,17 @@ MonoBehaviour:
   gunSound: {fileID: 3299006233831561905}
   reloadSound: {fileID: 854275227001512368}
   pickupSound: {fileID: 4880677728323983582}
+  scopeSound: {fileID: 0}
   damage: 20
   initialSpread: 0
   maxSpread: 0.1
   range: 500
   reloadTime: 4
-  fireRate: 5
-  timeBetweenShooting: 0.2
+  fireRate: 8
+  timeBetweenShooting: 0.125
   distanceModifier: 0.05
   damageFalloffStart: 30
+  singleReload: 0
   maxAmmo: 500
   magazineSize: 100
   bulletsPerTap: 2
@@ -89,7 +91,7 @@ MonoBehaviour:
   weaponSlot: 1
   animationType: 1
   spreadIncrease: 0.005
-  spreadDecrease: 0.03
+  spreadDecrease: 0.02
   currentSpread: 0
   specialWeaponType: 0
   BulletFirePoint: {fileID: 4509932338621849023}
