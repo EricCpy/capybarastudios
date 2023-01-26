@@ -32,7 +32,7 @@ public class woodenDoor : Interactable
             unlockedSound.Play();
         }
         else {
-            message = "locked...";
+            message = "locked... find the keys!";
             buttonSound.Play();
         }
     }
