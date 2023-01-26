@@ -13,25 +13,29 @@ public class M_Rocket : NetworkBehaviour
     Rigidbody rig;
     private bool exploded = false;
     public ulong owningPlayer;
+    Vector3 oldVelocity = Vector3.zero;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rig = GetComponent<Rigidbody>();
         rig.freezeRotation = true;
+    }
+
+    void Start() {
+        oldVelocity = rig.velocity;
         if(IsServer) Destroy(gameObject, 30f);
     }
 
     void OnCollisionEnter(Collision other)
     {   
-        Vector3 oldVelocity = rig.velocity;
         M_PlayerStats obj = other.gameObject.GetComponentInParent<M_PlayerStats>();
-        if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) {
-            rig.velocity = oldVelocity;
-            return;
-        } 
-        print(other.gameObject.name);
+        if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) return;
         Explode();
         exploded = true;
+    }
+
+    private void FixedUpdate() {
+        if(rig.velocity != oldVelocity) rig.velocity = oldVelocity;
     }
 
     private void Explode()

@@ -20,8 +20,12 @@ Unity Version
   - [x] DeathMenü
   - [x] out of map sterben
   - [x] aktualisiere und ordne tab menü nach kills
+  - [ ] Lobbysystem
+    - [ ] connect to lobby by code with relay
+    - [ ] Choose Map
+    - [ ] Choose Mode
   - [ ] Spielmodis
-  - [ ] connect to lobby by code with relay
+  - [ ] Handle Lobby when Host disconnects or game over
   - [ ] MultiplayerMap
 
 - [x] Tabmenü

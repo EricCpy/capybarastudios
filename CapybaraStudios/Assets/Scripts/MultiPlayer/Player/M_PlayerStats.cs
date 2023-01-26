@@ -16,7 +16,7 @@ public class M_PlayerStats : NetworkBehaviour
     public TextMeshProUGUI healthIndicator;
     public int damage_done = 0;
     public int kills = 0;
-    private Ragdoll ragdoll;
+    private M_Ragdoll ragdoll;
 
     [SerializeField] private Image healthBar;
 
@@ -62,7 +62,7 @@ public class M_PlayerStats : NetworkBehaviour
         }
         inputManager = GetComponent<M_InputManager>();
         hud = GetComponentInChildren<M_HUDcontroller>();
-        ragdoll = GetComponent<Ragdoll>();
+        ragdoll = GetComponent<M_Ragdoll>();
         volume = M_Camera.Instance._camera.GetComponentInChildren<Volume>();
         playerVisuals = GetComponent<PlayerVisuals>();
         weapon = GetComponentInChildren<M_Weapon>();
@@ -195,11 +195,11 @@ public class M_PlayerStats : NetworkBehaviour
         //  Addiere im TabMenü die Kills vom Killer + 1
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
         if(client == null || client.networkHealth.Value <= 0) return;
-        KillerClientRpc(clientId, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {client.lastDamager.Value}}});
+        KillerClientRpc(client.lastDamager.Value, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {clientId}}});
         if(clientId != client.lastDamager.Value) {
-                var killer = NetworkManager.Singleton.ConnectedClients[client.lastDamager.Value].PlayerObject.GetComponent<M_PlayerStats>();
-                killer.networkKills.Value++;
-                KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {client.lastDamager.Value}}});
+            var killer = NetworkManager.Singleton.ConnectedClients[client.lastDamager.Value].PlayerObject.GetComponent<M_PlayerStats>();
+            killer.networkKills.Value++;
+            KillSoundClientRpc(new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {client.lastDamager.Value}}});
         }
         client.networkHealth.Value = 0;
         client.lastDamager.Value = clientId;

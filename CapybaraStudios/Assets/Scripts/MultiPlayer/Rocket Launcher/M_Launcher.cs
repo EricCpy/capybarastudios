@@ -15,16 +15,13 @@ public class M_Launcher : NetworkBehaviour
     {
         if(IsServer) Spawn(from, firePoint.position, firePoint.rotation);
         else SpawnServerRPC(from, firePoint.position, firePoint.rotation);
-        
     }
 
     private void Spawn(ulong owner, Vector3 pos, Quaternion rot) {
         GameObject rocketInstance = Instantiate(rocket, pos, rot);
-        //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
-        rocketInstance.GetComponent<NetworkObject>().Spawn();
         rocketInstance.GetComponent<Rigidbody>().velocity = transform.forward * range;
         rocketInstance.GetComponent<M_Rocket>().owningPlayer = owner; 
-        //rocketInstance.GetComponent<NetworkObject>().SpawnWithOwnership();
+        rocketInstance.GetComponent<NetworkObject>().Spawn();
     }
 
     [ServerRpc]

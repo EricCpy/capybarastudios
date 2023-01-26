@@ -135,7 +135,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 4922897050496721276, guid: da8bc9849d239494dabb87fa9b36710f, type: 3}
   force: 10
   radius: 10
-  impactforce: 1000
+  impactforce: 500
   owningPlayer: 0
 --- !u!114 &2671152201906329398
 MonoBehaviour:
