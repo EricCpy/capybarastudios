@@ -123,7 +123,7 @@ public class LobbyManager : MonoBehaviour
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = lobby.Name;
-                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = lobby.AvailableSlots+"/"+lobby.MaxPlayers;
+                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = lobby.MaxPlayers-lobby.AvailableSlots+"/"+lobby.MaxPlayers;
                 //entryTransform.Find("JoinBtn") = ;
                 
                 index++;
