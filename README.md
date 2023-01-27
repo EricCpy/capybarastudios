@@ -20,12 +20,18 @@ Unity Version
   - [x] DeathMenü
   - [x] out of map sterben
   - [x] aktualisiere und ordne tab menü nach kills
-  - [ ] Lobbysystem
-    - [ ] connect to lobby by code with relay
-    - [ ] Choose Map
-    - [ ] Choose Mode
+  - [x] Lobbysystem
+    - [x] connect to lobby by code with relay
+    - [x] Choose Map
+    - [x] Choose Mode
+    - [x] Close Lobby
+    - [x] Find Lobbys
+    - [x] Connect to lobby by code
+  - [ ] Relay
+    - [ ] connect relay with lobby system
+    - [ ] start game from lobby for all player
+    - [ ] Handle Relay-Lobby when Host disconnects or game over
   - [ ] Spielmodis
-  - [ ] Handle Lobby when Host disconnects or game over
   - [ ] MultiplayerMap
 
 - [x] Tabmenü
@@ -40,11 +46,11 @@ Unity Version
     - [x] Video Funktionen einbauen
 
 - [ ] Maps
-  - [ ] mindestens 2 neue SingleplayerMaps
-  - [ ] Storyline
+  - [x] mindestens 2 neue SingleplayerMaps
+  - [x] Storyline
   - [ ] map muss abgeschlossen werden, um nächste freizuschalten
-  - [ ] mindestens eine neue Multiplayermap
-    - [ ] Parkourmap oder Parkourelemente
+  - [x] mindestens eine neue Multiplayermap
+    - [x] Parkourmap oder Parkourelemente
 
 - [x] Waffen
   - [x] Granadelauncher
