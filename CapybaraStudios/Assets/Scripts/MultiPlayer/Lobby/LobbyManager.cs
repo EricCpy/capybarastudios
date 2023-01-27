@@ -1,23 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField lobbyName;
     [SerializeField] private TMP_InputField maxPlayers;
-
     [SerializeField] private GameObject lobbyList;
+    [SerializeField] private Toggle isPrivate;
+    [SerializeField] private TMP_Dropdown map;
+    [SerializeField] private TMP_Dropdown gamemode;
+    [SerializeField] private TMP_InputField lobbyCodeInput;
+    [SerializeField] private GameObject waitingPanel;
+    [SerializeField] private GameObject joiningPanel;
+    [SerializeField] private GameObject creatingPanel;
+    [SerializeField] private GameObject panelHighlight;
+    [SerializeField] private GameObject startBtn;
+    [SerializeField] private TMP_Text lobbyCodeToCopy;
+    [SerializeField] private TMP_Text waitingMenuLobbyName;
+    [SerializeField] private TMP_Text playerCountText;
 
-    // Start is called before the first frame update
     private Lobby lobby;
     private string playerId;
-
 
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -39,16 +50,18 @@ public class LobbyManager : MonoBehaviour
         entryTemplate.gameObject.SetActive(false);
     }
 
-    public void ValidateLobbyName(string text)
+    public void ValidateLobbyName()
     {
+        string text = lobbyName.text;
         if (text == "")
         {
             lobbyName.text = "My Lobby";
         }
     }
 
-    public void ValidateMaxPlayers(string text)
+    public void ValidateMaxPlayers()
     {
+        string text = maxPlayers.text;
         if (text == "")
         {
             maxPlayers.text = "2";
@@ -60,7 +73,7 @@ public class LobbyManager : MonoBehaviour
         {
             maxPlayers.text = "10";
         }
-        else if (num == 0)
+        else if (num <= 1)
         {
             maxPlayers.text = "2";
         }
@@ -70,10 +83,22 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName.text, int.Parse(maxPlayers.text));
-            StartCoroutine(UpdateLobbyTimeoutCoroutine(15));
-            //hier muss auch map etc rein
-            Debug.Log("Created Lobby " + lobby.Name + " " + lobby.MaxPlayers);
+            CreateLobbyOptions options = new CreateLobbyOptions
+            {
+                IsPrivate = isPrivate.isOn,
+                Data = new Dictionary<string, DataObject> {
+                    {"GameMode", new DataObject(DataObject.VisibilityOptions.Public, gamemode.options[gamemode.value].text, DataObject.IndexOptions.S1)},
+                    {"Map", new DataObject(DataObject.VisibilityOptions.Public, map.options[map.value].text, DataObject.IndexOptions.S2)}
+                }
+            };
+            lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName.text, int.Parse(maxPlayers.text), options);
+            StartCoroutine(UpdateLobbyTimeoutCoroutine(20));
+            Debug.Log("Created Lobby " + lobby.Name + " " + lobby.MaxPlayers + " " + gamemode.options[gamemode.value].text + " " + map.options[map.value].text);
+            creatingPanel.SetActive(false);
+            panelHighlight.SetActive(false);
+            waitingPanel.SetActive(true);
+            startBtn.SetActive(true);
+            UpdateWaitingMenu();
         }
         catch (LobbyServiceException e)
         {
@@ -86,13 +111,58 @@ public class LobbyManager : MonoBehaviour
         var delay = new WaitForSecondsRealtime(secs);
         while (true)
         {
-            Lobbies.Instance.SendHeartbeatPingAsync(lobby.Id);
+            try
+            {
+                Lobbies.Instance.SendHeartbeatPingAsync(lobby.Id);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+
             yield return delay;
         }
     }
 
+    private IEnumerator UpdateLobbyInfosCoroutine(float secs)
+    {
+        var delay = new WaitForSecondsRealtime(secs);
+        while (true)
+        {
+            var t = Task.Run(async () => await UpdateLobbyAsync());
+            yield return new WaitUntil(() => t.IsCompleted);
+            //falls der Host die Lobby geschlossen hat
+            if(lobby == null) {
+                waitingPanel.SetActive(false);
+                joiningPanel.SetActive(true);
+                panelHighlight.SetActive(true);
+                StopAllCoroutines();
+                break;
+            }
+            playerCountText.text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
+            if (lobby.HostId == playerId) startBtn.SetActive(true);
+            yield return delay;
+        }
+    }
+
+    private async Task UpdateLobbyAsync()
+    {
+        try
+        {
+            await Lobbies.Instance.GetLobbyAsync(lobby.Id);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+
+    }
+
+
     public async void ListLobbies()
     {
+        entries.ForEach(entry => Destroy(entry));
+        entries.Clear();
         try
         {
             QueryLobbiesOptions queryLobbiesOptions = new QueryLobbiesOptions
@@ -109,12 +179,11 @@ public class LobbyManager : MonoBehaviour
             };
             QueryResponse response = await Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions);
 
-            var templateHeight = 50f;
+            var templateHeight = 60f;
             var index = 0;
             foreach (Lobby lobby in response.Results)
             {
-                Debug.Log(lobby.Id + " " + lobby.Name + " " + lobby.MaxPlayers);
-
+                Debug.Log(lobby.LobbyCode + " " + lobby.Name + " " + lobby.MaxPlayers);
 
                 var entryTransform = Instantiate(entryTemplate, entryContainer);
                 entries.Add(entryTransform.gameObject);
@@ -123,9 +192,9 @@ public class LobbyManager : MonoBehaviour
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = lobby.Name;
-                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = lobby.MaxPlayers-lobby.AvailableSlots+"/"+lobby.MaxPlayers;
-                //entryTransform.Find("JoinBtn") = ;
-                
+                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
+                entryTransform.Find("JoinBtn").GetComponent<Button>().onClick.AddListener(delegate { JoinLobby(lobby.LobbyCode); });
+
                 index++;
             }
         }
@@ -135,30 +204,77 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+    private async void JoinLobby(string lobbyCode)
+    {
+        try
+        {
+            await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode);
+            joiningPanel.SetActive(false);
+            panelHighlight.SetActive(false);
+            waitingPanel.SetActive(true);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
 
-    /*public async JoinLobby() {
-        await Lobbies.Instance.JoinLobbyByIdAsync();
-    }*/
+    public async void JoinLobbyByCode()
+    {
+        try
+        {
+            await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text);
+            joiningPanel.SetActive(false);
+            panelHighlight.SetActive(false);
+            waitingPanel.SetActive(true);
+        }
+        catch (LobbyServiceException e)
+        {
+            lobbyCodeInput.text = "Not existing!";
+            Debug.Log(e);
+        }
+    }
 
     private void OnDestroy()
     {
-        LeaveLobby();
+        LeaveLobbyAsync();
     }
 
-    public void LeaveLobby()
+    public async void LeaveLobbyAsync()
     {
         try
         {
             StopAllCoroutines();
             if (lobby != null)
             {
-                if (lobby.HostId == playerId) Lobbies.Instance.DeleteLobbyAsync(lobby.Id);
-                else Lobbies.Instance.RemovePlayerAsync(lobby.Id, playerId);
+                await Lobbies.Instance.RemovePlayerAsync(lobby.Id, playerId);
+                lobby = null;
             }
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
+    }
+
+    public async void DeleteLobbyAsync() {
+        try
+        {
+            StopAllCoroutines();
+            if (lobby != null)
+            {
+                if (lobby.HostId == playerId) await Lobbies.Instance.DeleteLobbyAsync(lobby.Id);
+            }
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    private void UpdateWaitingMenu()
+    {
+        lobbyCodeToCopy.text = lobby.LobbyCode;
+        StartCoroutine(UpdateLobbyInfosCoroutine(10));
     }
 }

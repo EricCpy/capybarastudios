@@ -91,8 +91,6 @@ public class multiplayerScoreboard : MonoBehaviour
         }   
     }
 
-
-
     private void OnDisable()
     {
         entries.ForEach(entry => Destroy(entry));
