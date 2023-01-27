@@ -109,7 +109,7 @@ public class LobbyManager : MonoBehaviour
             };
             QueryResponse response = await Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions);
 
-            var templateHeight = 40f;
+            var templateHeight = 50f;
             var index = 0;
             foreach (Lobby lobby in response.Results)
             {
