@@ -24033,6 +24033,8 @@ MonoBehaviour:
   sensitivityXSlider: {fileID: 352538889094378674}
   sensitivityYSlider: {fileID: 352612652528557086}
   mouseSmoothSlider: {fileID: 0}
+  retroScale: {fileID: 0}
+  retroButton: {fileID: 0}
   _inputActionAsset: {fileID: -944628639613478452, guid: 8645b4f669d4e2c4bb0fc084f45addd8, type: 3}
   playerInputField: {fileID: 0}
 --- !u!1 &353327324914912596
