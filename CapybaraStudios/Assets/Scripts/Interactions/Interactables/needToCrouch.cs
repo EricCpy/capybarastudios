@@ -10,6 +10,7 @@ public class needToCrouch : MonoBehaviour
     private NavMeshAgent currentMeshAgent;
     private PlayerMovement movementScript;
     private GameObject thePlayer;
+    public GameObject sleepingText;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class needToCrouch : MonoBehaviour
         movementScript = thePlayer.GetComponent<PlayerMovement>();
         if(!movementScript.crouching) {
             currentMeshAgent.enabled = true;
+            sleepingText.SetActive(false);
         }
     }
 }
