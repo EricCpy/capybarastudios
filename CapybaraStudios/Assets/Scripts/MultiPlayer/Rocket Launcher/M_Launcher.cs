@@ -19,7 +19,7 @@ public class M_Launcher : NetworkBehaviour
 
     private void Spawn(ulong owner, Vector3 pos, Quaternion rot) {
         GameObject rocketInstance = Instantiate(rocket, pos, rot);
-        rocketInstance.GetComponent<Rigidbody>().velocity = transform.forward * range;
+        rocketInstance.GetComponent<M_Rocket>().oldVelocity = transform.forward * range;
         rocketInstance.GetComponent<M_Rocket>().owningPlayer = owner; 
         rocketInstance.GetComponent<NetworkObject>().Spawn();
     }

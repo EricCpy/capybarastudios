@@ -27,9 +27,9 @@ Unity Version
     - [x] Close Lobby
     - [x] Find Lobbys
     - [x] Connect to lobby by code
-  - [ ] Relay
-    - [ ] connect relay with lobby system
-    - [ ] start game from lobby for all player
+  - [x] Relay
+    - [x] connect relay with lobby system
+    - [x] start game from lobby for all player
     - [ ] Handle Relay-Lobby when Host disconnects or game over
   - [ ] Spielmodis
 

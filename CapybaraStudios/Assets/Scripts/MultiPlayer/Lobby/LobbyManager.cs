@@ -85,6 +85,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            Debug.Log(isPrivate.isOn);
             CreateLobbyOptions options = new CreateLobbyOptions
             {
                 IsPrivate = isPrivate.isOn,
@@ -140,6 +141,7 @@ public class LobbyManager : MonoBehaviour
                 joiningPanel.SetActive(true);
                 panelHighlight.SetActive(true);
                 StopAllCoroutines();
+                ListLobbies();
                 break;
             }
 
@@ -171,11 +173,12 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            await Lobbies.Instance.GetLobbyAsync(lobby.Id);
+            lobby = await Lobbies.Instance.GetLobbyAsync(lobby.Id);
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+            lobby = null;
         }
 
     }
@@ -203,9 +206,9 @@ public class LobbyManager : MonoBehaviour
 
             var templateHeight = 60f;
             var index = 0;
-            foreach (Lobby lobby in response.Results)
+            foreach (Lobby l in response.Results)
             {
-                Debug.Log(lobby.LobbyCode + " " + lobby.Name + " " + lobby.MaxPlayers);
+                Debug.Log(l.Id + " " + l.Name + " " + l.MaxPlayers);
 
                 var entryTransform = Instantiate(entryTemplate, entryContainer);
                 entries.Add(entryTransform.gameObject);
@@ -213,9 +216,9 @@ public class LobbyManager : MonoBehaviour
                 entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * index);
                 entryTransform.gameObject.SetActive(true);
 
-                entryTransform.Find("Name").GetComponent<TMP_Text>().text = lobby.Name;
-                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
-                entryTransform.Find("JoinBtn").GetComponent<Button>().onClick.AddListener(delegate { JoinLobby(lobby.LobbyCode); });
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = l.Name;
+                entryTransform.Find("PlayerNum").GetComponent<TMP_Text>().text = l.MaxPlayers - l.AvailableSlots + "/" + l.MaxPlayers;
+                entryTransform.Find("JoinBtn").GetComponent<Button>().onClick.AddListener(delegate { JoinLobby(l.Id); });
 
                 index++;
             }
@@ -226,14 +229,15 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private async void JoinLobby(string lobbyCode)
+    private async void JoinLobby(string lobbyId)
     {
         try
         {
-            await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode);
+            lobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobbyId);
             joiningPanel.SetActive(false);
             panelHighlight.SetActive(false);
             waitingPanel.SetActive(true);
+            UpdateWaitingMenu();
         }
         catch (LobbyServiceException e)
         {
@@ -245,10 +249,11 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text);
+            lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text);
             joiningPanel.SetActive(false);
             panelHighlight.SetActive(false);
             waitingPanel.SetActive(true);
+            UpdateWaitingMenu();
         }
         catch (LobbyServiceException e)
         {
@@ -294,6 +299,7 @@ public class LobbyManager : MonoBehaviour
     private void UpdateWaitingMenu()
     {
         lobbyCodeToCopy.text = lobby.LobbyCode;
+        waitingMenuLobbyName.text = lobby.Name;
         StartCoroutine(UpdateLobbyInfosCoroutine(10));
     }
 

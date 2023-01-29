@@ -13,7 +13,7 @@ public class M_Rocket : NetworkBehaviour
     Rigidbody rig;
     private bool exploded = false;
     public ulong owningPlayer;
-    Vector3 oldVelocity = Vector3.zero;
+    public Vector3 oldVelocity = Vector3.zero;
     // Start is called before the first frame update
     void Awake()
     {
@@ -22,9 +22,14 @@ public class M_Rocket : NetworkBehaviour
     }
 
     void Start() {
-        oldVelocity = rig.velocity;
         if(IsServer) Destroy(gameObject, 30f);
     }
+
+    public override void OnNetworkSpawn()
+    {
+        rig.velocity = oldVelocity;
+    }
+
 
     void OnCollisionEnter(Collision other)
     {   
