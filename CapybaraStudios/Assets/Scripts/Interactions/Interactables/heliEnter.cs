@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class heliEnter : Interactable
 {
+    public AudioSource noFuelSound;
+    public AudioSource loadFuelSound;
     public GameObject button;
-    public AudioSource unlockedSound;
     private GunScript currentGunScript;
     public Weapon currentGun;
 
@@ -26,10 +27,18 @@ public class heliEnter : Interactable
 
     protected override void Interact(GameObject player)
     {
-        // if(currentGunScript.currentWeapon.name == "keyItem") {
+        currentGunScript = player.GetComponent<GunScript>();
+        currentGun = currentGunScript.currentWeapon;
+
+        if(currentGunScript.currentWeapon.name == "Fuel Tank") {
             FindObjectOfType<GameManager>().CompleteLevel();
-            unlockedSound.Play();
+            loadFuelSound.Play();
             SceneManager.LoadScene(4);
-        // }
+        }
+
+        else {
+            message = "no fuel... find the tank!";
+            noFuelSound.Play();
+        }
     }
 }
