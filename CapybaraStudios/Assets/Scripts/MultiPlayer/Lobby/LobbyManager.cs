@@ -183,7 +183,6 @@ public class LobbyManager : MonoBehaviour
 
     }
 
-
     public async void ListLobbies()
     {
         entries.ForEach(entry => Destroy(entry));

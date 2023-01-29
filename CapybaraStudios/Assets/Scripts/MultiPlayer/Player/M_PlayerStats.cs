@@ -166,6 +166,9 @@ public class M_PlayerStats : NetworkBehaviour
         //  Addiere im TabMenü die Kills vom Killer + 1
         var client = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<M_PlayerStats>();
         var killer = NetworkManager.Singleton.ConnectedClients[damagerId].PlayerObject.GetComponent<M_PlayerStats>();
+
+        Debug.Log(client);
+        Debug.Log(killer);
         if(client == null || client.networkHealth.Value <= 0 || client.immunity.Value > 0f || killer == null) return;
         
         client.lastDamager.Value = damagerId;

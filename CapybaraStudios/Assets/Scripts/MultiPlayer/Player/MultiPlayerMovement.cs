@@ -58,7 +58,6 @@ public class MultiPlayerMovement : NetworkBehaviour
             Destroy(_input);
         }
         if(IsOwner) {
-            NetworkManager.Singleton.LocalClient.PlayerObject = GetComponent<NetworkObject>();
             RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
         } 
         controller = GetComponent<CharacterController>();

@@ -22,17 +22,14 @@ public class M_Rocket : NetworkBehaviour
     }
 
     void Start() {
-        if(IsServer) Destroy(gameObject, 30f);
-    }
-
-    public override void OnNetworkSpawn()
-    {
+        if(!IsServer && !IsHost) return;
         rig.velocity = oldVelocity;
+        Destroy(gameObject, 30f);
     }
-
 
     void OnCollisionEnter(Collision other)
     {   
+        if(!IsServer && !IsHost) return;
         M_PlayerStats obj = other.gameObject.GetComponentInParent<M_PlayerStats>();
         if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) return;
         Explode();
@@ -44,8 +41,8 @@ public class M_Rocket : NetworkBehaviour
     }
 
     private void Explode()
-    {
-        if(IsServer) PlayExplosion();
+    {   
+        PlayExplosion();
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         HashSet<ulong> set = new HashSet<ulong>();
         foreach (Collider collision in colliders)
@@ -74,7 +71,7 @@ public class M_Rocket : NetworkBehaviour
         GameObject oj = Instantiate(explosionEffect, transform.position, transform.rotation);
         oj.GetComponent<NetworkObject>().Spawn();
 
-        if(IsServer) DestroyRocket();
+        DestroyRocket();
     }
 
     [ClientRpc]

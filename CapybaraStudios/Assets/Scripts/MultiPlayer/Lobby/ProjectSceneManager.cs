@@ -33,7 +33,7 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
     [ServerRpc(RequireOwnership = false)]
     private void SpawnPlayerServerRpc(ulong playerId) {
         var spawn = Instantiate(player);
-        spawn.GetComponent<NetworkObject>().SpawnWithOwnership(playerId);
+        spawn.GetComponent<NetworkObject>().SpawnAsPlayerObject(playerId, true);
     }
 
     public void LeaveGame() {

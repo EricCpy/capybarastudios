@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5792868719729086648}
   - component: {fileID: 4060748998051744162}
   - component: {fileID: 6239394265354095062}
-  - component: {fileID: 2671152201906329398}
-  - component: {fileID: 7894508134949179493}
   - component: {fileID: 6338570456442918959}
+  - component: {fileID: 1009116029535007898}
+  - component: {fileID: 5851803366687274211}
   m_Layer: 0
   m_Name: M_Rocket
   m_TagString: Untagged
@@ -105,7 +105,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &4060748998051744162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -137,7 +137,24 @@ MonoBehaviour:
   radius: 10
   impactforce: 500
   owningPlayer: 0
---- !u!114 &2671152201906329398
+  oldVelocity: {x: 0, y: 0, z: 0}
+--- !u!114 &6338570456442918959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559698944973560897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &1009116029535007898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +180,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!114 &7894508134949179493
+--- !u!114 &5851803366687274211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,22 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6338570456442918959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559698944973560897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!1001 &4105453720611119729
 PrefabInstance:
   m_ObjectHideFlags: 0
