@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Relay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +31,7 @@ public class LobbyManager : MonoBehaviour
 
     private Lobby lobby;
     private string playerId;
-
+    private bool started = false;
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<GameObject> entries;
@@ -87,8 +89,9 @@ public class LobbyManager : MonoBehaviour
             {
                 IsPrivate = isPrivate.isOn,
                 Data = new Dictionary<string, DataObject> {
-                    {"GameMode", new DataObject(DataObject.VisibilityOptions.Public, gamemode.options[gamemode.value].text, DataObject.IndexOptions.S1)},
-                    {"Map", new DataObject(DataObject.VisibilityOptions.Public, map.options[map.value].text, DataObject.IndexOptions.S2)}
+                    {"g", new DataObject(DataObject.VisibilityOptions.Public, gamemode.options[gamemode.value].text, DataObject.IndexOptions.S1)},
+                    {"m", new DataObject(DataObject.VisibilityOptions.Public, map.options[map.value].text, DataObject.IndexOptions.S2)},
+                    {"j", new DataObject(DataObject.VisibilityOptions.Member, "0")}
                 }
             };
             lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName.text, int.Parse(maxPlayers.text), options);
@@ -139,10 +142,29 @@ public class LobbyManager : MonoBehaviour
                 StopAllCoroutines();
                 break;
             }
-            playerCountText.text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
+
             if (lobby.HostId == playerId) startBtn.SetActive(true);
+            playerCountText.text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
+
+            if(lobby.Data["j"].Value != "0") {
+                playerCountText.text = "Loading Scene...";
+                if(!IsLobbyHost()) {
+                    RelayController.Instance.JoinRelay(lobby.Data["j"].Value);
+                } else {
+                    //Check if everyone has connected and then load map
+                    Debug.Log(NetworkManager.Singleton.ConnectedClients.Count);
+                    if(lobby.Players.Count == NetworkManager.Singleton.ConnectedClients.Count) {
+                        ProjectSceneManager.Instance.LoadScene(lobby.Data["m"].Value, lobby.Data["g"].Value);
+                        StopAllCoroutines();
+                    }
+                }
+            } 
             yield return delay;
         }
+    }
+
+    public bool IsLobbyHost() {
+        return lobby.HostId == playerId;
     }
 
     private async Task UpdateLobbyAsync()
@@ -235,11 +257,6 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        LeaveLobbyAsync();
-    }
-
     public async void LeaveLobbyAsync()
     {
         try
@@ -255,6 +272,8 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
+        waitingPanel.SetActive(false);
+        joiningPanel.SetActive(true);
     }
 
     public async void DeleteLobbyAsync() {
@@ -276,5 +295,23 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyCodeToCopy.text = lobby.LobbyCode;
         StartCoroutine(UpdateLobbyInfosCoroutine(10));
+    }
+
+    public async void Startgame() {
+        if(IsLobbyHost() && !started) {
+            started = true;
+            try{
+                string relayCode = await RelayController.Instance.CreateRelay(lobby);
+                Debug.Log(relayCode);
+                lobby = await Lobbies.Instance.UpdateLobbyAsync(lobby.Id, new UpdateLobbyOptions {
+                    Data = new Dictionary<string, DataObject> {
+                    {"j", new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
+                }});
+
+            } catch(LobbyServiceException e) {
+                Debug.Log(e);
+                started = false;
+            }
+        }
     }
 }

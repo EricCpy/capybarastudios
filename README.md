@@ -32,7 +32,6 @@ Unity Version
     - [ ] start game from lobby for all player
     - [ ] Handle Relay-Lobby when Host disconnects or game over
   - [ ] Spielmodis
-  - [ ] MultiplayerMap
 
 - [x] Tabmenü
    - [x] Namen

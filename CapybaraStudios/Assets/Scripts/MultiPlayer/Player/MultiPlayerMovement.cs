@@ -57,7 +57,10 @@ public class MultiPlayerMovement : NetworkBehaviour
         if(!IsOwner) {
             Destroy(_input);
         }
-        if(IsOwner) RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
+        if(IsOwner) {
+            NetworkManager.Singleton.LocalClient.PlayerObject = GetComponent<NetworkObject>();
+            RespawnManager.Instance.SetClientToNewSpawnServerRpc(OwnerClientId);
+        } 
         controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
         _isCrouchingHash = Animator.StringToHash("isCrouched");
