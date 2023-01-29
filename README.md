@@ -44,10 +44,9 @@ Unity Version
       - [x] mindestens Maussenstivität einstellbar
     - [x] Video Funktionen einbauen
 
-- [ ] Maps
+- [x] Maps
   - [x] mindestens 2 neue SingleplayerMaps
   - [x] Storyline
-  - [ ] map muss abgeschlossen werden, um nächste freizuschalten
   - [x] mindestens eine neue Multiplayermap
     - [x] Parkourmap oder Parkourelemente
 
