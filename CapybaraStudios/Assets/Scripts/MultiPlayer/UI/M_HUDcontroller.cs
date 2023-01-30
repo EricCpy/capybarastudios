@@ -96,10 +96,8 @@ public class M_HUDcontroller : NetworkBehaviour
     public void LoadMenu()
     {
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
-        if(IsServer || IsHost) {
-            NotfiyHostDisconnectClientRpc();
-        } 
         NetworkManager.Singleton.Shutdown();
+        ProjectSceneManager.Instance.inGame = false;
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu_Scene");
@@ -110,17 +108,9 @@ public class M_HUDcontroller : NetworkBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        if(IsServer || IsHost) {
-            NotfiyHostDisconnectClientRpc();
-        } 
         NetworkManager.Singleton.Shutdown();
 		Application.Quit();
 #endif
-    }
-    
-    [ClientRpc]
-    public void NotfiyHostDisconnectClientRpc() {
-        Debug.Log("Host Disconnected");
     }
 
 

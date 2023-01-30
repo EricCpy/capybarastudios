@@ -82,6 +82,10 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            creatingPanel.SetActive(false);
+            panelHighlight.SetActive(false);
+            waitingPanel.SetActive(true);
+            startBtn.SetActive(true);
             Debug.Log(isPrivate.isOn);
             CreateLobbyOptions options = new CreateLobbyOptions
             {
@@ -95,10 +99,6 @@ public class LobbyManager : MonoBehaviour
             lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName.text, int.Parse(maxPlayers.text), options);
             StartCoroutine(UpdateLobbyTimeoutCoroutine(20));
             Debug.Log("Created Lobby " + lobby.Name + " " + lobby.MaxPlayers + " " + gamemode.options[gamemode.value].text + " " + map.options[map.value].text);
-            creatingPanel.SetActive(false);
-            panelHighlight.SetActive(false);
-            waitingPanel.SetActive(true);
-            startBtn.SetActive(true);
             UpdateWaitingMenu();
         }
         catch (LobbyServiceException e)

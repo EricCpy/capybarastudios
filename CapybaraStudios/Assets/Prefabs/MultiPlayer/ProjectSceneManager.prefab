@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1168766782365090938, guid: 95f9c4580e3f4e04c9d26f8c2a000844, type: 3}
+  endHud: {fileID: 3080688101573462666, guid: 97f254ce6239b7f458c308998f2df287, type: 3}
   playerId: 
+  inGame: 0
 --- !u!114 &2536869404998468257
 MonoBehaviour:
   m_ObjectHideFlags: 0

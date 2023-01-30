@@ -9,8 +9,9 @@ using Unity.Services.Authentication;
 public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
 {
     public GameObject player;
+    public GameObject endHud;
     [HideInInspector] public string playerId; 
-    private bool inGame = false;
+    public bool inGame = false;
     private async void Awake() {
         DontDestroyOnLoad(gameObject);
         await UnityServices.InitializeAsync();
@@ -26,8 +27,10 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
         //wenn InGame und IsListening sich auf false setzt, dann öffne Hud zum Disconnecten
         if(!inGame && NetworkManager.Singleton.IsListening) {
             inGame = true;
-        } else if(inGame && NetworkManager.Singleton.IsListening) {
+        } else if(inGame && !NetworkManager.Singleton.IsListening) {
             inGame = false;
+            Debug.Log("end");
+            Instantiate(endHud);
             //öffne End Hud
         }
     }
