@@ -5,7 +5,7 @@ Unity Version
 2021.3.11f1
 
 # TODOs bis zur Endpräsentation:
-- [ ] Multiplayer
+- [x] Multiplayer
   - [x] movement
   - [x] kamera
   - [x] Players sollen unterschiedliche Farben haben
@@ -31,7 +31,7 @@ Unity Version
     - [x] connect relay with lobby system
     - [x] start game from lobby for all player
     - [x] Handle Relay-Lobby when Host disconnects or game over
-  - [ ] Spielmodis
+  - [x] Spielmodis
   - [x] testing
 
 - [x] Tabmenü
@@ -57,7 +57,8 @@ Unity Version
   - [x] fliegender Geschützturm
   - [x] stehender Geschützturm
 
--[ ] Testing
+- [ ] Testing & Fixes
   - [ ] Multiplayer
   - [ ] Singleplayer
-  - [ ] Quiting Map and restarting
+  - [x] Quiting Map and restarting Multiplayer
+  - [ ] Quiting Map and restarting Singleplayer

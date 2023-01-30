@@ -91,9 +91,9 @@ public class LobbyManager : MonoBehaviour
             {
                 IsPrivate = isPrivate.isOn,
                 Data = new Dictionary<string, DataObject> {
-                    {"g", new DataObject(DataObject.VisibilityOptions.Public, gamemode.options[gamemode.value].text, DataObject.IndexOptions.S1)},
-                    {"m", new DataObject(DataObject.VisibilityOptions.Public, map.options[map.value].text, DataObject.IndexOptions.S2)},
-                    {"j", new DataObject(DataObject.VisibilityOptions.Member, "0")}
+                    {Constants.GameTypeKey, new DataObject(DataObject.VisibilityOptions.Public, gamemode.options[gamemode.value].text, DataObject.IndexOptions.S1)},
+                    {Constants.MapKey, new DataObject(DataObject.VisibilityOptions.Public, map.options[map.value].text, DataObject.IndexOptions.S2)},
+                    {Constants.JoinKey, new DataObject(DataObject.VisibilityOptions.Member, "0")}
                 }
             };
             lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName.text, int.Parse(maxPlayers.text), options);
@@ -145,16 +145,16 @@ public class LobbyManager : MonoBehaviour
             if (lobby.HostId == playerId) startBtn.SetActive(true);
             playerCountText.text = lobby.MaxPlayers - lobby.AvailableSlots + "/" + lobby.MaxPlayers;
 
-            if(lobby.Data["j"].Value != "0") {
+            if(lobby.Data[Constants.JoinKey].Value != "0") {
                 playerCountText.text = "Loading Scene...";
                 if(!IsLobbyHost()) {
-                    RelayController.Instance.JoinRelay(lobby.Data["j"].Value);
+                    RelayController.Instance.JoinRelay(lobby.Data[Constants.JoinKey].Value);
                 } else {
                     //Check if everyone has connected and then load map
                     Debug.Log(NetworkManager.Singleton.ConnectedClients.Count);
                     if(lobby.Players.Count == NetworkManager.Singleton.ConnectedClients.Count) {
                         DeleteLobbyAsync();
-                        ProjectSceneManager.Instance.LoadScene(lobby.Data["m"].Value, lobby.Data["g"].Value);
+                        ProjectSceneManager.Instance.LoadScene(lobby.Data[Constants.MapKey].Value, lobby.Data[Constants.GameTypeKey].Value);
                     }
                 }
             } 
@@ -306,7 +306,7 @@ public class LobbyManager : MonoBehaviour
                 Debug.Log(relayCode);
                 lobby = await Lobbies.Instance.UpdateLobbyAsync(lobby.Id, new UpdateLobbyOptions {
                     Data = new Dictionary<string, DataObject> {
-                    {"j", new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
+                    {Constants.JoinKey, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
                 }});
 
             } catch(LobbyServiceException e) {

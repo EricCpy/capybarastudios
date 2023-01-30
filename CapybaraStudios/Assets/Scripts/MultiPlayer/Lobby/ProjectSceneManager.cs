@@ -10,7 +10,8 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
 {
     public GameObject player;
     public GameObject endHud;
-    [HideInInspector] public string playerId; 
+    [HideInInspector] public string playerId;
+    [HideInInspector] public GameType gametype; 
     public bool inGame = false;
     private async void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -40,8 +41,12 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
         NetworkManager.SceneManager.OnSceneEvent += SceneManager_OnSceneEvent;
     }
 
-    public void LoadScene(string map, string gameType) {
-        Debug.Log("lllaa");
+    public void LoadScene(string map, string game) {
+        if(game == "Deathmatch") {
+            gametype = GameType.DeathMatch;
+        } else {
+            gametype = GameType.LastOneStanding;
+        }
         NetworkManager.SceneManager.LoadScene(map, LoadSceneMode.Single);
     }
 
