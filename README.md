@@ -30,7 +30,7 @@ Unity Version
   - [x] Relay
     - [x] connect relay with lobby system
     - [x] start game from lobby for all player
-    - [ ] Handle Relay-Lobby when Host disconnects or game over
+    - [x] Handle Relay-Lobby when Host disconnects or game over
   - [ ] Spielmodis
   - [x] testing
 

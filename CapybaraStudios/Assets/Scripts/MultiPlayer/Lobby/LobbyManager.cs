@@ -153,8 +153,8 @@ public class LobbyManager : MonoBehaviour
                     //Check if everyone has connected and then load map
                     Debug.Log(NetworkManager.Singleton.ConnectedClients.Count);
                     if(lobby.Players.Count == NetworkManager.Singleton.ConnectedClients.Count) {
+                        DeleteLobbyAsync();
                         ProjectSceneManager.Instance.LoadScene(lobby.Data["m"].Value, lobby.Data["g"].Value);
-                        StopAllCoroutines();
                     }
                 }
             } 
