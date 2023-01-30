@@ -3,13 +3,33 @@ using My.Core.Singletons;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using Unity.Services.Relay;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 
 public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
 {
     public GameObject player;
-
-    public void Awake() {
+    [HideInInspector] public string playerId; 
+    private bool inGame = false;
+    private async void Awake() {
         DontDestroyOnLoad(gameObject);
+        await UnityServices.InitializeAsync();
+        AuthenticationService.Instance.SignedIn += () => {
+            playerId = AuthenticationService.Instance.PlayerId;
+            SceneManager.LoadScene("Menu_Scene");
+        };
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
+
+    private void FixedUpdate() {
+        //wenn isClient und inGame, dann öffne ... menü falls networkmanager nicht mehr kommuniziert
+        //wenn InGame und IsListening sich auf false setzt, dann öffne Hud zum Disconnecten
+        if(!inGame && NetworkManager.Singleton.IsListening) {
+            inGame = true;
+        } else if(inGame && NetworkManager.Singleton.IsListening) {
+            inGame = false;
+            //öffne End Hud
+        }
     }
 
     public override void OnNetworkSpawn()

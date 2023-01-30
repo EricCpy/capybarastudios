@@ -32,6 +32,7 @@ Unity Version
     - [x] start game from lobby for all player
     - [ ] Handle Relay-Lobby when Host disconnects or game over
   - [ ] Spielmodis
+  - [x] testing
 
 - [x] Tabmenü
    - [x] Namen
@@ -55,3 +56,8 @@ Unity Version
   - [x] Rocketlauncher
   - [x] fliegender Geschützturm
   - [x] stehender Geschützturm
+
+-[ ] Testing
+  - [ ] Multiplayer
+  - [ ] Singleplayer
+  - [ ] Quiting Map and restarting

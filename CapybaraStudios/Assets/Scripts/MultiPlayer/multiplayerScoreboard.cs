@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Unity.Netcode;
 
 public class multiplayerScoreboard : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class multiplayerScoreboard : MonoBehaviour
 
             var currentPlayer = Color.cyan;
             var player = kvPair.Value;
-            if (player.playerName.Value.ToString() == PlayerPrefs.GetString("CurrentName", "Player"))
+            if (player.OwnerClientId == NetworkManager.Singleton.LocalClientId)
             {
                 entryTransform.Find("Name").GetComponent<TMP_Text>().color = currentPlayer;
                 entryTransform.Find("Rank").GetComponent<TMP_Text>().color = currentPlayer;

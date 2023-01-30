@@ -96,9 +96,13 @@ public class M_HUDcontroller : NetworkBehaviour
     public void LoadMenu()
     {
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
+        if(IsServer || IsHost) {
+            NotfiyHostDisconnectClientRpc();
+        } 
+        NetworkManager.Singleton.Shutdown();
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu_Scene");
     }
 
     public void QuitGame()
@@ -106,10 +110,20 @@ public class M_HUDcontroller : NetworkBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-				Application.Quit();
+        if(IsServer || IsHost) {
+            NotfiyHostDisconnectClientRpc();
+        } 
+        NetworkManager.Singleton.Shutdown();
+		Application.Quit();
 #endif
     }
     
+    [ClientRpc]
+    public void NotfiyHostDisconnectClientRpc() {
+        Debug.Log("Host Disconnected");
+    }
+
+
     public TMP_InputField playerInputField;
     public void initName()
     {
@@ -120,11 +134,5 @@ public class M_HUDcontroller : NetworkBehaviour
     public void updateName()
     {
         PlayerPrefs.SetString("CurrentName", playerInputField.text);
-    }
-
-    public void RestartLevel()
-    {
-        Resume();
-        GameManager.RestartLevel();
     }
 }

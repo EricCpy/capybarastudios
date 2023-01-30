@@ -36,12 +36,9 @@ public class LobbyManager : MonoBehaviour
     private Transform entryTemplate;
     private List<GameObject> entries;
 
-    async void Start()
+    void Start()
     {
-        await UnityServices.InitializeAsync();
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        playerId = AuthenticationService.Instance.PlayerId;
+        playerId = ProjectSceneManager.Instance.playerId;
     }
 
     public void Awake()
@@ -277,7 +274,6 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
         waitingPanel.SetActive(false);
-        joiningPanel.SetActive(true);
     }
 
     public async void DeleteLobbyAsync() {
