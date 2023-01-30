@@ -276,6 +276,11 @@ public class LobbyManager : MonoBehaviour
         waitingPanel.SetActive(false);
     }
 
+    public void CloseLobby() {
+        if(started) return;
+        DeleteLobbyAsync();
+    }
+
     public async void DeleteLobbyAsync() {
         try
         {
@@ -301,6 +306,7 @@ public class LobbyManager : MonoBehaviour
     public async void Startgame() {
         if(IsLobbyHost() && !started) {
             started = true;
+            playerCountText.text = "Loading Scene...";
             try{
                 string relayCode = await RelayController.Instance.CreateRelay(lobby);
                 Debug.Log(relayCode);
@@ -312,6 +318,7 @@ public class LobbyManager : MonoBehaviour
             } catch(LobbyServiceException e) {
                 Debug.Log(e);
                 started = false;
+                playerCountText.text = "Something went wrong!";
             }
         }
     }
