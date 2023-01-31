@@ -25,6 +25,7 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
     }
 
     private void FixedUpdate() {
+        if(NetworkManager.Singleton == null) return;
         //wenn isClient und inGame, dann öffne ... menü falls networkmanager nicht mehr kommuniziert
         //wenn InGame und IsListening sich auf false setzt, dann öffne Hud zum Disconnecten
         if(!inGame && NetworkManager.Singleton.IsListening) {
