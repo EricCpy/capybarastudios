@@ -10,6 +10,7 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
 {
     public GameObject player;
     public GameObject endHud;
+    public GameObject camera;
     [HideInInspector] public string playerId;
     [HideInInspector] public GameType gametype; 
     public bool inGame = false;
@@ -30,9 +31,8 @@ public class ProjectSceneManager : NetworkSingleton<ProjectSceneManager>
             inGame = true;
         } else if(inGame && !NetworkManager.Singleton.IsListening) {
             inGame = false;
-            Debug.Log("end");
-            Instantiate(endHud);
-            //öffne End Hud
+            Instantiate(camera); //Kamera wird gelöscht, weil auf NetworkObject -> spawne neue
+            Instantiate(endHud); //öffne End Hud
         }
     }
 
