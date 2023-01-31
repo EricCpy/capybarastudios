@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float playerVelocity;
 
     //crouching
-    private bool crouching = false;
+    public bool crouching = false;
 
     //sprinting
     private bool sprinting = false;

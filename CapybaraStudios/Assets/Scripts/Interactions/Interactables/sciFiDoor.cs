@@ -8,6 +8,7 @@ public class sciFiDoor : Interactable
     public GameObject leftDoor;
     public GameObject rightDoor;
     public AudioSource doorSound;
+    private bool open = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +27,15 @@ public class sciFiDoor : Interactable
         doorSound.Play();
         Debug.Log(player.name + "interacted with " + gameObject.name);
         var buttonRenderer = button.GetComponent<Renderer>();
-        if(buttonRenderer.material.color.Equals(Color.red)) {
-            buttonRenderer.material.SetColor("_Color", Color.green);
-            leftDoor.transform.localPosition = new Vector3(0, 0, 3);
+        if(!open) {
+            leftDoor.transform.localPosition = new Vector3(0, 0, 4);
             rightDoor.transform.localPosition = new Vector3(0, 0, -4);
+            open = true;
         }
         else {
-            buttonRenderer.material.SetColor("_Color", Color.red);
             leftDoor.transform.localPosition = new Vector3(0, 0, 0);
-            rightDoor.transform.localPosition = new Vector3((float)0.007935028, (float)-0.1499473, (float)-1.433132);
+            rightDoor.transform.localPosition = new Vector3(0.007935028f, -0.1499473f, -1.433132f);
+            open = false;
         }
     }
 }

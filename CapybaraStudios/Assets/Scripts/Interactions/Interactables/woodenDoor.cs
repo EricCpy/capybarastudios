@@ -6,8 +6,14 @@ public class woodenDoor : Interactable
 {
     public GameObject button;
     public GameObject door;
-    private bool open = false;
     public AudioSource buttonSound;
+    public AudioSource unlockedSound;
+    private GunScript currentGunScript;
+    public Weapon currentGun;
+
+    public woodenDoor() {
+        message = "open door";
+    }
 
     // Update is called once per frame
     void Update()
@@ -17,15 +23,17 @@ public class woodenDoor : Interactable
 
     protected override void Interact(GameObject player)
     {
-        Debug.Log(player.name + "interacted with " + gameObject.name);
-        if(open == false) {
+        currentGunScript = player.GetComponent<GunScript>();
+        currentGun = currentGunScript.currentWeapon;
+
+        if(currentGunScript.currentWeapon.name == "keyItem") {
             door.transform.localRotation = Quaternion.Euler(0, 0, 0);
             button.transform.localPosition = new Vector3(833, -78, 170);
-            buttonSound.Play();
+            unlockedSound.Play();
         }
         else {
-            door.transform.localRotation = Quaternion.Euler(0, -90, 0);
-            button.transform.localPosition = new Vector3(830, -78, 174);
+            message = "locked... find the keys!";
+            buttonSound.Play();
         }
     }
 }
