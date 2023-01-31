@@ -18,6 +18,7 @@ Unity Version
   - [x] KillSound für Killer
   - [x] TabMenü für den Multiplayer (ScoreManager)
   - [x] DeathMenü
+  - [x] SettingsMenü
   - [x] out of map sterben
   - [x] aktualisiere und ordne tab menü nach kills
   - [x] Lobbysystem

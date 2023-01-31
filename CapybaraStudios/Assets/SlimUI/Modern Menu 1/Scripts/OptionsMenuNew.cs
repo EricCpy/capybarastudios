@@ -76,7 +76,7 @@ namespace SlimUI.ModernMenu
             // check difficulty
             // check slider values
             musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume");
-            retroScale.GetComponent<Slider>().value = PlayerPrefs.GetFloat("retroScale", 1);
+            retroScale.GetComponent<Slider>().value = retroScale.GetComponent<Slider>().maxValue - PlayerPrefs.GetFloat("retroScale", 1) + retroScale.GetComponent<Slider>().minValue;
             retroButton.GetComponent<Toggle>().isOn = PlayerPrefs.GetFloat("retroScale", 0) != 0;
             retroScale.SetActive(retroButton.GetComponent<Toggle>().isOn);
             updateRetro();
