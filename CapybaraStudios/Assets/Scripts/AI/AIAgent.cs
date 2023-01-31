@@ -67,8 +67,7 @@ public class AIAgent : MonoBehaviour
         if (NavMesh.SamplePosition(randomDirection, out hit, 5, 1))
         {
             finalPosition = hit.position;
+            agent.destination = finalPosition;
         }
-
-        agent.destination = finalPosition;
     }
 }

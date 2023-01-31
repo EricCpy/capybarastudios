@@ -29,7 +29,8 @@ public class M_Weapon : NetworkBehaviour
     private float reloadStatus = 1;
     private Animator _animator;
     public int animationType;
-
+    public Vector3 firePos;
+    public Transform center;
     private void Awake()
     {
         bulletsLeft = magazineSize;
@@ -60,7 +61,8 @@ public class M_Weapon : NetworkBehaviour
         launcher.Launch(OwnerClientId);
         //knockback
         var dir = _transform.position - BulletFirePoint.position;
-        var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 200f);
+        firePos = center.position;
+        var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 300f);
         ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
         impactReceiver.AddImpact(dir, force);
 

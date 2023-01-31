@@ -31,8 +31,9 @@ public class M_Rocket : NetworkBehaviour
     {   
         if(!IsServer && !IsHost) return;
         M_PlayerStats obj = other.gameObject.GetComponentInParent<M_PlayerStats>();
+        Vector3 currPos = transform.position;
         if(exploded || (obj != null && obj.OwnerClientId == owningPlayer)) return;
-        Explode();
+        Explode(currPos);
         exploded = true;
     }
 
@@ -40,10 +41,10 @@ public class M_Rocket : NetworkBehaviour
         if(rig.velocity != oldVelocity) rig.velocity = oldVelocity;
     }
 
-    private void Explode()
+    private void Explode(Vector3 pos)
     {   
         PlayExplosion();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        Collider[] colliders = Physics.OverlapSphere(pos, radius);
         HashSet<ulong> set = new HashSet<ulong>();
         foreach (Collider collision in colliders)
         {
@@ -61,14 +62,14 @@ public class M_Rocket : NetworkBehaviour
             if(stats != null)
             {
                 if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
-                    KnockbackClientRpc(transform.position, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
+                    KnockbackClientRpc(pos, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
                     if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-49, stats.OwnerClientId, owningPlayer);
                     else stats.UpdateHealthServerRpc(-2, stats.OwnerClientId, owningPlayer);
                 }
             }
             
         }
-        GameObject oj = Instantiate(explosionEffect, transform.position, transform.rotation);
+        GameObject oj = Instantiate(explosionEffect, pos, transform.rotation);
         oj.GetComponent<NetworkObject>().Spawn();
 
         DestroyRocket();
@@ -77,9 +78,8 @@ public class M_Rocket : NetworkBehaviour
     [ClientRpc]
     private void KnockbackClientRpc(Vector3 point, ClientRpcParams clientRpcParams) {
         GameObject player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
-        Vector3 position = player.GetComponent<MultiPlayerMovement>().center.position;
-        //torso ist leicht verschoben
-        Vector3 dir = position - point; 
+        Vector3 position = player.GetComponent<M_GunScript>().currentWeapon.firePos;
+        Vector3 dir = position - point;
         float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
         float currForce = percentage * impactforce;
         ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
