@@ -264,7 +264,8 @@ namespace SlimUI.ModernMenu
             if (retroButton.GetComponent<Toggle>().isOn)
             {
                 retroScale.SetActive(true);
-                PlayerPrefs.SetFloat("retroScale", retroScale.GetComponent<Slider>().value);
+                Slider slider = retroScale.GetComponent<Slider>();
+                PlayerPrefs.SetFloat("retroScale", slider.maxValue - slider.value + slider.minValue);
             }
             else
             {
