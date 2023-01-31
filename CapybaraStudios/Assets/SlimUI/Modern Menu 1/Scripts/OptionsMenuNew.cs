@@ -272,7 +272,6 @@ namespace SlimUI.ModernMenu
                 retroScale.SetActive(false);
                 PlayerPrefs.SetFloat("retroScale", 0f);
             }
-
             FindObjectOfType<retroMode>().RefreshMode();
         }
 
