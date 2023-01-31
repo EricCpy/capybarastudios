@@ -78,7 +78,7 @@ namespace SlimUI.ModernMenu
             musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
             retroScale.GetComponent<Slider>().value = retroScale.GetComponent<Slider>().maxValue -
                 PlayerPrefs.GetFloat("retroScale", 1) + retroScale.GetComponent<Slider>().minValue;
-            retroButton.GetComponent<Toggle>().isOn = PlayerPrefs.GetFloat("retroScale", 0) != 0;
+            retroButton.GetComponent<Toggle>().isOn = PlayerPrefs.GetFloat("retroScale", 0) > 0.5;
             retroScale.SetActive(retroButton.GetComponent<Toggle>().isOn);
             updateRetro();
             soundSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
