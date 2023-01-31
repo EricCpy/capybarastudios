@@ -299,7 +299,11 @@ namespace SlimUI.ModernMenu
         {
             SceneManager.LoadScene(n);
         }
-
+        
+        public void LoadScene(string n)
+        {
+            SceneManager.LoadScene(n);
+        }
         public void MusicSlider()
         {
             //PlayerPrefs.SetFloat("MusicVolume", sliderValue);

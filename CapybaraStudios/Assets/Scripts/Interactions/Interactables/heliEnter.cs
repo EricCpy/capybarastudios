@@ -33,7 +33,7 @@ public class heliEnter : Interactable
         if(currentGunScript.currentWeapon.name == "Fuel Tank") {
             FindObjectOfType<GameManager>().CompleteLevel();
             loadFuelSound.Play();
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene("AntarcticEndScene");
         }
 
         else {
