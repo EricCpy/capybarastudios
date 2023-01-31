@@ -30,7 +30,7 @@ public class AIIdleState : AIState
         if(agent.config.aIBehaviour == AIBehaviour.Dummy) return;
         if(!agent.agent.hasPath && agent.config.aIBehaviour != AIBehaviour.Attack) {
             if (!agent.agent.isOnNavMesh) return;
-            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(1,10f), UnityEngine.Random.Range(0, 0.39f), UnityEngine.Random.Range(1,10f)));
+            agent.WalkRandom(new Vector3(UnityEngine.Random.Range(-50f,50f), UnityEngine.Random.Range(-0.39f, 0.39f), UnityEngine.Random.Range(-50f,50f)));
         }
         if(agent.config.aIBehaviour != AIBehaviour.Aggressiv && agent.config.aIBehaviour != AIBehaviour.Attack) return;
 
