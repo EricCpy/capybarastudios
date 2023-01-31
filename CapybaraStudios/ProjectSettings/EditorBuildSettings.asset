@@ -29,5 +29,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Warehouse.unity
     guid: fa2aabd9b39a7794fbf5f0f2bbbcc204
+  - enabled: 1
+    path: Assets/Scenes/AntarcticStation.unity
+    guid: 73aa4027beb4c42969f1c5644065c3c2
+  - enabled: 1
+    path: Assets/Scenes/AntarcticEndScene.unity
+    guid: f5b895f279d1adb4cafd7b48281c7cdb
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cf60e2e2887156240ae7a662e7de9893, type: 2}
