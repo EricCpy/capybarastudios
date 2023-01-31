@@ -75,12 +75,13 @@ namespace SlimUI.ModernMenu
             initName();
             // check difficulty
             // check slider values
-            musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume");
-            retroScale.GetComponent<Slider>().value = retroScale.GetComponent<Slider>().maxValue - PlayerPrefs.GetFloat("retroScale", 1) + retroScale.GetComponent<Slider>().minValue;
+            musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+            retroScale.GetComponent<Slider>().value = retroScale.GetComponent<Slider>().maxValue -
+                PlayerPrefs.GetFloat("retroScale", 1) + retroScale.GetComponent<Slider>().minValue;
             retroButton.GetComponent<Toggle>().isOn = PlayerPrefs.GetFloat("retroScale", 0) != 0;
             retroScale.SetActive(retroButton.GetComponent<Toggle>().isOn);
             updateRetro();
-            soundSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("SFXVolume");
+            soundSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
             sensitivityXSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("XSensitivity", 1f);
             sensitivityYSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("YSensitivity", 1f);
             //mouseSmoothSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MouseSmoothing");
@@ -272,6 +273,7 @@ namespace SlimUI.ModernMenu
                 retroScale.SetActive(false);
                 PlayerPrefs.SetFloat("retroScale", 0f);
             }
+
             FindObjectOfType<retroMode>().RefreshMode();
         }
 
@@ -299,11 +301,12 @@ namespace SlimUI.ModernMenu
         {
             SceneManager.LoadScene(n);
         }
-        
+
         public void LoadScene(string n)
         {
             SceneManager.LoadScene(n);
         }
+
         public void MusicSlider()
         {
             //PlayerPrefs.SetFloat("MusicVolume", sliderValue);
