@@ -113,16 +113,8 @@ public class M_HUDcontroller : NetworkBehaviour
 #endif
     }
 
-
-    public TMP_InputField playerInputField;
     public void initName()
     {
         string name = PlayerPrefs.GetString("CurrentName", "Player");
-        playerInputField.text = name;
-    }
-
-    public void updateName()
-    {
-        PlayerPrefs.SetString("CurrentName", playerInputField.text);
     }
 }
