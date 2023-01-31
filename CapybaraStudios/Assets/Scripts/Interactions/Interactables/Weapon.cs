@@ -184,8 +184,20 @@ public class Weapon : Interactable
                 StartCoroutine(SpawnTrail(trail, hit));
             }
 
+            float finalDamage = damage;
+
+            //distance multiplier 0.1- 0.01
+            if (damageFalloffStart < hit.distance)
+            {
+                float distance = hit.distance / 10f - damageFalloffStart / 10f;
+                float distanceMultiplier = (1 - distance * distanceModifier);
+                if (distanceMultiplier > 1) distanceMultiplier = 1;
+                if (distanceMultiplier < 0) distanceMultiplier = 0;
+                finalDamage *= distanceMultiplier;
+            }
+
             if (collisionObject.CompareTag("Head") || collisionObject.CompareTag("Body") ||
-                collisionObject.CompareTag("Limbs"))
+                collisionObject.CompareTag("Limbs") || collisionObject.CompareTag("Turret"))
             {
                 //does object have stats?
                 if (collisionObject.GetComponentInParent(typeof(PlayerStats)))
@@ -196,17 +208,7 @@ public class Weapon : Interactable
                     float hitMultiplier = 1;
                     if (collisionObject.CompareTag("Head")) hitMultiplier = 3;
                     if (collisionObject.CompareTag("Limbs")) hitMultiplier = 0.75f;
-                    float finalDamage = (int)(damage * hitMultiplier);
-
-                    //distance multiplier 0.1- 0.01
-                    if (damageFalloffStart < hit.distance)
-                    {
-                        float distance = hit.distance / 10f - damageFalloffStart / 10f;
-                        float distanceMultiplier = (1 - distance * distanceModifier);
-                        if (distanceMultiplier > 1) distanceMultiplier = 1;
-                        if (distanceMultiplier < 0) distanceMultiplier = 0;
-                        finalDamage *= distanceMultiplier;
-                    }
+                    finalDamage = (int)(damage * hitMultiplier);
 
                     //final damage (rounded int)
                     var ps = GetComponentInParent<PlayerStats>();
@@ -222,6 +224,20 @@ public class Weapon : Interactable
                     //player hit particle TODO
 
                     //Hitmarker
+                    HitShow();
+                    Invoke(nameof(HitDisable), 0.2f);
+                }
+                //is hit turret?
+                if (collisionObject.GetComponentInParent(typeof(Turret)))
+                {
+                    Turret turret = (collisionObject.GetComponentInParent(typeof(Turret)) as Turret);
+                    turret.TakeDamage((int)finalDamage);
+
+                    if (transform.root.tag == "Player")
+                    {
+                        GameManager.damageDone += (int)finalDamage;
+                    }
+
                     HitShow();
                     Invoke(nameof(HitDisable), 0.2f);
                 }
@@ -459,7 +475,7 @@ public class Weapon : Interactable
         Launcher launcher = GetComponent<Launcher>();
         launcher.Launch();
         //knockback
-        var dir = transform.parent.transform.position - BulletFirePoint.position;
+        Vector3 dir = transform.parent.transform.position - BulletFirePoint.position;
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 500f);
         ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
         impactReceiver.AddImpact(dir, force);

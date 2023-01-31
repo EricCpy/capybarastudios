@@ -17,6 +17,8 @@ public class M_HUDcontroller : NetworkBehaviour
     public GameObject tabMenuUI;
     public GameObject settingsMenuUI;
     [SerializeField] M_InputManager _input;
+    [SerializeField] private TextMeshProUGUI deathText;
+    private bool dead = false;
 
     public override void OnNetworkSpawn() {
         if(!IsOwner) Destroy(gameObject);
@@ -25,7 +27,6 @@ public class M_HUDcontroller : NetworkBehaviour
 
     void Start()
     {
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
         deathMenuUI.SetActive(false);
@@ -37,6 +38,7 @@ public class M_HUDcontroller : NetworkBehaviour
 
     public void DoPause()
     {
+        if(dead) Death("", false);
         if (_gameIsPaused)
         {
             settingsMenuUI.SetActive(false);
@@ -51,36 +53,23 @@ public class M_HUDcontroller : NetworkBehaviour
 
     public void Tab()
     {
+        if(dead) Death("", false);
         if (!_gameIsPaused)
         {
             tabMenuUI.SetActive(!tabMenuUI.activeSelf);
         }
     }
 
-    public void Death()
+    public void Death(string killer, bool dead)
     {
-        tabMenuUI.SetActive(false);
-        deathMenuUI.SetActive(true);
-        gameUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
-    }
-
-
-    private IEnumerator DeathFadein(float time)
-    {
-        if (time > 0)
-        {
-            yield return new WaitForSeconds(0.1f);
-            deathMenuUI.GetComponent<CanvasGroup>().alpha += 0.06666666f;
-            time -= 100;
-            StartCoroutine(DeathFadein(time));
+        this.dead = dead;
+        deathMenuUI.SetActive(dead);
+        if(dead == false) return;
+        if(killer.Equals("")) {
+            deathText.text = "You killed yourself :(";
+            return;
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
-        }
+        deathText.text = killer + " killed you";
     }
 
     public void Resume()
@@ -88,7 +77,6 @@ public class M_HUDcontroller : NetworkBehaviour
         print("Resume");
         if(_input) _input.Resume();
         Cursor.lockState = CursorLockMode.Locked;
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
         _gameIsPaused = false;
         pauseMenuUI.SetActive(false);
@@ -102,16 +90,17 @@ public class M_HUDcontroller : NetworkBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
-        InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
         _gameIsPaused = true;
     }
 
     public void LoadMenu()
     {
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
+        NetworkManager.Singleton.Shutdown();
+        ProjectSceneManager.Instance.inGame = false;
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu_Scene");
     }
 
     public void QuitGame()
@@ -119,25 +108,13 @@ public class M_HUDcontroller : NetworkBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-				Application.Quit();
+        NetworkManager.Singleton.Shutdown();
+		Application.Quit();
 #endif
     }
-    
-    public TMP_InputField playerInputField;
+
     public void initName()
     {
         string name = PlayerPrefs.GetString("CurrentName", "Player");
-        playerInputField.text = name;
-    }
-
-    public void updateName()
-    {
-        PlayerPrefs.SetString("CurrentName", playerInputField.text);
-    }
-
-    public void RestartLevel()
-    {
-        Resume();
-        GameManager.RestartLevel();
     }
 }

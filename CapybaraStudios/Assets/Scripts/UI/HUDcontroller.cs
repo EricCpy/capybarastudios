@@ -108,7 +108,7 @@ public class HUDcontroller : MonoBehaviour
         //TODO if bedingung, nur wenn Singleplayer, dann timeScale
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu_Scene");
     }
 
     public void QuitGame()

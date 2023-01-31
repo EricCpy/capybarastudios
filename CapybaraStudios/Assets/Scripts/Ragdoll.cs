@@ -5,18 +5,19 @@ using UnityEngine;
 public class Ragdoll : MonoBehaviour
 {
     Rigidbody[] rBodies;
-    MeshCollider[]meshColliders;
+    MeshCollider[] meshColliders;
     Animator animator;
+    ClientNetworkAnimator canimator;
     // Start is called before the first frame update
     void Awake()
     {
         rBodies = GetComponentsInChildren<Rigidbody>();
-        meshColliders = GetComponentsInChildren<MeshCollider>();
         animator = GetComponentInChildren<Animator>();
+        meshColliders = GetComponentsInChildren<MeshCollider>();
         DeactivatePhysics();
     }
 
-    private void DeactivatePhysics() {
+    public void DeactivatePhysics() {
         foreach(var r in rBodies) {
             r.isKinematic = true;
         }

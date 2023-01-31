@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
@@ -57,6 +58,10 @@ namespace SlimUI.ModernMenu
         public GameObject sensitivityYSlider;
         public GameObject mouseSmoothSlider;
 
+        public GameObject retroScale;
+        public GameObject retroButton;
+        private float retroValue = 1;
+
         private float sliderValue = 0.0f;
         private float sliderValueXSensitivity = 1f;
         private float sliderValueYSensitivity = 1f;
@@ -71,6 +76,10 @@ namespace SlimUI.ModernMenu
             // check difficulty
             // check slider values
             musicSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume");
+            retroScale.GetComponent<Slider>().value = PlayerPrefs.GetFloat("retroScale", 1);
+            retroButton.GetComponent<Toggle>().isOn = PlayerPrefs.GetFloat("retroScale", 0) != 0;
+            retroScale.SetActive(retroButton.GetComponent<Toggle>().isOn);
+            updateRetro();
             soundSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("SFXVolume");
             sensitivityXSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("XSensitivity", 1f);
             sensitivityYSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("YSensitivity", 1f);
@@ -250,6 +259,28 @@ namespace SlimUI.ModernMenu
             //sliderValueSmoothing = mouseSmoothSlider.GetComponent<Slider>().value;
         }
 
+        public void updateRetro()
+        {
+            if (retroButton.GetComponent<Toggle>().isOn)
+            {
+                retroScale.SetActive(true);
+                Slider slider = retroScale.GetComponent<Slider>();
+                PlayerPrefs.SetFloat("retroScale", slider.maxValue - slider.value + slider.minValue);
+            }
+            else
+            {
+                retroScale.SetActive(false);
+                PlayerPrefs.SetFloat("retroScale", 0f);
+            }
+            FindObjectOfType<retroMode>().RefreshMode();
+        }
+
+        public void toggleRetro()
+        {
+            updateRetro();
+        }
+
+
         public void FullScreen()
         {
             Screen.fullScreen = !Screen.fullScreen;
@@ -286,12 +317,12 @@ namespace SlimUI.ModernMenu
             _inputActionAsset.FindAction("LookAround")
                 .ApplyParameterOverride("scaleVector2:x",
                     (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
-            
+
             _inputActionAsset.FindAction("LookAround")
                 .ApplyParameterOverride("scaleVector2:y",
                     (float)(0.1 * PlayerPrefs.GetFloat("XSensitivity", 1f)));
             var tmp = FindObjectOfType<InputManager>();
-            if(tmp) tmp.RebindKey();
+            if (tmp) tmp.RebindKey();
         }
 
         public void SensitivityYSlider()

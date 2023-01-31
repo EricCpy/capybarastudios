@@ -23,13 +23,15 @@ public class AIFindWeaponState : AIState
 
     public void Update(AIAgent agent)
     {
-        Debug.Log(agent.weapons.HasWeapon());
+//        Debug.Log(agent.weapons.HasWeapon());
         if(agent.weapons.HasWeapon()) {
             agent.stateMachine.ChangeState(AIStateId.Idle);
         }
 
         pickup = FindWeapon(agent);
-        if(pickup != null) agent.agent.destination = pickup.transform.position;
+        if(pickup != null) {
+            agent.agent.destination = pickup.transform.position;
+        }
 
         //walk random
         if(!agent.agent.hasPath) {

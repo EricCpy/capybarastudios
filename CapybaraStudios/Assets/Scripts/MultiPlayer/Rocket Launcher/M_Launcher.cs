@@ -1,21 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-
-public class M_Launcher : MonoBehaviour
+public class M_Launcher : NetworkBehaviour
 {
     public Transform firePoint;
-    public Rigidbody rocket;
+    public GameObject rocket;
 
     public float knockbackForce = 100f;
 
     public float range = 100f;
 
-    public void Launch()
+    public void Launch(ulong from)
     {
-        Rigidbody rocketInstance = Instantiate(rocket, firePoint.position, firePoint.rotation);
-        //rocketInstance.GetComponent<Rigidbody>().AddForce(firePoint.forward * range, ForceMode.Impulse);
-        rocketInstance.velocity = transform.forward * range;
+        if(IsServer) Spawn(from, firePoint.position, firePoint.rotation);
+        else SpawnServerRPC(from, firePoint.position, firePoint.rotation);
+    }
+
+    private void Spawn(ulong owner, Vector3 pos, Quaternion rot) {
+        GameObject rocketInstance = Instantiate(rocket, pos, rot);
+        rocketInstance.GetComponent<M_Rocket>().oldVelocity = transform.forward * range;
+        rocketInstance.GetComponent<M_Rocket>().owningPlayer = owner; 
+        rocketInstance.GetComponent<NetworkObject>().Spawn();
+    }
+
+    [ServerRpc]
+    public void SpawnServerRPC(ulong owner, Vector3 pos, Quaternion rot) {
+        Spawn(owner, pos, rot);
     }
 
     public float GetKnockbackForce()

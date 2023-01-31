@@ -16,7 +16,7 @@ public class M_InputManager : MonoBehaviour
     public PlayerInput.ShootingActions shooting;
     public PlayerInput.UIActions ui;
     public PlayerInput.GeneralActions general;
-    private GunScript gun;
+    private M_GunScript gun;
     private M_HUDcontroller hud;
     void Awake()
     {
@@ -42,27 +42,10 @@ public class M_InputManager : MonoBehaviour
         general = playerInput.General;
 
         hud = GetComponentInChildren<M_HUDcontroller>();
-        /*gun = GetComponent<GunScript>();
-        
-        if (gun)
-        {
-            
-            shooting.Special.started += ctx => gun.StartSpecial();
-            shooting.Special.canceled += ctx => gun.StopSpecial();
+        gun = GetComponent<M_GunScript>();
 
-            shooting.Shoot.started += ctx => gun.StartFiring();
-            shooting.Shoot.performed += ctx => gun.Shoot();
-            shooting.Shoot.canceled += ctx => gun.StopFiring();
-
-            shooting.Reload.performed += ctx => gun.Reload();  
-            shooting.Drop.performed += ctx => gun.EjectGun(); 
-        }
-
-        shooting.EquipPrimary.performed += ctx => equip(0);
-        shooting.EquipSecondary.performed += ctx => equip(1);
-        shooting.EquipKnife.performed += ctx => equip(2);
-        shooting.EquipUtility.performed += ctx => equip(3);*/
-
+        shooting.Shoot.performed += ctx => gun.Shoot();
+        shooting.Reload.performed += ctx => gun.Reload();
 
         ui.Tab.started += ctx => hud.Tab();
         ui.Tab.canceled += ctx => hud.Tab();
@@ -113,13 +96,28 @@ public class M_InputManager : MonoBehaviour
         ui.Disable();
     }
 
+
+    public void Die() {
+        walking.Disable();
+        shooting.Disable();
+    }
+
+    public void Respawn() {
+        walking.Enable();
+        shooting.Enable();
+    }
+
     private void Pause() {
-        if(!general.enabled)
+        if(!general.enabled) {
+            general.Enable();
+            shooting.Disable();
+        } 
         hud.DoPause();
     }
 
     public void Resume() {
         general.Disable();
+        shooting.Enable();
     }
 
     private void SetMove(InputAction.CallbackContext ctx)

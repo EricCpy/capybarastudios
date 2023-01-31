@@ -117,6 +117,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 4922897050496721276, guid: 81e91a55042706f488471896c6279b3a, type: 3}
   force: 100
   radius: 10
+  impactforce: 700
 --- !u!54 &5792868719729086648
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &5268335479088350865
 GameObject:
   m_ObjectHideFlags: 0

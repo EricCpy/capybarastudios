@@ -5,47 +5,60 @@ Unity Version
 2021.3.11f1
 
 # TODOs bis zur Endpräsentation:
-- [ ] Multiplayer
+- [x] Multiplayer
   - [x] movement
   - [x] kamera
   - [x] Players sollen unterschiedliche Farben haben
   - [x] Name aus Menü soll über dem Kopf angezeigt werden
-  - [ ] rocketlauncher
-  - [ ] dmg
-  - [ ] dying
-  - [ ] respawning
-  - [ ] TabMenü für den Multiplayer
-  - [ ] Sounds
-  - [ ] connect to lobby by code with relay
+  - [x] rocketlauncher
+  - [x] Sounds
+  - [x] dmg
+  - [x] dying
+  - [x] respawning
+  - [x] KillSound für Killer
+  - [x] TabMenü für den Multiplayer (ScoreManager)
+  - [x] DeathMenü
+  - [x] out of map sterben
+  - [x] aktualisiere und ordne tab menü nach kills
+  - [x] Lobbysystem
+    - [x] connect to lobby by code with relay
+    - [x] Choose Map
+    - [x] Choose Mode
+    - [x] Close Lobby
+    - [x] Find Lobbys
+    - [x] Connect to lobby by code
+  - [x] Relay
+    - [x] connect relay with lobby system
+    - [x] start game from lobby for all player
+    - [x] Handle Relay-Lobby when Host disconnects or game over
+  - [x] Spielmodis
+  - [x] testing
 
-- [ ] Tabmenü
-   - [ ] Namen
+- [x] Tabmenü
+   - [x] Namen
 
-- [ ] Menüs
+- [x] Menüs
   - [x] Namen ändern in Settings
-  - [ ] alle Optionen im Menü funktionieren
+  - [x] alle Optionen im Menü funktionieren
     - [x] Soundmanager
     - [x] Controls 
       - [x] mindestens Maussenstivität einstellbar
-    - [ ] Video Funktionen einbauen
+    - [x] Video Funktionen einbauen
 
-- [ ] Maps
-  - [ ] mindestens 2 neue SingleplayerMaps
-  - [ ] Storyline
-  - [ ] map muss abgeschlossen werden, um nächste freizuschalten
-  - [ ] mindestens eine neue Multiplayermap
-    - [ ] Parkourmap oder Parkourelemente
+- [x] Maps
+  - [x] mindestens 2 neue SingleplayerMaps
+  - [x] Storyline
+  - [x] mindestens eine neue Multiplayermap
+    - [x] Parkourmap oder Parkourelemente
 
-- [ ] Waffen
-  - [ ] Granadelauncher
-  - [ ] Rocketlauncher
-  - [ ] fliegender Geschützturm
-  - [ ] stehender Geschützturm
+- [x] Waffen
+  - [x] Granadelauncher
+  - [x] Rocketlauncher
+  - [x] fliegender Geschützturm
+  - [x] stehender Geschützturm
 
-- [ ] Sounds
-  - [ ] Heilen
-  - [ ] 2 neue Soundtracks für die neuen Maps
-  - [ ] Menümusik
-  - [ ] Soundtrack für den Multiplayer
-  - [ ] Rocketlauncher
-  - [ ] Granadelauncher
+- [ ] Testing & Fixes
+  - [ ] Multiplayer
+  - [ ] Singleplayer
+  - [x] Quiting Map and restarting Multiplayer
+  - [ ] Quiting Map and restarting Singleplayer

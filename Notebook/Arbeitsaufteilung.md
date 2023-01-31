@@ -92,7 +92,6 @@
 >           - Standing Turret
 >           - Healstation
 >           - Grenadelauncher
->           - Bowlingball Weapon
 >       - Player
 >           - Model
 >       - AI
@@ -108,7 +107,7 @@
 >           - Interactions
 >           - Tooltips
 >        - Weapons
->           - Weaponsystem for Hitscan-Weapons
+>           - Waffensystem für Hitscan-Weapons
 >             - automatisches Schießen
 >             - Schadensabfall
 >             - Nachladen
@@ -122,9 +121,16 @@
 >           - Input
 >           - Balancing
 >           - Rocketlauncher
->           - Turret
 >           - Grenadelauncher
 >           - Rückstoßsystem
+>       - Turret
+>           - Boden-Turret
+>           - Flying Turret
+>           - Spieler-Tracking
+>       - Animationen
+>           - Explosion
+>           - Propeller
+>           - Bewegliche Turrets
 >       - Player
 >           - HUD
 >           - Steuerung

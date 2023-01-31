@@ -47,11 +47,16 @@ public class PlayerStats : MonoBehaviour
         if (player != transform.root)
         {
             Vector3 X;
-            if (Vector3.Dot(origin - hit, transform.position - origin) > 0) X = origin;
-            else if (Vector3.Dot(hit - origin, transform.position - hit) > 0) X = hit;
-            else X = origin + Vector3.Project(transform.position - origin, hit - origin);
-            float distance = (X - transform.position + new Vector3(0, 2, 0)).magnitude;
-            //print("distance to shot:" + distance);
+            if (Vector3.Dot(origin - hit, transform.root.position - origin) > 0) X = origin;
+            else if (Vector3.Dot(hit - origin, transform.root.position - hit) > 0) X = hit;
+            else X = origin + Vector3.Project(transform.root.position - origin, hit - origin);
+            float distance = (X - (transform.root.position + new Vector3(0, 2, 0))).magnitude;
+            if (isAI && distance <= 5 && agent.weapons.HasWeapon() && player.root.CompareTag("Player"))
+            {
+                print(transform.root.position + new Vector3(0, 2, 0));
+                print("distance to shot:" + distance);
+                agent.stateMachine.ChangeState(AIStateId.AttackPlayer);
+            }
         }
     }
 
@@ -90,7 +95,7 @@ public class PlayerStats : MonoBehaviour
     public int TakeDamage(int damageAmount)
     {
         if (damageAmount <= 0 || currentHealth <= 0) return 0;
-        Debug.Log("Take Damage: " + damageAmount);
+        //Debug.Log("Take Damage: " + damageAmount);
         //take damage
         int damage_taken = (currentHealth - damageAmount);
         if (damage_taken < 0)

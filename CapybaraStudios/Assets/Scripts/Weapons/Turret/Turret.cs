@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    public GameObject turret;
     public Transform target;
     public Transform body;
+    public AudioSource explosionSound;
+    public GameObject explosionEffect;
     public int damage = 10;
     public float range = 1000f;
     public float cooldown = .5f;
+    public float maxHealth = 250;
+    public float radius;
+    public bool canShoot;
     private int controllerMask = ~(1 << 15);
 
     //Shooting
@@ -22,16 +28,18 @@ public class Turret : MonoBehaviour
 
     private void Start() {
         weapon = GetComponent<Weapon>();
+        GetComponent<SphereCollider>().radius = radius;
     }
 
     private void Update() 
     {
         if (target != null)
         {
-            Aim();
+            //aim
+            body.transform.LookAt(target);
             Debug.DrawLine(firePointLeft.position, target.position);
 
-            if(readyToShoot)
+            if(readyToShoot && canShoot)
             {
                 Transform firePoint = isLeft ? firePointLeft : firePointRight;
                 weapon.init(null, firePoint, null, null, null);
@@ -43,21 +51,6 @@ public class Turret : MonoBehaviour
         }
     }
 
-    private void Aim()
-    {
-        float targetPlaneAngle = vector3AngleOnPlane(target.position, transform.position, -body.transform.up, body.transform.forward);
-        Vector3 newRotation = new Vector3(0, targetPlaneAngle, 0);
-        body.transform.Rotate(newRotation, Space.Self);
-    }
-
-    float vector3AngleOnPlane(Vector3 from, Vector3 to, Vector3 planeNormal, Vector3 toZeroAngle)
-    {
-        Vector3 projectedVector = Vector3.ProjectOnPlane(from - to, planeNormal);
-        float projectedVectorAngle = Vector3.SignedAngle(projectedVector, toZeroAngle, planeNormal);
-
-        return projectedVectorAngle;
-    }
-
     private void ShootWeapon(Transform firePoint)
     {
         weapon.BulletFirePoint = firePoint;
@@ -67,6 +60,27 @@ public class Turret : MonoBehaviour
     private void Cooldown()
     {
         readyToShoot = true;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(maxHealth >= 0)
+        {
+            //take damage
+            maxHealth -= damage;
+            //check if dead
+            if(maxHealth <= 0)
+            {
+                Instantiate(explosionEffect, transform.position, transform.rotation);
+                if (explosionSound)
+                {
+                    var sound = Instantiate(explosionSound); 
+                    sound.Play();
+                    explosionSound = null;
+                }
+                Destroy(turret);
+            }
+        }
     }
 
     IEnumerator FocusPlayer(PlayerMovement newTarget, float delayTime)

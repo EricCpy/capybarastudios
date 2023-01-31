@@ -8,7 +8,7 @@ public class PlayerVisuals : NetworkBehaviour
 {
     private NetworkVariable<Color> _netColor = new();
     private NetworkVariable<NetworkString> _netName = new();
-    [SerializeField] private SkinnedMeshRenderer[] renderers;
+    public SkinnedMeshRenderer[] renderers;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private GameObject nameBar;
     [SerializeField] private TextMeshProUGUI nameOverlay;
@@ -51,5 +51,6 @@ public class PlayerVisuals : NetworkBehaviour
     [ServerRpc]
     private void NameServerRpc(string name) {
         _netName.Value = name;
+        GetComponent<M_PlayerStats>().playerName.Value = name;
     }
 }

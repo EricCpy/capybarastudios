@@ -3,65 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class M_Weapon : Interactable
+public class M_Weapon : NetworkBehaviour
 {
     private Transform _transform;
-
     //sounds
     public AudioSource gunSound;
     public AudioSource reloadSound;
     public AudioSource pickupSound;
-
-    //Gun stats
-    public float reloadTime, timeBetweenShooting;
-    public int maxAmmo, magazineSize;
-    public bool hasAmmo;
-    [HideInInspector] public int bulletsLeft, bulletsShot;
-    bool reloading, readyToShoot;
-    private float reloadStatus = 1;
-
     //HUD
     private TextMeshProUGUI _ammoText;
     private TextMeshProUGUI _maxAmmoText;
 
-    private WaitForSeconds rapidFireWait;
-    private int controllerMask = ~(1 << 15);
-    private Animator _animator;
-    public int weaponSlot;
-    public int animationType;
-
-    private float _inaccuracy = 1f;
-    //_inaccuracy for extra ai inaccuracy, player inaccuracy = 0
-
-    public int specialWeaponType;
-    // 0 ist für nicht special Weapon
-    // 1 ist für Grappling Gun
-    // 2 ist für sniper
-    // 3 ist für rocket launcher
-
     public Transform BulletFirePoint;
-    private bool _ai;
+
+    //Gun stats
+    public float reloadTime, timeBetweenShooting;
+    public int magazineSize;
+    [HideInInspector] public int bulletsLeft;
+    bool reloading, readyToShoot;
+    private float reloadStatus = 1;
+    private Animator _animator;
+    public int animationType;
 
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
-        message = "Pick up [E] Rocket Launcher";
     }
 
     public void init(Animator animatior, Transform transform, TextMeshProUGUI ammoText, TextMeshProUGUI maxAmmoText,
-        GameObject hitmarker, float inaccuracy = 1f, bool ai = false)
+        GameObject hitmarker)
     {
         _animator = animatior;
         _transform = transform;
         _ammoText = ammoText;
         _maxAmmoText = maxAmmoText;
-        _inaccuracy = inaccuracy;
-        _ai = ai;
     }
 
     private void Update()
@@ -70,51 +51,24 @@ public class M_Weapon : Interactable
         else if (reloadStatus > 1) reloadStatus = 1;
     }
 
-    protected override void Interact(GameObject player)
+    public void Shoot()
     {
-        player.GetComponent<GunScript>().PickUp(gameObject);
-        pickupSound.Play();
-    }
-
-    public void Shoot(bool first)
-    {
-        if (reloading)
-        {
-            cancelReload();
-            readyToShoot = false;
-            Invoke("ResetShot", timeBetweenShooting);
-            return;
-        }
-
         if (!readyToShoot || reloading || bulletsLeft <= 0) return;
-
         if (_animator != null) _animator.SetTrigger("shoot");
-        readyToShoot = false;
-
-        
         //rocket launcher
-        Launcher launcher = GetComponent<Launcher>();
-        launcher.Launch();
+        M_Launcher launcher = GetComponent<M_Launcher>();
+        launcher.Launch(OwnerClientId);
         //knockback
-        var dir = transform.parent.transform.position - BulletFirePoint.position;
+        var dir = _transform.position - BulletFirePoint.position;
         var force = Mathf.Clamp(launcher.GetKnockbackForce(), 25f, 200f);
         ImpactReceiver impactReceiver = GetComponentInParent(typeof(ImpactReceiver)) as ImpactReceiver;
         impactReceiver.AddImpact(dir, force);
-        //
-
 
         //magazine
         bulletsLeft--;
-        bulletsShot--;
         ShowAmmo();
         gunSound.Play();
-        if (bulletsShot > 0 && bulletsLeft > 0)
-        {
-            readyToShoot = true;
-            Shoot(false);
-            return;
-        }
-
+        readyToShoot = false;
         Invoke("ResetShot", timeBetweenShooting);
     }
 
@@ -127,73 +81,30 @@ public class M_Weapon : Interactable
     //reload
     public void Reload()
     {
-        if (bulletsLeft.Equals(magazineSize) || maxAmmo <= 0 || reloadStatus < 1) return;
-
+        if (reloading || bulletsLeft == magazineSize) return;
         reloading = true;
-        readyToShoot = true;
-        reloadSound.Play();
         reloadStatus = 0;
+        reloadSound.Play();
         Invoke("ReloadFinished", reloadTime);
     }
 
     private void ReloadFinished()
     {
-        if (reloadSound)
-        {
-            reloadSound.Stop();
-        }
-
+        reloadSound.Stop();
         pickupSound.Play();
-
-        if ((maxAmmo + bulletsLeft) < magazineSize)
-        {
-            bulletsLeft = maxAmmo + bulletsLeft;
-            maxAmmo = 0;
-        }
-        else
-        {
-            maxAmmo -= magazineSize - bulletsLeft;
-            bulletsLeft = magazineSize;
-        }
-
-        ShowAmmo();
-
+        readyToShoot = true;
         reloading = false;
+        bulletsLeft = magazineSize;
+        ShowAmmo();
     }
 
     public void ShowAmmo()
     {
-        if (!_ammoText || !_maxAmmoText) return;
-        if (!hasAmmo)
-        {
-            _ammoText.SetText("∞");
-            _maxAmmoText.SetText("");
-        }
-        else
-        {
-            _ammoText.SetText((bulletsLeft) + " / " + (magazineSize));
-            if (maxAmmo > 0)
-                _maxAmmoText.SetText((maxAmmo).ToString());
-            else
-                _maxAmmoText.SetText("0");
-        }
+        _ammoText.SetText("" + bulletsLeft);
     }
-
+    
     public float getReloadStatus()
     {
         return reloadStatus;
-    }
-
-    public void cancelReload()
-    {
-        if (reloadSound)
-        {
-            reloadSound.Stop();
-        }
-
-        reloading = false;
-        readyToShoot = true;
-        reloadStatus = 1;
-        CancelInvoke("ReloadFinished");
     }
 }

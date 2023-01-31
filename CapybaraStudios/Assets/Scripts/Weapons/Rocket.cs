@@ -9,30 +9,39 @@ public class Rocket : MonoBehaviour
     public GameObject explosionEffect;
     public float force = 10f;
     public float radius = 10f;
-    
+    public float impactforce = 700f;
     Rigidbody rig;
+    private bool exploded = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+        rig.freezeRotation = true;
+        Destroy(gameObject, 30f);
     }
 
     void OnCollisionEnter(Collision other)
     {
-        Explode();
+        Vector3 oldVelocity = rig.velocity;
+        if(exploded) {
+            rig.velocity = oldVelocity;
+            return;
+        }
+        Explode(other.transform.position);
+        exploded = true;
     }
 
-    private void Explode()
+    private void Explode(Vector3 point)
     {
         if (explosionSound)
         {
             var sound = Instantiate(explosionSound); 
             sound.Play();
-            explosionSound = null;
+            Destroy(sound.gameObject, 10f);
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-
+        bool selfknocked = false;
         foreach (Collider collision in colliders)
         {
 
@@ -49,6 +58,22 @@ public class Rocket : MonoBehaviour
             if(collision.GetComponentInParent(typeof(PlayerStats)))
             {
                 PlayerStats stats = collision.GetComponentInParent<PlayerStats>();
+                if(!selfknocked && stats.gameObject.tag == "Player") {
+                    stats.TakeDamage(99);
+                    selfknocked = true;
+                    GameObject player = stats.gameObject;
+                    Vector3 dir = point - player.transform.position;
+                    float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
+                    float currForce = percentage * impactforce;
+                    ImpactReceiver receiver = player.GetComponent<ImpactReceiver>();
+                    receiver.AddImpact(dir, currForce);
+                } else if(stats.gameObject.tag == "Enemy") {
+                    stats.TakeDamage(100);
+                }
+            }
+            if(collision.GetComponentInParent(typeof(Turret)))
+            {
+                Turret stats = collision.GetComponentInParent<Turret>();
                 stats.TakeDamage(100);
             }
             
