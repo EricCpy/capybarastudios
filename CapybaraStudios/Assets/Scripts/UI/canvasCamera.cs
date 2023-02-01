@@ -5,27 +5,27 @@ using UnityEngine;
 public class canvasCamera : MonoBehaviour
 {
     // Start is called before the first frame update
-    private GameObject camera;
+    private GameObject _camera = null;
 
     void Start()
     {
-        StartCoroutine(LateStart(0.5f));
+        StartCoroutine(LateStart(2f));
     }
 
     IEnumerator LateStart(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        _camera = Camera.main.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!camera)
+        if (_camera == null)
         {
-            camera = GameObject.FindGameObjectWithTag("MainCamera");
+            _camera = Camera.main.gameObject;
+        } else {
+            transform.LookAt(_camera.transform);
         }
-
-        transform.LookAt(camera.transform);
     }
 }
