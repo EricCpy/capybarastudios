@@ -57,12 +57,12 @@ public class GameManager : MonoBehaviour
             _scoreEntryList = JsonUtility.FromJson<Scores>(json).scores;
         }
 
-        if (sceneIndex == 1)
+        if (levelName == "Singleplayer")
         {
             themeOne.Play();
         }
 
-        if (sceneIndex == 3)
+        if (levelName == "AntarcticStation")
         {
             themeThree.Play();
         }
