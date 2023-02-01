@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public delegate void CharacterSpawnedDelegate(GameObject player);
 
-    private GameObject currentPlayer;
+    public GameObject currentPlayer;
 
     private static Transform _dummy;
     public Transform dummy;

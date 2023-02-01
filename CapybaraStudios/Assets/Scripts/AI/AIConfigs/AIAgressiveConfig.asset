@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: AIAgressiveConfig
   m_EditorClassIdentifier: 
   maxTime: 0.5
-  maxDistance: 15
-  minSightDistance: 20
+  maxDistance: 25
+  minSightDistance: 40
   rotationSeconds: 0.025
   healTime: 1
-  outOfRangeDistance: 35
+  outOfRangeDistance: 50
   maxHp: 100
-  inaccuracy: 5
+  inaccuracy: 7
   stoppingDistance: 3
   startWeapon: {fileID: 0}
   aIBehaviour: 3

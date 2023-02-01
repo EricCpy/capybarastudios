@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: AISniper
   m_EditorClassIdentifier: 
   maxTime: 0.5
-  maxDistance: 60
-  minSightDistance: 25
+  maxDistance: 80
+  minSightDistance: 80
   rotationSeconds: 0.025
   healTime: 1
-  outOfRangeDistance: 60
+  outOfRangeDistance: 100
   maxHp: 100
   inaccuracy: 5
   stoppingDistance: 3

@@ -95,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _animator.SetBool("isGrounded", controller.isGrounded);
+        
     }
 
     public void ProcessMovement(Vector2 input)
