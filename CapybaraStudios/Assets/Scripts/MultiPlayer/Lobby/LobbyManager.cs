@@ -300,7 +300,7 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyCodeToCopy.text = lobby.LobbyCode;
         waitingMenuLobbyName.text = lobby.Name;
-        StartCoroutine(UpdateLobbyInfosCoroutine(10));
+        StartCoroutine(UpdateLobbyInfosCoroutine(3));
     }
 
     public async void Startgame() {

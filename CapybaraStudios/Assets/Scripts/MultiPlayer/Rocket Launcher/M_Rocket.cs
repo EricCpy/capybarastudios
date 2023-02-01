@@ -62,7 +62,7 @@ public class M_Rocket : NetworkBehaviour
             if(stats != null)
             {
                 if(set.Add(stats.OwnerClientId) && stats.gameObject.tag == "Player") {
-                    KnockbackClientRpc(pos, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
+                    KnockbackClientRpc(pos, owningPlayer, new ClientRpcParams {Send = new ClientRpcSendParams {TargetClientIds = new List<ulong> {stats.OwnerClientId}}});
                     if(stats.OwnerClientId != owningPlayer) stats.UpdateHealthServerRpc(-49, stats.OwnerClientId, owningPlayer);
                     else stats.UpdateHealthServerRpc(-2, stats.OwnerClientId, owningPlayer);
                 }
@@ -76,9 +76,15 @@ public class M_Rocket : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void KnockbackClientRpc(Vector3 point, ClientRpcParams clientRpcParams) {
-        GameObject player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
-        Vector3 position = player.GetComponent<M_GunScript>().currentWeapon.firePos;
+    private void KnockbackClientRpc(Vector3 point, ulong senderId, ClientRpcParams clientRpcParams) {
+        var playerObject = NetworkManager.Singleton.LocalClient.PlayerObject;
+        GameObject player = playerObject.gameObject;
+        Vector3 position = Vector3.zero;
+        if(senderId == playerObject.OwnerClientId) {
+            position = player.GetComponent<M_GunScript>().currentWeapon.firePos;
+        } else {
+            position = player.GetComponent<MultiPlayerMovement>().center.position;
+        } 
         Vector3 dir = position - point;
         float percentage = 1 - dir.sqrMagnitude / (float) (radius * radius);
         float currForce = percentage * impactforce;

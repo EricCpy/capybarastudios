@@ -1,12 +1,12 @@
 <span style="color:white">
 
-# Arbeitsaufteilung CapybaraStudios bis 13.01. 
+# Arbeitsaufteilung und Spielmechaniken CapybaraStudios
 
 ## __Eric J. &emsp; *Producer, Developer*__
 
-> ### &nbsp; Anzahl aller Commits: 121
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 29,1%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 10,1  
+> ### &nbsp; Anzahl aller Commits: 184
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 26,4%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 11,5  
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Weapons
 >           - Grappling Gun
@@ -33,20 +33,42 @@
 >           - Drop Weapon
 >           - Collect Weapon
 >       - Multiplayer
+>           - movement
+>           - camera
+>           - different player colors
+>           - menu name
+>           - rocketlauncher
+>           - Sounds
+>           - dmg
+>           - dying
+>           - respawning
+>           - KillSound
+>           - TabMenu (ScoreManager)
+>           - DeathMenu
+>           - SettingsMenu
+>           - out of map dying
+>           - Lobbysystem
+>               - connect to lobby by code with relay
+>               - choose map
+>               - choose Mode
+>               - close Lobby
+>               - find Lobbys
+>               - connect to lobby by code
 >           - Relay
->           - Movement
->           - Kamera
->           - Player
->           - Menu
+>               - connect relay with lobby system
+>               - start game from lobby for all player
+>               - handle Relay-Lobby when Host disconnects or game over
+>           - Spielmodi
+>           - Testing
 >       - Fixes und Anpassungen
 >       - Git Management
 >       - Management
 
 ## __Adrian J. &emsp; *CO-Producer, Developer*__
 
-> ### &nbsp; Anzahl aller Commits: 133
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 32%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 11,1
+> ### &nbsp; Anzahl aller Commits: 188
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 26,9%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 11,75
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Weapons
 >           - Inverse Kinematics
@@ -76,9 +98,9 @@
 
 ## __Deniz S. &emsp; *Assetcreator*__
 
-> ### &nbsp; Anzahl aller Commits: 28
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 6,7%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 2,3  
+> ### &nbsp; Anzahl aller Commits: 32
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 4,5%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 2
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Weapons
 >           - Rocketlauncher
@@ -99,9 +121,9 @@
 
 ## __Felix A. &emsp; *Developer*__
 
-> ### &nbsp; Anzahl aller Commits: 43
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 10,3%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4,5
+> ### &nbsp; Anzahl aller Commits: 63
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 9%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >        - Objects
 >           - Interactions
@@ -142,9 +164,9 @@
 
 ## __Erdenay K. &emsp; *Environment- and Leveldesigner*__
 
-> ### &nbsp; Anzahl aller Commits: 44
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 10,3%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4,5
+> ### &nbsp; Anzahl aller Commits: 71
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 10,1% 
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4,4
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Objects
 >           - Interactions 
@@ -160,9 +182,9 @@
 
 ## __Florian K. &emsp; *Sounddesigner, Webdeveloper*__
 
-> ### &nbsp; Anzahl aller Commits: 4 (Main Repo) + Website [-> Repository](https://github.com/fnyrawr/capybarastudios_website)
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits im Main Repo: 1%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 0,3
+> ### &nbsp; Anzahl aller Commits: 6 (Main Repo) + 45 Website [-> Repository](https://github.com/fnyrawr/capybarastudios_website)
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 7%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 3,1
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Sound
 >           - own Soundtracks made in FL Studio with sound concept in mind (changing to intense version when being on attack)
@@ -180,14 +202,12 @@
 
 ## __Zainab E. &emsp; *UI-Designer, HR-Management*__
 
-> ### &nbsp; Anzahl aller Commits: 44
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 10,3%  
-> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4,5
+> ### &nbsp; Anzahl aller Commits: 109 (viele kleine)
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 15,6%  
+> &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 6,9 (in einer Woche sehr viele kleine, sonst selten)
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - UI
->           - Menu
->           - Basics
->           - UI art
+>           - Concepts
 >       - Management
 >           - Jira
 >       - Map
@@ -199,4 +219,6 @@
 
 ### 1. Eric J. und Adrian J.
 ### 2. Deniz S. und Felix A.
-### 3. Erdenay K., Florian K. und Zainab E.
+### 3. Florian K.
+### 4. Erdenay K.
+### 5. Zainab E.
