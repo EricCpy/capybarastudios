@@ -2823,6 +2823,7 @@ MonoBehaviour:
   walkingSound: {fileID: 1305461152254008309}
   slidingSound: {fileID: 7061895013661187923}
   jumpSound: {fileID: 7520782608286808615}
+  crouching: 0
   speed: 7
   sprintingSpeed: 15
   jumpHeight: 1.35
