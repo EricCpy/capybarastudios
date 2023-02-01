@@ -197,8 +197,8 @@
 >           - Assistance in Map Design
 >       - Website
 >           - Technical Design
->           - Implementation in Django (currently in progress)
->           - Testing and Hosting (upcoming)
+>           - Implementation in Django
+>           - Testing and Hosting
 
 ## __Zainab E. &emsp; *UI-Designer, HR-Management*__
 
@@ -215,7 +215,7 @@
 >       - Website
 >           - Information
 <br><br>
-# Derzeitiges Ranking im Main Repo
+# Derzeitiges Ranking
 
 ### 1. Eric J. und Adrian J.
 ### 2. Deniz S. und Felix A.
