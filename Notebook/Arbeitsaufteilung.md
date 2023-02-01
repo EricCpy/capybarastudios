@@ -169,7 +169,8 @@
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 4,4
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Objects
->           - Interactions 
+>           - Interactions
+>           - Map Scripts
 >       - Maps
 >           - MultiplayerMap
 >           - SingleplayerMap
@@ -179,6 +180,7 @@
 >       - Sound
 >           - Sound on objects
 >           - Sound selection
+>       - Trailer
 
 ## __Florian K. &emsp; *Sounddesigner, Webdeveloper*__
 
