@@ -6,7 +6,9 @@ public class AIChasePlayerState : AIState
     float timer = 0.0f;
     public void Enter(AIAgent agent)
     {
-        agent.agent.destination = agent.player.position;
+        if (agent.agent.isOnNavMesh) {
+            agent.agent.destination = agent.player.position;
+        }
         agent.agent.stoppingDistance = agent.config.stoppingDistance;
     }
 

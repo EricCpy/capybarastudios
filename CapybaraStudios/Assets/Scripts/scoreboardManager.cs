@@ -68,7 +68,7 @@ public class scoreboardManager : MonoBehaviour
 
             var currentPlayer = Color.cyan;
 
-            if (scoreEntry.playerName == "current")
+            if (scoreEntry.playername == "current")
             {
                 entryTransform.Find("Name").GetComponent<TMP_Text>().color = currentPlayer;
                 entryTransform.Find("Rank").GetComponent<TMP_Text>().color = currentPlayer;
@@ -78,10 +78,10 @@ public class scoreboardManager : MonoBehaviour
             }
 
             entryTransform.Find("Rank").GetComponent<TMP_Text>().text = prefix;
-            entryTransform.Find("Name").GetComponent<TMP_Text>().text = scoreEntry.playerName;
-            entryTransform.Find("Time").GetComponent<TMP_Text>().text = scoreEntry.time;
-            entryTransform.Find("Kills").GetComponent<TMP_Text>().text = scoreEntry.kills + "";
-            entryTransform.Find("Dmg").GetComponent<TMP_Text>().text = scoreEntry.damageDone + "";
+            entryTransform.Find("Name").GetComponent<TMP_Text>().text = scoreEntry.playername;
+            entryTransform.Find("Time").GetComponent<TMP_Text>().text = scoreEntry.playtime;
+            entryTransform.Find("Kills").GetComponent<TMP_Text>().text = scoreEntry.killcount + "";
+            entryTransform.Find("Dmg").GetComponent<TMP_Text>().text = scoreEntry.damagedealt + "";
 
 
             index++;

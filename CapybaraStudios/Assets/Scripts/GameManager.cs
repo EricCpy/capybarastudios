@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     public static List<ScoreEntry> scorelist;
     private static string levelName;
     private int sceneIndex;
-    public static string url = "http://127.0.0.1:8000/leaderboard/api/"; // change this for leaderboard submission
+    public static string url = "https://floriank.pythonanywhere.com/leaderboard/api/"; // change this for leaderboard submission
 
     private void Start()
     {
@@ -197,8 +197,8 @@ public class GameManager : MonoBehaviour
         //lapLogger.text += "\n" + CourseTimer.toString(time);
         foreach (ScoreEntry highscoreEntry in _scoreEntryList)
         {
-            if (highscoreEntry.playerName == playerName &&
-                TimeSpan.Parse(highscoreEntry.time).TotalSeconds > TimeSpan.Parse(time).TotalSeconds)
+            if (highscoreEntry.playername == playerName &&
+                TimeSpan.Parse(highscoreEntry.playtime).TotalSeconds > TimeSpan.Parse(time).TotalSeconds)
             {
                 if (_scoreEntryList[0] == highscoreEntry)
                 {
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
                 _scoreEntryList.Remove(highscoreEntry);
                 break;
             }
-            else if (highscoreEntry.playerName == playerName && TimeSpan.Parse(highscoreEntry.time).TotalSeconds <=
+            else if (highscoreEntry.playername == playerName && TimeSpan.Parse(highscoreEntry.playtime).TotalSeconds <=
                      TimeSpan.Parse(time).TotalSeconds)
             {
                 return "";
@@ -222,8 +222,11 @@ public class GameManager : MonoBehaviour
 
         _scoreEntryList.Add(new ScoreEntry
         {
-            playerName = playerName, time = time, kills = kills, damageDone = damageDone,
-            madeAt = DateTime.Now
+            playername = playerName,
+            playtime = time,
+            killcount = kills,
+            damagedealt = damageDone,
+            time = DateTime.Now
         });
         SortTimers();
         saveScores();
@@ -246,15 +249,18 @@ public class GameManager : MonoBehaviour
         tmp.AddRange(_scoreEntryList);
         tmp.Add(new ScoreEntry
         {
-            playerName = "current", time = time, kills = kills,
-            damageDone = damageDone, madeAt = DateTime.Now
+            playername = "current",
+            playtime = time,
+            killcount = kills,
+            damagedealt = damageDone,
+            time = DateTime.Now
         });
         tmp.Sort((o1, o2) =>
-            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
+            (int)((TimeSpan.Parse(o1.playtime).TotalSeconds - TimeSpan.Parse(o2.playtime).TotalSeconds)));
 
         foreach (var entry in tmp)
         {
-            int length = Math.Min(entry.playerName.Length, 10);
+            int length = Math.Min(entry.playername.Length, 10);
             string prefix = "";
             switch (tmp.IndexOf(entry) + 1)
             {
@@ -274,8 +280,8 @@ public class GameManager : MonoBehaviour
             }
 
             string s = String.Format("{0,-4} {1,-15} {2,-8} {3,-5} {4,-6}\n", prefix,
-                entry.playerName.Substring(0, length),
-                entry.time, entry.kills, entry.damageDone);
+                entry.playername.Substring(0, length),
+                entry.time, entry.killcount, entry.damagedealt);
             sb.Append(s);
         }
 
@@ -288,11 +294,14 @@ public class GameManager : MonoBehaviour
         tmp.AddRange(_scoreEntryList);
         tmp.Add(new ScoreEntry
         {
-            playerName = "current", time = time, kills = kills,
-            damageDone = damageDone, madeAt = DateTime.Now
+            playername = "current",
+            playtime = time,
+            killcount = kills,
+            damagedealt = damageDone,
+            time = DateTime.Now
         });
         tmp.Sort((o1, o2) =>
-            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
+            (int)((TimeSpan.Parse(o1.playtime).TotalSeconds - TimeSpan.Parse(o2.playtime).TotalSeconds)));
 
         return tmp;
     }
@@ -300,7 +309,7 @@ public class GameManager : MonoBehaviour
     private void SortTimers()
     {
         _scoreEntryList.Sort((o1, o2) =>
-            (int)((TimeSpan.Parse(o1.time).TotalSeconds - TimeSpan.Parse(o2.time).TotalSeconds)));
+            (int)((TimeSpan.Parse(o1.playtime).TotalSeconds - TimeSpan.Parse(o2.playtime).TotalSeconds)));
         while (_scoreEntryList.Count > 10) // nur die top 10 und keine doppelten einträge 
         {
             _scoreEntryList.RemoveRange(10, 1);
@@ -320,15 +329,20 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(highscores);
         PlayerPrefs.SetString(saveLocation, json);
         PlayerPrefs.Save();
+        string nameOfMap = "";
+        if (SceneManager.GetActiveScene().name == "Singleplayer") nameOfMap = "Space";
         ScoreEntry tmp = new ScoreEntry()
         {
-            damageDone = damageDone, kills = kills, madeAt = DateTime.Now,
-            playerName = PlayerPrefs.GetString("CurrentName", "Player"), time = time,
-            map = SceneManager.GetActiveScene().name
+            damagedealt = damageDone,
+            killcount = kills,
+            time = DateTime.Now,
+            playername = PlayerPrefs.GetString("CurrentName", "Player"),
+            playtime = time,
+            mapname = nameOfMap
         };
 
         string json2 = JsonUtility.ToJson(tmp);
-        Upload(json2);
+        StartCoroutine(Upload(json2));
         //TODO, submit score to database
     }
 
@@ -336,20 +350,22 @@ public class GameManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("data", json);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(url, json))
+        Debug.Log(form.headers.ToString());
+        using UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/json");
+        yield return www.SendWebRequest();
+        if (www.result != UnityWebRequest.Result.Success)
         {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("data upload complete!");
-            }
+            Debug.Log(www.error);
         }
+        else
+        {
+            Debug.Log("data upload complete!");
+        }
+
     }
 
 
@@ -361,11 +377,11 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class ScoreEntry
     {
-        public string time;
-        public int kills;
-        public int damageDone;
-        public string playerName;
-        public DateTime madeAt;
-        public string map;
+        public string playtime;
+        public int killcount;
+        public int damagedealt;
+        public string playername;
+        public DateTime time;
+        public string mapname;
     }
 }
