@@ -17,16 +17,9 @@ public class AIAgent : MonoBehaviour
     private bool playerFound;
     [HideInInspector] public Transform target;
 
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        if (player != null)
-        {
-            Debug.Log("player");
-            target = player.GetComponent<PlayerMovement>().torso;
-        }
-
         healthBar = GetComponentInChildren<UIHealthBar>();
         playerStats = GetComponent<PlayerStats>();
         sensor = GetComponent<AISensor>();
@@ -44,6 +37,15 @@ public class AIAgent : MonoBehaviour
 
         GameManager gameManager = FindObjectOfType<GameManager>();
         gameManager.OnCharacterSpawned += UpdatePlayer;
+    }
+
+    void Start() {
+        var p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null)
+        {   
+            player = p.transform;
+            target = player.GetComponent<PlayerMovement>().torso;
+        }
     }
 
     void Update()

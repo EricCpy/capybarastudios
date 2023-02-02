@@ -28,13 +28,13 @@ public class AIFindWeaponState : AIState
         }
 
         pickup = FindWeapon(agent);
+        if (!agent.agent.isOnNavMesh) return;
         if(pickup != null) {
             agent.agent.destination = pickup.transform.position;
         }
 
         //walk random
         if(!agent.agent.hasPath) {
-            if (!agent.agent.isOnNavMesh) return;
             agent.WalkRandom(new Vector3(UnityEngine.Random.Range(-10f,10f), UnityEngine.Random.Range(-0.39f, 0.39f), UnityEngine.Random.Range(-10f,10f)));
         }
     }
