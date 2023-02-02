@@ -331,6 +331,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
         string nameOfMap = "";
         if (SceneManager.GetActiveScene().name == "Singleplayer") nameOfMap = "Space";
+        else nameOfMap = "Arctic";
         ScoreEntry tmp = new ScoreEntry()
         {
             damagedealt = damageDone,
@@ -343,7 +344,6 @@ public class GameManager : MonoBehaviour
 
         string json2 = JsonUtility.ToJson(tmp);
         StartCoroutine(Upload(json2));
-        //TODO, submit score to database
     }
 
     IEnumerator Upload(string json)
