@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        Debug.Log("ddd");
         currentPlayer = Instantiate(player, respawnPosition, Quaternion.identity);
         OnCharacterSpawned?.Invoke(currentPlayer);
     }

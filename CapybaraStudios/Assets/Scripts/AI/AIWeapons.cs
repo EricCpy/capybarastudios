@@ -13,6 +13,7 @@ public class AIWeapons : MonoBehaviour
     private float inaccuracy = 3f;
     private bool isFiring;
     Coroutine fireCoroutine;
+    private bool hasWeapon;
     [SerializeField] AIAgent agent;
 
     private void Awake() {
@@ -20,6 +21,7 @@ public class AIWeapons : MonoBehaviour
         if(agent.config.startWeapon != null) {
             GameObject weapon = Instantiate(agent.config.startWeapon);
             EquipWeapon(weapon);
+            hasWeapon = true;
         }
     }
     private void Update() {
@@ -36,6 +38,7 @@ public class AIWeapons : MonoBehaviour
 
     public void EquipWeapon(GameObject weapon) {
         if(weapon.GetComponent<Weapon>().maxAmmo == 0) return;
+        hasWeapon = true;
         current = weapon;
         weapon.GetComponent<Rigidbody>().isKinematic = true;
         weapon.GetComponent<BoxCollider>().enabled = false;
@@ -43,7 +46,6 @@ public class AIWeapons : MonoBehaviour
         gunSlot.GetChild(0).gameObject.SetActive(true);
         currentWeapon = gunSlot.GetChild(0).GetComponent<Weapon>();
         currentWeapon.init(animator, headTransform, null, null, null, inaccuracy, true);
-
         weaponAnimator.refresh();
         weapon.transform.localRotation = Quaternion.Euler(0, 0, 0);
         weapon.transform.localPosition = new Vector3(0, 0, 0);
@@ -58,10 +60,11 @@ public class AIWeapons : MonoBehaviour
         oldGun.GetComponent<BoxCollider>().enabled = true;
         print(oldGun.name + " ditched");
         currentWeapon = null;
+        hasWeapon = false;
     }
 
     public bool HasWeapon() {
-        return currentWeapon != null;
+        return hasWeapon;
     }
 
     public void SetFiring(bool val) {
@@ -77,6 +80,7 @@ public class AIWeapons : MonoBehaviour
         if(!HasWeapon()) return;
         if(currentWeapon.bulletsLeft > 0) return;
         if(currentWeapon.maxAmmo == 0) {
+            Debug.Log("lll");
             DitchWeapon();
             agent.stateMachine.ChangeState(AIStateId.FindWeapon);
             return;

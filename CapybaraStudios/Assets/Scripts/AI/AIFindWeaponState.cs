@@ -23,7 +23,6 @@ public class AIFindWeaponState : AIState
 
     public void Update(AIAgent agent)
     {
-//        Debug.Log(agent.weapons.HasWeapon());
         if(agent.weapons.HasWeapon()) {
             agent.stateMachine.ChangeState(AIStateId.Idle);
         }

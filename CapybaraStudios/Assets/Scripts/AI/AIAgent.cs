@@ -17,12 +17,13 @@ public class AIAgent : MonoBehaviour
     private bool playerFound;
     [HideInInspector] public Transform target;
 
-    void Awake()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         if (player != null)
         {
+            Debug.Log("player");
             target = player.GetComponent<PlayerMovement>().torso;
         }
 
