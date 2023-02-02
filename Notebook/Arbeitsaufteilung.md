@@ -186,21 +186,24 @@
 
 > ### &nbsp; Anzahl aller Commits: 6 (Main Repo) + 45 Website [-> Repository](https://github.com/fnyrawr/capybarastudios_website)
 > &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 7%  
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an Website: 100%  
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 3,1
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Sound
->           - own Soundtracks made in FL Studio with sound concept in mind (changing to intense version when being on attack)
+>           - own Soundtracks made in FL Studio with sound concept in mind (changing to intense version when being on attack) for complete Game Audio
 >           - Sound selection
 >       - Management
 >           - Playtest questions and sequence
->           - Assistant in Management on demand
+>           - Assistant in Management (Jira Sprint Organization, Epics Organization, Projects Organization)
 >       - Map
 >           - Prototypes
 >           - Assistance in Map Design
 >       - Website
 >           - Technical Design
->           - Implementation in Django
->           - Testing and Hosting
+>           - Implementation in Django with REST-Framework
+>           - Contents
+>           - Testing
+>           - Hosting
 
 ## __Zainab E. &emsp; *UI-Designer, HR-Management*__
 
@@ -214,8 +217,6 @@
 >           - Jira
 >       - Map
 >           - SinglePlayerMap
->       - Website
->           - Information
 <br><br>
 # Derzeitiges Ranking
 
