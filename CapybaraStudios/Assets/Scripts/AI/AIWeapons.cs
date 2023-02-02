@@ -80,7 +80,6 @@ public class AIWeapons : MonoBehaviour
         if(!HasWeapon()) return;
         if(currentWeapon.bulletsLeft > 0) return;
         if(currentWeapon.maxAmmo == 0) {
-            Debug.Log("lll");
             DitchWeapon();
             agent.stateMachine.ChangeState(AIStateId.FindWeapon);
             return;

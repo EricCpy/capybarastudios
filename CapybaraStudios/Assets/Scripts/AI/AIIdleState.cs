@@ -32,7 +32,7 @@ public class AIIdleState : AIState
             if (agent.agent.isOnNavMesh) agent.WalkRandom(new Vector3(UnityEngine.Random.Range(-50f,50f), UnityEngine.Random.Range(-0.39f, 0.39f), UnityEngine.Random.Range(-50f,50f)));
         }
         if(agent.config.aIBehaviour != AIBehaviour.Aggressiv && agent.config.aIBehaviour != AIBehaviour.Attack) return;
-        //Debug.Log("hier");
+
         float dist = (agent.player.position - agent.transform.position).sqrMagnitude;
         if(dist <= agent.config.minSightDistance * agent.config.minSightDistance
          && !Physics.Linecast(agent.player.position, agent.transform.position, agent.sensor.occlusionLayers)) {

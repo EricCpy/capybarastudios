@@ -156,7 +156,6 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Debug.Log("ddd");
         currentPlayer = Instantiate(player, respawnPosition, Quaternion.identity);
         OnCharacterSpawned?.Invoke(currentPlayer);
     }
@@ -349,9 +348,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Upload(string json)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("data", json);
-        Debug.Log(form.headers.ToString());
         using UnityWebRequest www = new UnityWebRequest(url, "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
