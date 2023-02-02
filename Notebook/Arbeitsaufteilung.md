@@ -186,7 +186,7 @@
 
 > ### &nbsp; Anzahl aller Commits: 6 (Main Repo) + 45 Website [-> Repository](https://github.com/fnyrawr/capybarastudios_website)
 > &nbsp; &nbsp; &nbsp; Prozentualer Anteil an gesamten Commits: 7%  
-> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an Website: 100%
+> &nbsp; &nbsp; &nbsp; Prozentualer Anteil an Website: 100%  
 > &nbsp; &nbsp; &nbsp; Durchschnittliche Commits pro Woche: 3,1
 > ### &nbsp; Liste aller Features und erledigten Aufgaben:
 >       - Sound
